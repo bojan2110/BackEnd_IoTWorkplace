@@ -8,10 +8,10 @@ router.get('/', function (req, res) {
 });
 //
 
-var bluetoothController = require('../controllers/bluetooth.controller');
+var sitCycleController = require('../controllers/sitcycle.controller');
 // Contact routes
-router.route('/bluetooth')
-    .get(bluetoothController.index)
-    .post(bluetoothController.new);
+router.route('/sitcycle')
+    .get(sitCycleController.getallsitcycledata)
+    .post(sitCycleController.newsitcycle);
 // Export API routes
 module.exports = router;

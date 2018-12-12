@@ -16,3 +16,4 @@ var stepsSchema = mongoose.Schema({
 var Steps = module.exports = mongoose.model('steps', stepsSchema);
 module.exports.get = function (callback, limit) {
     Steps.find(callback).limit(limit);
+  }

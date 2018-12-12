@@ -8,10 +8,10 @@ router.get('/', function (req, res) {
 });
 //
 
-var bluetoothController = require('../controllers/bluetooth.controller');
+var stepsController = require('../controllers/steps.controller');
 // Contact routes
-router.route('/bluetooth')
-    .get(bluetoothController.index)
-    .post(bluetoothController.new);
+router.route('/steps')
+    .get(stepsController.getallstepsdata)
+    .post(stepsController.newstepentry);
 // Export API routes
 module.exports = router;

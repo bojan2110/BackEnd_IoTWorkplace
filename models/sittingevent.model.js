@@ -16,3 +16,4 @@ var sittingEventSchema = mongoose.Schema({
 var SittingEvent = module.exports = mongoose.model('sittingevent', sittingEventSchema);
 module.exports.get = function (callback, limit) {
     SittingEvent.find(callback).limit(limit);
+  }
