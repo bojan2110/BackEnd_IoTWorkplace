@@ -15,7 +15,7 @@ exports.getallstepsdata = function (req, res) {
         });
     });
 };
-// Handle create contact actions
+// Handle create steps actions
 exports.newstepentry = function (req, res) {
     var stepsentry = new StepsEntry();
     stepsentry.userid = req.body.userid;

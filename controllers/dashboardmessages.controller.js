@@ -1,36 +1,47 @@
 
 MessagesEntry = require('../models/dashboardmessages.model.js');
 // Handle index actions
-exports.index = function (req, res) {
-    MessagesEntry.get(function (err, messagesdata) {
-        if (err) {
+exports.getmessages = function (req, res) {
+    //type of messages to be obtained
+    var messagetype=req.params.messagetype;
+    // case when message request is all messages
+    if (messagetype=='all')
+    {
+      MessagesEntry.get(function (err, messagesdata) {
+              if (err) {
+                  res.json({
+                      status: "error",
+                      message: err,
+                  });
+              }
+              res.json({
+                  status: "success",
+                  message: "Messages Data retrieved successfully",
+                  data: messagesdata
+              });
+          });
+    }
+    //specific message type is required
+    else {
+      MessagesEntry.find({'type':messagetype}, function (err, messagesdata) {
+          if (err) {
+              res.json({
+                  status: "error",
+                  message: err,
+              });
+          }
+          // return array (messagesData) is empty
+          if (!messagesdata.length) {
+            res.sendStatus(404);
+          }
+
+          else{
             res.json({
-                status: "error",
-                message: err,
+                status: "success",
+                message: "",
+                data: messagesdata
             });
         }
-        res.json({
-            status: "success",
-            message: "Messages Data retrieved successfully",
-            data: messagesdata
-        });
-    });
-};
-// Handle create contact actions
-exports.new = function (req, res) {
-    var msgentry = new MessagesEntry();
-    msgentry.id = req.body.id;
-    msgentry.message = req.body.message;
-    msgentry.author=req.body.author;
-    msgentry.type=req.body.type;
-
-// save the contact and check for errors
-    msgentry.save(function (err) {
-        // if (err)
-        //     res.json(err);
-res.json({
-            message: 'New Message Entry Created!',
-            data: msgentry
-        });
-    });
+      });
+    }
 };
