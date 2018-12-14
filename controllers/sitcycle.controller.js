@@ -5,8 +5,7 @@ exports.getallsitcycledata = function (req, res) {
     var date=req.params.date;
     var hour=req.params.hour;
     var min=req.params.min;
-    console.log(hour)
-    console.log(min)
+
     //{'date':date, 'hour':{ $lte: hour}, 'minute': {$lte: min}}
     SitCycleEntry.find({$or:[{'date':date,'hour':{ $lte: hour},'minute': {$lte: min}},{'date':date,'hour':{ $lt: hour}}]},
     function (err, messagesdata) {

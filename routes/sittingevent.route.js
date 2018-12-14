@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
 
 var sittingEventController = require('../controllers/sittingevent.controller');
 // Contact routes
-router.route('/sittingevent')
+router.route('/sittingevent/:date/:hour?/:min?')
     .get(sittingEventController.getallsitdata)
     .post(sittingEventController.newsitentry);
 // Export API routes

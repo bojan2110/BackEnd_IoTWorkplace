@@ -10,7 +10,8 @@ var sittingEventSchema = mongoose.Schema({
         required: true
     },
     date: String,
-    time: String
+    hour: Number,
+    minute: Number
 });
 // Export Contact model
 var SittingEvent = module.exports = mongoose.model('sittingevent', sittingEventSchema);
