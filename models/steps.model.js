@@ -10,7 +10,8 @@ var stepsSchema = mongoose.Schema({
         required: true
     },
     date: String,
-    time: String
+    hour: Number,
+    minute: Number
 });
 // Export Contact model
 var Steps = module.exports = mongoose.model('steps', stepsSchema);

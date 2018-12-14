@@ -10,8 +10,6 @@ router.get('/', function (req, res) {
 
 var stepsController = require('../controllers/steps.controller');
 // Contact routes
-router.route('/steps')
-    .get(stepsController.getallstepsdata)
-    .post(stepsController.newstepentry);
+router.route('/steps/:date/:hour?/:min?').get(stepsController.getstepsbydate);
 // Export API routes
 module.exports = router;

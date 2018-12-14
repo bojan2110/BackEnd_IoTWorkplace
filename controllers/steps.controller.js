@@ -1,18 +1,40 @@
 StepsEntry = require('../models/steps.model');
 // Handle index actions
-exports.getallstepsdata = function (req, res) {
-    StepsEntry.get(function (err, stepsdata) {
+exports.getstepsbydate = function (req, res) {
+  var date=req.params.date;
+  var hour=req.params.hour;
+  var min=req.params.min;
+
+    StepsEntry.find({$or:[{'date':date,'hour':{ $lte: hour},'minute': {$lte: min}},{'date':date,'hour':{ $lt: hour}}]},
+    function (err, messagesdata) {
         if (err) {
             res.json({
                 status: "error",
                 message: err,
             });
         }
-        res.json({
-            status: "success",
-            message: "Steps data retrieved successfully",
-            data: stepsdata
-        });
+        // return array (messagesData) is empty
+        if (!messagesdata.length) {
+          res.json({
+              status: "success",
+              numcycles: 0
+          });
+        }
+
+        else{
+          // sortedarray=messagesdata.sort(function(a, b) {
+          //     return parseFloat(a.hour) - parseFloat(b.hour) || parseFloat(a.minute) - parseFloat(b.minute);
+          // });
+          totalSteps=0
+          for (i = 0; i < messagesdata.length; i++) {  //loop through the array
+              totalSteps += messagesdata[i].numsteps;  //Do the math!
+          }
+
+          res.json({
+              status: "success",
+              total_steps: totalSteps
+          });
+      }
     });
 };
 // Handle create steps actions
