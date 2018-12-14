@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 // Setup schema
 var messagesSchema = mongoose.Schema({
-    id: {
-        type: Number,
+    _id: {
+        type: String,
         required: true
     },
     message: {
