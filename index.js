@@ -14,6 +14,10 @@ let mongoose = require('mongoose');
 let bluetoothRoutes = require("./routes/bluetooth.route");
 let microphoneRoutes = require("./routes/microphone.route");
 let messagesRoutes = require("./routes/dashboardmessages.route");
+let stepsRoutes = require("./routes/steps.route");
+let sitEventRoutes = require("./routes/sittingevent.route");
+let sitCycleRoutes = require("./routes/sitcycle.route");
+
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
     extended: true
@@ -39,6 +43,9 @@ db.once('open', function callback () {
   app.use('/api', bluetoothRoutes)
   app.use('/api', microphoneRoutes)
   app.use('/api', messagesRoutes)
+  app.use('/api', stepsRoutes)
+  app.use('/api', sitEventRoutes)
+  app.use('/api', sitCycleRoutes)
   app.listen(port,'130.37.53.25');
   console.log('Server running!!');
 });
