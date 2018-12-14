@@ -10,8 +10,7 @@ router.get('/', function (req, res) {
 
 var sitCycleController = require('../controllers/sitcycle.controller');
 // Contact routes
-router.route('/sitcycle')
-    .get(sitCycleController.getallsitcycledata)
-    .post(sitCycleController.newsitcycle);
-// Export API routes
+router.route('/sitcycle/:date/:hour?/:min?')
+    .get(sitCycleController.getallsitcycledata);
+    // Export API routes
 module.exports = router;

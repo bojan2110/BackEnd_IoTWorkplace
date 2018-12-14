@@ -1,34 +1,36 @@
 SitCycleEntry = require('../models/sitcycle.model');
 // Handle index actions
 exports.getallsitcycledata = function (req, res) {
-    SitCycleEntry.get(function (err, sitcycledata) {
+
+    var date=req.params.date;
+    var hour=req.params.hour;
+    var min=req.params.min;
+    console.log(hour)
+    console.log(min)
+    //{'date':date, 'hour':{ $lte: hour}, 'minute': {$lte: min}}
+    SitCycleEntry.find({$or:[{'date':date,'hour':{ $lte: hour},'minute': {$lte: min}},{'date':date,'hour':{ $lt: hour}}]},
+    function (err, messagesdata) {
         if (err) {
             res.json({
                 status: "error",
                 message: err,
             });
         }
-        res.json({
-            status: "success",
-            message: "Sit Event data retrieved successfully",
-            data: sitcycledata
-        });
-    });
-};
-// Handle create contact actions
-exports.newsitcycle = function (req, res) {
-    var sitcycleentry = new SitCycleEntry();
-    sitcycleentry.userid = req.body.userid;
-    sitcycleentry.date=req.body.date;
-    sitcycleentry.time=req.body.time;
+        // return array (messagesData) is empty
+        if (!messagesdata.length) {
+          res.json({
+              status: "success",
+              numcycles: 0
+          });
+        }
 
-// save the contact and check for errors
-    sitcycleentry.save(function (err) {
-        // if (err)
-        //     res.json(err);
-res.json({
-            message: 'New Sit Cycle Entry Created!',
-            data: sitcycleentry
-        });
+        else{
+          console.log(messagesdata)
+          res.json({
+              status: "success",
+              cycle_events: messagesdata,
+              numcycles:messagesdata.length
+          });
+      }
     });
 };

@@ -6,7 +6,8 @@ var sitCycleSchema = mongoose.Schema({
         required: true
     },
     date: String,
-    time: String
+    hour: Number,
+    minute: Number
 });
 // Export Contact model
 var SitCycle = module.exports = mongoose.model('sitcycle', sitCycleSchema);
