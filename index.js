@@ -35,8 +35,11 @@ var db=mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
   console.log("h");
+  //local: 3005	
   var port = 3000;
-  // Send message for default URL 
+  //local: 127.0.0.1	
+  var address='130.37.53.25'; 
+ // Send message for default URL 
   app.get('/', (req, res) => res.send('Hello World with Express and Node and mongo'));
   // Launch app to listen to specified port
   // Use Api routes in the App
@@ -46,7 +49,7 @@ db.once('open', function callback () {
   app.use('/api', stepsRoutes)
   app.use('/api', sitEventRoutes)
   app.use('/api', sitCycleRoutes)
-  app.listen(port,'130.37.53.25');
+  app.listen(port,address);
   console.log('Server running!!');
 });
 
