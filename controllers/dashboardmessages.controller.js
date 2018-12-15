@@ -26,12 +26,10 @@ exports.getmessages = function (req, res) {
     }
     //specific message type is required
     else {
-
-      //
       if (typeof messageid !== 'undefined')
       {
 
-        MessagesEntry.findById(messageid, function (err, messagesdata) {
+        MessagesEntry.find({'_id':messageid,'type':messagetype}, function (err, messagesdata) {
 
             if (err) {
                 res.json({
@@ -39,10 +37,13 @@ exports.getmessages = function (req, res) {
                     message: err,
                 });
             }
-            // // return array (messagesData) is empty
-            // if (!messagesdata.length) {
-            //   res.sendStatus(404);
-            // }
+            // return array (messagesData) is empty
+            if (!messagesdata.length) {
+                res.json({
+                          status: "success",
+                          message: "not the right ID for '" + messagetype + "'   message type",
+                });
+            }
 
             else{
               console.log(messagesdata)

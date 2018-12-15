@@ -1,11 +1,19 @@
 StepsEntry = require('../models/steps.model');
 // Handle index actions
 exports.getstepsbydate = function (req, res) {
+
   var date=req.params.date;
   var hour=req.params.hour;
   var min=req.params.min;
 
-    StepsEntry.find({$or:[{'date':date,'hour':{ $lte: hour},'minute': {$lte: min}},{'date':date,'hour':{ $lt: hour}}]},
+  var findquery={}
+  if (typeof hour == 'undefined')
+    findquery={'date':date}
+  else
+     findquery={$or:[{'date':date,'hour':{ $lte: hour},'minute': {$lte: min}},{'date':date,'hour':{ $lt: hour}}]}
+
+
+    StepsEntry.find(findquery,
     function (err, messagesdata) {
         if (err) {
             res.json({
@@ -22,9 +30,6 @@ exports.getstepsbydate = function (req, res) {
         }
 
         else{
-          // sortedarray=messagesdata.sort(function(a, b) {
-          //     return parseFloat(a.hour) - parseFloat(b.hour) || parseFloat(a.minute) - parseFloat(b.minute);
-          // });
           totalSteps=0
           for (i = 0; i < messagesdata.length; i++) {  //loop through the array
               totalSteps += messagesdata[i].numsteps;  //Do the math!
