@@ -25,7 +25,7 @@ exports.getstepsbydate = function (req, res) {
         if (!messagesdata.length) {
           res.json({
               status: "success",
-              numcycles: 0
+              steps: 0
           });
         }
 
