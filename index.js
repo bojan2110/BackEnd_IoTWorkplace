@@ -31,18 +31,21 @@ app.use(bodyParser.json());
 mongoose.connect('admin:bombona@mongodb://localhost:27017/resthub', { useNewUrlParser: true });
 
 
-var db=mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
-  console.log("h");
-  //local: 3005	
-  var port = 3000;
-  //local: 127.0.0.1	
-  var address='130.37.53.25'; 
+  var db=mongoose.connection;
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function callback () {
+  console.log("Start Server node js");
+//local: 3005	
+  var port = 80;
+  //local: 127.0.0.1, remote/VM: 130.37.53.25	
+  var address='health-iot.labs.vu.nl'; 
  // Send message for default URL 
-  app.get('/', (req, res) => res.send('Hello World with Express and Node and mongo'));
-  // Launch app to listen to specified port
-  // Use Api routes in the App
+  app.get('/',function(req,res){
+     res.sendFile(__dirname + '/landingpage/index.html');
+  });
+  // Launch the website
+  app.use(express.static(__dirname + '/landingpage')); 
+ // Use Api routes
   app.use('/api', bluetoothRoutes)
   app.use('/api', microphoneRoutes)
   app.use('/api', messagesRoutes)
