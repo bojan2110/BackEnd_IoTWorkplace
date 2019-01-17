@@ -35,16 +35,16 @@ mongoose.connect('admin:bombona@mongodb://localhost:27017/resthub', { useNewUrlP
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function callback () {
   console.log("Start Server node js");
-//local: 3005	
+//local: 3005	, remote : 80
   var port = 80;
-  //local: 127.0.0.1, remote/VM: 130.37.53.25	
-  var address='health-iot.labs.vu.nl'; 
- // Send message for default URL 
+  //local: 127.0.0.1, remote/VM: 130.37.53.25 or health-iot.labs.vu.nl
+  var address='health-iot.labs.vu.nl';
+ // Send message for default URL
   app.get('/',function(req,res){
      res.sendFile(__dirname + '/landingpage/index.html');
   });
   // Launch the website
-  app.use(express.static(__dirname + '/landingpage')); 
+  app.use(express.static(__dirname + '/landingpage'));
  // Use Api routes
   app.use('/api', bluetoothRoutes)
   app.use('/api', microphoneRoutes)
