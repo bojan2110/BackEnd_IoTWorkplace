@@ -46,7 +46,8 @@ router.post('/backgroundpictures/post', upload.single('backgroundImage'), (req, 
   const dashboardBackground = new DashboardBackground({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
-    backgroundImage: req.file.path
+    backgroundImage: req.file.path,
+    category: req.body.category
   });
 
   dashboardBackground
