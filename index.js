@@ -1,12 +1,8 @@
-// index.js:wq
-
 // Import express
 let express = require('express')
 // Initialize the app
 let app = express();
-
 // Import Body parser
-
 let bodyParser = require('body-parser');
 // Import Mongoose
 let mongoose = require('mongoose');
@@ -17,14 +13,14 @@ let messagesRoutes = require("./routes/dashboardmessages.route");
 let stepsRoutes = require("./routes/steps.route");
 let sitEventRoutes = require("./routes/sittingevent.route");
 let sitCycleRoutes = require("./routes/sitcycle.route");
-
+let dashboardBackgroundRoutes = require("./routes/dashboardbackground.route");
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: false
 }));
 
 app.use(bodyParser.json());
-
+app.use('backgroundpictures', express.static('backgroundpictures'));
 
 // Connect to Mongoose and set connection variable
 // database name is resthub in this case
@@ -52,6 +48,7 @@ mongoose.connect('admin:bombona@mongodb://localhost:27017/resthub', { useNewUrlP
   app.use('/api', stepsRoutes)
   app.use('/api', sitEventRoutes)
   app.use('/api', sitCycleRoutes)
+  app.use('/api', dashboardBackgroundRoutes)
   app.listen(port,address);
   console.log('Server running!!');
 });
