@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
-app.use('backgroundpictures', express.static('backgroundpictures'));
+app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
 
 // Connect to Mongoose and set connection variable
 // database name is resthub in this case
