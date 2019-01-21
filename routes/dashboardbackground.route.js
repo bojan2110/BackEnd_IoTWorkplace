@@ -8,7 +8,8 @@ const DashboardBackground = require('../models/dashboardbackground.model');
 
 // BackgroundImages routes
 router.route('/backgroundpictures/allrandom').get(dashboardBackgroundController.allrandom);
-router.route('/backgroundpictures/categoryrandom/:category').get(dashboardBackgroundController.categoryrandom);
+router.route('/backgroundpictures/uploadpic').post(dashboardBackgroundController.uploadpic);
+// router.route('/backgroundpictures/categoryrandom/:category').get(dashboardBackgroundController.categoryrandom);
 // router.route('/background/post').post([dashboardBackgroundController.uploadimage,dashboardBackgroundController.newdashboardbackground]);
 
 const storage = multer.diskStorage({
@@ -31,47 +32,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 //max 2GB files - change if necessary
-const upload=multer({storage:storage,
-   limits: {
-   fileSize: 1024 * 1024 * 1024
-  },
-  fileFilter:fileFilter
-});
+const upload=multer({storage:storage,limits: {fileSize: 1024 * 1024 * 1024},fileFilter:fileFilter});
 
-
-
-// decouple similar to above when you know how
-router.post('/backgroundpictures/post', upload.single('backgroundImage'), (req, res, next) => {
-
-  const dashboardBackground = new DashboardBackground({
-    _id: new mongoose.Types.ObjectId(),
-    name: req.body.name,
-    backgroundImage: req.file.path,
-    category: req.body.category
-  });
-
-  dashboardBackground
-    .save()
-    .then(result => {
-      console.log(result);
-      res.status(201).json({
-        message: "Created background image successfully",
-        backgroundImage: {
-            name: result.name,
-            _id: result._id,
-            request: {
-                type: 'GET',
-                url: "http://127.0.0.1:3005/api/backgroundpictures/" + result._id
-            }
-        }
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json({
-        error: err
-      });
-    });
-});
 // Export API routes
 module.exports = router;

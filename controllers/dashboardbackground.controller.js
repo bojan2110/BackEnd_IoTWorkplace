@@ -1,9 +1,25 @@
 DashboardBackground = require('../models/dashboardbackground.model');
 const multer=require('multer');
-// const upload=multer({dest:'backgroundpictures/'});
-
 const mongoose = require("mongoose");
-// var upload = multer({dest:'backgroundpictures/'}).single('backgroundImage')
+const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    cb(null, './backgroundpictures/');
+  },
+  filename: function(req, file, cb) {
+    cb(null,  file.originalname);
+  }
+});
+//accept specific file types
+const fileFilter = (req, file, cb) => {
+  // reject a file
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(new Error('Only jpeg and png supported.'), false);
+  }
+};
+
+var upload = multer({dest:'backgroundpictures/',storage:storage,limits: {fileSize: 1024 * 1024 * 1024},fileFilter:fileFilter}).single('backgroundImage')
 
 exports.allrandom = function (req, res) {
 
@@ -30,80 +46,65 @@ exports.allrandom = function (req, res) {
 };
 
 
-// DashboardBackground.find()
-//     .select("name _id backgroundImage")
-//     .exec()
-//     .then(docs => {
-//       const response = {
-//         count: docs.length,
-//         images: docs.map(doc => {
-//           return {
-//             name: doc.name,
-//             backgroundImage: doc.backgroundImage,
-//             _id: doc._id,
-//             request: {
-//               type: "GET",
-//               url: "http://127.0.0.1:3005/api/backgroundpictures/" + doc._id
-//             }
-//           };
-//         })
-//       };
-//       //   if (docs.length >= 0) {
-//       res.status(200).json(response);
-//       //   } else {
-//       //       res.status(404).json({
-//       //           message: 'No entries found'
-//       //       });
-//       //   }
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       res.status(500).json({
-//         error: err
-//       });
-//     });
 
-
-
-
-exports.categoryrandom = function (req, res) {
-
-  const id = req.params.category;
-
-    DashboardBackground.find({'category':category})
-      .select('name _id backgroundImage')
-      .exec()
-      .then(
-        function (docs) {
-          // use doc
-          var doc = docs[Math.floor(Math.random() * docs.length)];
-          res.json({
-                        name: doc.name,
-                        filePath: doc.backgroundImage,
-                        _id: doc._id
-          });
+exports.uploadpic=function (req, res) {
+    upload(req,res,function(err){
+        if(err)
+        {
+          return res.end("Error uploading");
         }
+        //file is uploaded
+        const dashboardBackground = new DashboardBackground({
+          _id: new mongoose.Types.ObjectId(),
+          name: req.body.name,
+          backgroundImage: req.file.path,
+          category: req.body.category
+        });
 
-      )
-      .catch(err => {
-        console.log(err);
-        res.status(500).json({ error: err });
-      });
+        dashboardBackground.save().
+        then(result => {
+          console.log(result);
+          res.status(201).json({
+            message: "Created background image successfully",
+            backgroundImage: {
+                name: result.name,
+                _id: result._id,
+                category:result.category
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(500).json({
+            error: err
+          });
+        });
+
+    });
 };
 
-// doc => {
-//   console.log("From database", doc);
-//   if (doc) {
-//     res.status(200).json({
-//         image: doc,
-//         request: {
-//             type: 'GET',
-//             url: 'http://127.0.0.1:3005/api/backgroundpictures'
+
+// exports.categoryrandom = function (req, res) {
+//
+//   const id = req.params.category;
+//
+//     DashboardBackground.find({'category':category})
+//       .select('name _id backgroundImage')
+//       .exec()
+//       .then(
+//         function (docs) {
+//           // use doc
+//           var doc = docs[Math.floor(Math.random() * docs.length)];
+//           res.json({
+//                         name: doc.name,
+//                         filePath: doc.backgroundImage,
+//                         _id: doc._id
+//           });
 //         }
-//     });
-//   } else {
-//     res
-//       .status(404)
-//       .json({ message: "No valid entry found for provided ID" });
-//   }
-// }
+//
+//       )
+//       .catch(err => {
+//         console.log(err);
+//         res.status(500).json({ error: err });
+//       });
+// };
