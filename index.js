@@ -14,6 +14,8 @@ let stepsRoutes = require("./routes/steps.route");
 let sitEventRoutes = require("./routes/sittingevent.route");
 let sitCycleRoutes = require("./routes/sitcycle.route");
 let dashboardBackgroundRoutes = require("./routes/dashboardbackground.route");
+mongoose.set('debug', true)
+let activityTimeSeriesRoutes=require("./routes/activity_time_series.route");
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
     extended: false
@@ -49,6 +51,7 @@ mongoose.connect('admin:bombona@mongodb://localhost:27017/resthub', { useNewUrlP
   app.use('/api', sitEventRoutes)
   app.use('/api', sitCycleRoutes)
   app.use('/api', dashboardBackgroundRoutes)
+  app.use('/api', activityTimeSeriesRoutes)
   app.listen(port,address);
   console.log('Server running!!');
 });

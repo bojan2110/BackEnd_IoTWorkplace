@@ -1,20 +1,13 @@
 var mongoose = require('mongoose');
 // Setup schema
-var sittingEventSchema = mongoose.Schema({
-    userid: {
-        type: Number,
-        required: true
-    },
-    sit: {
-        type: Boolean,
-        required: true
-    },
-    date: String,
-    hour: Number,
-    minute: Number
+var sitEventSchema = mongoose.Schema({
+    userid: { type: Number, required: true},
+    date : { type: String, required: true },
+    sit: {  type: Number,required: true}
 });
 // Export Contact model
-var SittingEvent = module.exports = mongoose.model('sittingevent', sittingEventSchema);
+//sits - corresponds to the database name in MongoDB
+var Sit = module.exports = mongoose.model('sits', sitEventSchema);
 module.exports.get = function (callback, limit) {
-    SittingEvent.find(callback).limit(limit);
-  }
+    Sit.find(callback).limit(limit);
+}
