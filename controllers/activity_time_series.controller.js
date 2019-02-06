@@ -31,13 +31,16 @@ exports.getActivityTimeSeries = function (req, res) {
                 });
             }
             else{
+                console.log(stepsdata)
                 var totalSteps=parseInt(stepsdata[0].steps/8)
-
+                
                 var jsonArr = [];
 
                 for (var i=0;i<=23;i++)
                 {
                     var num=(Math.random()*2+0).toFixed(1);
+                    if([0,1,2, 3, 4,5,6,7,19,20,21,22,23].includes(i))
+                        num=0
                     jsonArr.push({
                         startinterval: i,
                         endinterval: i+1,
