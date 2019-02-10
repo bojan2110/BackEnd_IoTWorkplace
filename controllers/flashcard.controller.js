@@ -30,20 +30,11 @@ exports.getFlashcard = function (req, res) {
 
             else{
               console.log(cardsdata)
-              if(flashcard==4){
-                res.json({
-                    status: "success",
-                    flashcard_data: cardsdata,
-                    goal: 500,
-                    goalid: 0
-                });
-              }
-              else{
               res.json({
                   status: "success",
                   flashcard_data: cardsdata
               });
-            }
+            // }
           }
         });
       }

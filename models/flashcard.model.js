@@ -6,7 +6,9 @@ var flashCardSchema = mongoose.Schema({
     message: {
         type: String,
         required: true
-    }
+    },
+    goal: {type: Number},
+    goalid: {type: Number}
 
 });
 // Export Contact model
