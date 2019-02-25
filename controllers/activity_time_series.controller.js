@@ -7,19 +7,15 @@ exports.getActivityTimeSeries = function (req, res) {
   var enddate=req.params.enddate.toString();
   console.log(startdate);
   console.log(enddate);
-  //
+
   var findquery={
     "userid":userid ,
     "date": {"$gte": startdate,"$lte":enddate}
   }
-  // var findquery={
-  //   "userid":userid
-  // }
+
  console.log(findquery);  //get one day data - per hour
 
   if (startdate ===  enddate){
-
-
     if(activity === "steps"){
         Steps = require('../models/steps.model');
         Steps.find(findquery,
@@ -33,9 +29,7 @@ exports.getActivityTimeSeries = function (req, res) {
             else{
                 console.log(stepsdata)
                 var totalSteps=parseInt(stepsdata[0].steps/8)
-                
                 var jsonArr = [];
-
                 for (var i=0;i<=23;i++)
                 {
                     var num=(Math.random()*2+0).toFixed(1);
@@ -46,9 +40,7 @@ exports.getActivityTimeSeries = function (req, res) {
                         endinterval: i+1,
                         steps: parseInt(num*totalSteps)
                     });
-
                 }
-
                 res.json({
                     status: "success",
                     total_steps: stepsdata[0].steps,
@@ -75,6 +67,8 @@ exports.getActivityTimeSeries = function (req, res) {
                 for (var i=0;i<=23;i++)
                 {
                     var num=(Math.random()*2+0).toFixed(1);
+                    if([0,1,2, 3, 4,5,6,7,19,20,21,22,23].includes(i))
+                        num=0
                     jsonArr.push({
                         startinterval: i,
                         endinterval: i+1,
@@ -87,6 +81,58 @@ exports.getActivityTimeSeries = function (req, res) {
                     total_sit: sitdata[0].sit,
                     num: jsonArr
                 });
+            }
+        });
+      }
+      else if(activity === "cycles"){
+        SitCycle = require('../models/sitcycle.model');
+        SitCycle.find(findquery,
+        function (err, cycledata) {
+            if (err) {
+                res.json({
+                    status: "error",
+                    message: err,
+                });
+            }
+            else{
+                //get the number of cycles
+                var numCycles=cycledata[0].cycles
+
+                var countCycles=0;
+                var jsonArr = [];
+
+                for (var i=0;i<=23;i++)
+                {
+                  //will generate 1 or 0
+                    var cycleOrNo=(Math.random()>0.5)? 1 : 0;
+
+                    if([0,1,2, 3, 4,5,6,7,19,20,21,22,23].includes(i))
+                        cycleOrNo=0
+
+                    if(cycleOrNo==1)
+                      countCycles=countCycles+1
+
+                    console.log(cycleOrNo);
+                    console.log(countCycles);
+                    console.log(numCycles);
+
+                    if(countCycles>numCycles)
+                      cycleOrNo=0
+
+                    jsonArr.push({
+                        startinterval: i,
+                        endinterval: i+1,
+                        cycle: parseInt(cycleOrNo)
+                    });
+
+                }
+
+                res.json({
+                    status: "success",
+                    total_cycles: cycledata[0].sit,
+                    num: jsonArr
+                });
+
             }
         });
       }
@@ -117,9 +163,8 @@ exports.getActivityTimeSeries = function (req, res) {
                 });
             }
         });
-    }
+    }//end activity Steps
     else if(activity === "sit"){
-
       Sit = require('../models/sittingevent.model');
       Sit.find(findquery,
       function (err, sitdata) {
@@ -135,7 +180,6 @@ exports.getActivityTimeSeries = function (req, res) {
                   console.log(sitdata[i]);
                   totalSit += sitdata[i].sit;  //Do the math!
               }
-
               res.json({
                   status: "success",
                   total_sit: totalSit,
@@ -143,11 +187,31 @@ exports.getActivityTimeSeries = function (req, res) {
               });
           }
       });
-
-
-
-    }
-
+    }//end activity sitting
+    else if(activity === "cycles"){
+        SitCycle = require('../models/sitcycle.model');
+        SitCycle.find(findquery,
+        function (err, cycledata) {
+            if (err) {
+                res.json({
+                    status: "error",
+                    message: err,
+                });
+            }
+            else{
+                var totalCycles=0
+                for (var i = 0; i < cycledata.length; i++) {  //loop through the array
+                    console.log(cycledata[i]);
+                    totalCycles += cycledata[i].sit;  //Do the math!
+                }
+                res.json({
+                    status: "success",
+                    total_sit: totalCycles,
+                    returnArray: cycledata
+                });
+            }
+        });
+    }//end activity cycles
   }
 
   };

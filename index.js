@@ -15,8 +15,9 @@ let sitEventRoutes = require("./routes/sittingevent.route");
 let sitCycleRoutes = require("./routes/sitcycle.route");
 let dashboardBackgroundRoutes = require("./routes/dashboardbackground.route");
 let flashCardRoutes = require("./routes/flashcard.route");
-mongoose.set('debug', true)
 let activityTimeSeriesRoutes=require("./routes/activity_time_series.route");
+
+mongoose.set('debug', true)
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
     extended: false
