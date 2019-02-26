@@ -16,6 +16,7 @@ let sitCycleRoutes = require("./routes/sitcycle.route");
 let dashboardBackgroundRoutes = require("./routes/dashboardbackground.route");
 let flashCardRoutes = require("./routes/flashcard.route");
 let activityTimeSeriesRoutes=require("./routes/activity_time_series.route");
+let userRoutes=require("./routes/user.route");
 
 mongoose.set('debug', true)
 // Configure bodyparser to handle post requests
@@ -55,6 +56,7 @@ mongoose.connect('admin:bombona@mongodb://localhost:27017/resthub', { useNewUrlP
   app.use('/api', dashboardBackgroundRoutes)
   app.use('/api', activityTimeSeriesRoutes)
   app.use('/api', flashCardRoutes)
+  app.use('/api', userRoutes)
 
   app.listen(port,address);
   console.log('Server running!!');
