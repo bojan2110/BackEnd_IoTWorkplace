@@ -18,6 +18,7 @@ let flashCardRoutes = require("./routes/flashcard.route");
 let activityTimeSeriesRoutes=require("./routes/activity_time_series.route");
 let userRoutes=require("./routes/user.route");
 
+
 mongoose.set('debug', true)
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
