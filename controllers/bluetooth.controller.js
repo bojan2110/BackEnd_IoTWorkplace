@@ -17,19 +17,28 @@ exports.index = function (req, res) {
 };
 // Handle create contact actions
 exports.new = function (req, res) {
+
+  var data = []
+  for(const bt of req.body){
+
     var btentry = new BluetoothEntry();
-    btentry.deviceName = req.body.deviceName ? req.body.deviceName : btentry.deviceName;
-    btentry.rssi = req.body.rssi;
-    btentry.collectionTime=req.body.collectionTime;
-    btentry.create_date=req.body.create_date;
-  
-// save the contact and check for errors
-    btentry.save(function (err) {
-        // if (err)
-        //     res.json(err);
-res.json({
-            message: 'New Bluetooth Entry Created!',
-            data: btentry
+    btentry.deviceName = bt.deviceName
+    btentry.rssi = bt.rssi;
+    btentry.collectionTime=bt.collectionTime;
+    btentry.create_date=bt.create_date;
+    data.push(btentry)
+  }
+  //save the contact and check for errors
+  BluetoothEntry.insertMany(data,function (err) {
+      if (err)
+        {
+          res.json(err);
+        }
+        else{
+        res.json({
+            message: 'New Bluetooth Entry Created!'
         });
-    });
+      }
+  });
+
 };

@@ -10,17 +10,14 @@ var bluetoothEntrySchema = mongoose.Schema({
         required: true
     },
     collectionTime: {
-	type: Number,
-	required: true
-	},
-    create_date: {
-        type: Date,
-        default: Date.now
-    }
+	       type: Number,
+	        required: true
+	  }
 });
+
+bluetoothEntrySchema.set('timestamps', true);
 // Export Contact model
 var BluetoothEntry = module.exports = mongoose.model('bluetoothentry', bluetoothEntrySchema);
 module.exports.get = function (callback, limit) {
     BluetoothEntry.find(callback).limit(limit);
 }
-
