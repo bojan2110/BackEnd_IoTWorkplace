@@ -46,9 +46,7 @@ exports.new = function (req, res) {
             res.json(err);
           }
           else{
-          res.json({
-              message: 'New Microphone Entry Created!'
-          });
+            res.json([{success : "MIC Entries Inserted", status : 200}]);
         }
     });
 };
