@@ -8,12 +8,10 @@ var microphoneEntrySchema = mongoose.Schema({
     collectionTime: {
         type: Number,
         required: true
-        },
-    create_date: {
-        type: Date,
-        default: Date.now
-    }
+        }
 });
+
+microphoneEntrySchema.set('timestamps', true);
 // Export Contact model
 var MicrophoneEntry = module.exports = mongoose.model('microphoneentry', microphoneEntrySchema);
 module.exports.get = function (callback, limit) {
