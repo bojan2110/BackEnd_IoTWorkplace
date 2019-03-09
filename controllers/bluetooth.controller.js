@@ -35,10 +35,8 @@ exports.new = function (req, res) {
           res.json(err);
         }
         else{
-        res.json({
-            message: 'New Bluetooth Entry Created!'
-        });
-      }
+        res.json({success : "BT Entries Inserted", status : 200});
+        }
   });
 
 };
