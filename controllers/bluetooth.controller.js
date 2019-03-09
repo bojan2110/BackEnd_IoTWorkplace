@@ -35,7 +35,7 @@ exports.new = function (req, res) {
           res.json(err);
         }
         else{
-        res.json({success : "BT Entries Inserted", status : 200});
+        res.json([{success : "BT Entries Inserted", status : 200}]);
         }
   });
 
