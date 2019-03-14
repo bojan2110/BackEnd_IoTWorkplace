@@ -32,9 +32,11 @@ exports.new = function (req, res) {
     Activity.insertMany(data,function (err) {
         if (err)
           {
+            console.log(err)
             res.json(err);
           }
           else{
+            console.log('success : "Activity Entries Inserted", status : 200')
             res.json([{success : "Activity Entries Inserted", status : 200}]);
         }
     });
