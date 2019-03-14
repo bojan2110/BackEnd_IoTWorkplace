@@ -1,14 +1,16 @@
 var mongoose = require('mongoose');
 // Setup schema
 var microphoneEntrySchema = mongoose.Schema({
+    userid: {  type: Number,required: true},
     speakStatus: {
         type: Number,
         required: true
     },
     collectionTime: {
         type: Number,
-        required: true
-        }
+        required: true,
+        unique: true
+    }
 });
 
 microphoneEntrySchema.set('timestamps', true);

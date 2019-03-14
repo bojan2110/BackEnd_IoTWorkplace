@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 // Setup schema
 var bluetoothEntrySchema = mongoose.Schema({
+    userid: {  type: Number,required: true},
     deviceName: {
         type: String,
         required: true
@@ -11,7 +12,8 @@ var bluetoothEntrySchema = mongoose.Schema({
     },
     collectionTime: {
 	       type: Number,
-	        required: true
+	       required: true,
+         unique: true
 	  }
 });
 

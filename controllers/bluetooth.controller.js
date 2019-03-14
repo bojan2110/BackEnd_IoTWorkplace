@@ -22,10 +22,10 @@ exports.new = function (req, res) {
   for(const bt of req.body){
 
     var btentry = new BluetoothEntry();
+    btentry.userid = bt.userid
     btentry.deviceName = bt.deviceName
     btentry.rssi = bt.rssi;
     btentry.collectionTime=bt.collectionTime;
-    btentry.create_date=bt.create_date;
     data.push(btentry)
   }
   //save the contact and check for errors

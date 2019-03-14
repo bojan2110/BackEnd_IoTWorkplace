@@ -1,3 +1,5 @@
+// add timestamps in front of log messages
+require('console-stamp')(console, '[HH:MM:ss.l]');
 // Import express
 let express = require('express')
 // Initialize the app
@@ -6,6 +8,7 @@ let app = express();
 let bodyParser = require('body-parser');
 // Import Mongoose
 let mongoose = require('mongoose');
+
 //import routes
 let bluetoothRoutes = require("./routes/bluetooth.route");
 let microphoneRoutes = require("./routes/microphone.route");
@@ -17,7 +20,20 @@ let dashboardBackgroundRoutes = require("./routes/dashboardbackground.route");
 let flashCardRoutes = require("./routes/flashcard.route");
 let activityTimeSeriesRoutes=require("./routes/activity_time_series.route");
 let userRoutes=require("./routes/user.route");
+let stepRoutes=require("./routes/step.route");
+let activityRoutes=require("./routes/activity.route");
 
+//for google calendar calls
+const fs = require('fs');
+const readline = require('readline');
+const {google} = require('googleapis');
+const SCOPES = ['https://www.googleapis.com/auth/calendar'];
+var OAuth2 = google.auth.OAuth2;
+// var Session = require('express-session');
+// The file token.json stores the user's access and refresh tokens, and is
+// created automatically when the authorization flow completes for the first
+// time.
+const TOKEN_PATH = 'token.json';
 
 mongoose.set('debug', true)
 // Configure bodyparser to handle post requests
@@ -30,7 +46,7 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
 
 // Connect to Mongoose and set connection variable
 // database name is resthub in this case
-mongoose.connect('admin:bombona@mongodb://localhost:27017/resthub', { useNewUrlParser: true });
+  mongoose.connect('admin:bombona@mongodb://localhost:27017/resthub', { useNewUrlParser: true });
 
 
   var db=mongoose.connection;
@@ -41,9 +57,84 @@ mongoose.connect('admin:bombona@mongodb://localhost:27017/resthub', { useNewUrlP
   var port = 80;
   //local: 127.0.0.1, remote/VM: 130.37.53.25 or health-iot.labs.vu.nl
   var address='health-iot.labs.vu.nl';
+
+
+  // Load client secrets from a local file.
+  // fs.readFile('credentials.json', (err, content) => {
+  //   console.log('readFile')
+  //   if (err) return console.log('Error loading client secret file:', err);
+  //   // Authorize a client with credentials, then call the Google Calendar API.
+  //   authorize(JSON.parse(content), listEvents);
+  // });
+
+  /**
+   * Create an OAuth2 client with the given credentials, and then execute the
+   * given callback function.
+   * @param {Object} credentials The authorization client credentials.
+   * @param {function} callback The callback to call with the authorized client.
+   */
+  function authorize(credentials, callback) {
+    console.log('authorize')
+    // const {client_secret, client_id, redirect_uris} = credentials.installed;
+    const oAuth2Client = getOAuthClient();
+    // Check if we have previously stored a token.
+    fs.readFile(TOKEN_PATH, (err, token) => {
+      if (err) return getAccessToken(oAuth2Client, callback);
+      console.log(token)
+      oAuth2Client.setCredentials(JSON.parse(token));
+      callback(oAuth2Client);
+    });
+  }
+
+  /**
+   * Get and store new token after prompting for user authorization, and then
+   * execute the given callback with the authorized OAuth2 client.
+   * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
+   * @param {getEventsCallback} callback The callback for the authorized client.
+   */
+  function getAccessToken(oAuth2Client, callback) {
+    console.log('getAccessToken')
+    const authUrl = oAuth2Client.generateAuthUrl({
+      access_type: 'offline',
+      scope: SCOPES,
+    });
+    console.log('Authorize this app by visiting this url:', authUrl);
+  }
+
+  /**
+   * Lists the next 10 events on the user's primary calendar.
+   * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
+   */
+  function listEvents(auth) {
+    console.log('listEvents')
+    const calendar = google.calendar({version: 'v3', auth});
+    calendar.events.list({
+      calendarId: 'primary',
+      timeMin: (new Date()).toISOString(),
+      maxResults: 10,
+      singleEvents: true,
+      orderBy: 'startTime',
+    }, (err, res) => {
+      if (err) return console.log('The API returned an error: ' + err);
+      const events = res.data.items;
+      if (events.length) {
+        console.log('Upcoming 10 events:');
+        events.map((event, i) => {
+          const start = event.start.dateTime || event.start.date;
+          console.log(`${start} - ${event.summary}`);
+        });
+      } else {
+        console.log('No upcoming events found.');
+      }
+    });
+  }
+
  // Send message for default URL
   app.get('/',function(req,res){
      res.sendFile(__dirname + '/landingpage/index.html');
+     // var url = getAuthUrl();
+     // console.log(url);
+
   });
   // Launch the website
   app.use(express.static(__dirname + '/landingpage'));
@@ -58,9 +149,36 @@ mongoose.connect('admin:bombona@mongodb://localhost:27017/resthub', { useNewUrlP
   app.use('/api', activityTimeSeriesRoutes)
   app.use('/api', flashCardRoutes)
   app.use('/api', userRoutes)
-
+  app.use('/api', stepRoutes)
+  app.use('/api', activityRoutes)
   app.listen(port,address);
   console.log('Server running!!');
-});
 
-//////////
+});
+// //creates an oAuth client
+function getOAuthClient () {
+  console.log('getOAuthClient')
+    //clientid,client secret,redirect uri
+    return new OAuth2("394896214180-1lc9sc7uje9tnd3vf2ueos4fqh263mu5.apps.googleusercontent.com" ,  "5NmGemSAjbNRfhgpmybQR8vH", "http://localhost:3005/redirect");
+}
+
+app.use("/redirect", function (req, res) {
+  console.log('redirect')
+    var session = req.session;
+    var code = req.query.code; // the query param code
+    console.log('session ' + session)
+    console.log('code ' + code)
+    var oAuth2Client = getOAuthClient();
+    // console.log(oAuth2Client)
+    oAuth2Client.getToken(code, (err, token) => {
+      if (err) return console.error('Error retrieving access token', err);
+      oAuth2Client.setCredentials(token);
+      // Store the token to disk for later program executions
+      fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+        if (err) return console.error(err);
+        console.log('Token stored to', TOKEN_PATH);
+      });
+      callback(oAuth2Client);
+    });
+
+});
