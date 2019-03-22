@@ -37,7 +37,7 @@ exports.new = function (req, res) {
           }
           else{
             console.log('success : "Activity Entries Inserted", status : 200')
-            res.json([{success : "Activity Entries Inserted", status : 200}]);
+            res.json(data);
         }
     });
 };
