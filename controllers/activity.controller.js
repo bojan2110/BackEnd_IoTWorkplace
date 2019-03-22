@@ -23,8 +23,8 @@ exports.new = function (req, res) {
     for(const act of req.body){
       var actentry = new Activity();
       actentry.userid = act.userid;
-      actentry.activityType = actentry.activityType;
-      actentry.confidence = actentry.confidence;
+      actentry.activityType = act.activityType;
+      actentry.confidence = act.confidence;
       actentry.collectionTime=act.collectionTime;
       data.push(actentry)
     }
