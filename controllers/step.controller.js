@@ -24,7 +24,7 @@ exports.new = function (req, res) {
       var stepentry = new Step();
       stepentry.userid = step.userid;
       stepentry.dataSource = step.dataSource;
-      stepentry.collectionTime=stepentry.collectionTime;
+      stepentry.collectionTime=step.collectionTime;
       data.push(stepentry)
     }
     //save the contact and check for errors

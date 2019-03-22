@@ -1,8 +1,8 @@
 var mongoose = require('mongoose');
 // Setup schema
 var stepSchema = mongoose.Schema({
-    userid: {  type: Number,required: true},
-    dataSource: {  type: String,required: true},
+    userid: {type: Number,required: true},
+    dataSource: {type: String,required: true},
     collectionTime: {
         type: Number,
         required: true,
