@@ -35,7 +35,9 @@ exports.new = function (req, res) {
           res.json(err);
         }
         else{
-        res.json([{success : "BT Entries Inserted", status : 200}]);
+          var ts=data.map(a => a.collectionTime)
+          console.log('success : "BT Entries Inserted", status : 200')
+          res.json({message : "BT Entries Inserted", status : 200,timestamps:ts});
         }
   });
 

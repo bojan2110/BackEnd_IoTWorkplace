@@ -36,8 +36,15 @@ exports.new = function (req, res) {
             res.json(err);
           }
           else{
+            // TODO: check if its more efficient to send only the min and max timestamp of the collection
+            // then in the client side, we can generate all the possible timestamps in between and do the check in the file
+            // as it is now, we might end up sending big arrays? - Check this.
+
+            // var maxTS=Math.max.apply(Math, data.map(function(o) { return o.collectionTime; }))
+            // var minTS=Math.min.apply(Math, data.map(function(o) { return o.collectionTime; }))
+            var ts=data.map(a => a.collectionTime)
             console.log('success : "Activity Entries Inserted", status : 200')
-            res.json(data);
+            res.json({message : "Activity Entries Inserted", status : 200,timestamps:ts});
         }
     });
 };

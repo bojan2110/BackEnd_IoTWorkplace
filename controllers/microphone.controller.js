@@ -34,7 +34,9 @@ exports.new = function (req, res) {
             res.json(err);
           }
           else{
-            res.json([{success : "MIC Entries Inserted", status : 200}]);
+            var ts=data.map(a => a.collectionTime)
+            console.log('success : "MIC Entries Inserted", status : 200')
+            res.json({message : "MIC Entries Inserted", status : 200,timestamps:ts});
         }
     });
 };
