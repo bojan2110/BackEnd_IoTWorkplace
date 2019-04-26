@@ -26,6 +26,7 @@ exports.new = function (req, res) {
       stepentry.userid = step.userid;
       stepentry.dataSource = step.dataSource;
       stepentry.collectionTime=step.collectionTime;
+      stepentry.numSteps=step.numSteps;
       data.push(stepentry)
 
     }

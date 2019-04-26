@@ -3,13 +3,11 @@ var mongoose = require('mongoose');
 var stepSchema = mongoose.Schema({
     userid: {type: Number,required: true},
     dataSource: {type: String,required: true},
-    collectionTime: {
-        type: Number,
-        required: true,
-        unique: true
-    }
+    collectionTime: {type: Number, required: true, unique: true},
+    numSteps: {type: Number,required: true}
 
 });
+
 stepSchema.set('timestamps', true);
 
 var Step = module.exports = mongoose.model('db_steps', stepSchema);
