@@ -36,6 +36,8 @@ exports.new = function (req, res) {
     Step.insertMany(data,function (err) {
         if (err)
           {
+            console.log('step data error')
+            console.log(err)
             res.json(err);
           }
           else{
