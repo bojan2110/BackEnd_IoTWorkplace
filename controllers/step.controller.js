@@ -33,7 +33,7 @@ exports.new = function (req, res) {
     console.log(data)
 
     //save the contact and check for errors
-    Step.insert(data,function (err) {
+    Step.insertMany(data,function (err) {
         if (err)
           {
             console.log('step data error')
@@ -47,5 +47,5 @@ exports.new = function (req, res) {
             console.log('success : "Step Entries Inserted", status : 200')
             res.json({message : "Step Entries Inserted", status : 200,timestamps:ts});
         }
-    });
+    },{ ordered: false });
 };
