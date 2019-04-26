@@ -33,7 +33,7 @@ exports.new = function (req, res) {
     console.log(data)
 
     //save the contact and check for errors
-    Step.insertMany(data,function (err) {
+    Step.insert(data,function (err) {
         if (err)
           {
             console.log('step data error')
