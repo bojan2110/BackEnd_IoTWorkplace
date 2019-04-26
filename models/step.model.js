@@ -9,7 +9,7 @@ var stepSchema = mongoose.Schema({
 });
 
 stepSchema.set('timestamps', true);
-stepSchema.index({ collectionTime: 1}, { unique: true})
+stepSchema.index({ collectionTime: 1}, { unique: true,  sparse: true})
 
 var Step = module.exports = mongoose.model('db_steps', stepSchema);
 module.exports.get = function (callback, limit) {
