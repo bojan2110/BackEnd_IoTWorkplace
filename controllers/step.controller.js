@@ -28,10 +28,9 @@ exports.new = function (req, res) {
       stepentry.collectionTime=step.collectionTime;
       stepentry.numSteps=step.numSteps;
       data.push(stepentry)
-
     }
     //save the contact and check for errors
-    Step.insertMany(data,function (err) {
+    Step.updateMany(data,function (err) {
         if (err)
           {
             res.json(err);
@@ -41,5 +40,5 @@ exports.new = function (req, res) {
             console.log('success : "Step Entries Inserted", status : 200')
             res.json({message : "Step Entries Inserted", status : 200,timestamps:ts});
         }
-    });
+    },{upsert:true});
 };
