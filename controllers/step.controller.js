@@ -47,5 +47,5 @@ exports.new = function (req, res) {
             console.log('success : "Step Entries Inserted", status : 200')
             res.json({message : "Step Entries Inserted", status : 200,timestamps:ts});
         }
-    },{ ordered: false });
+    });
 };
