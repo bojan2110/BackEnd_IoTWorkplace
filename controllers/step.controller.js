@@ -37,13 +37,13 @@ exports.new = function (req, res) {
         if (err)
           {
 
-            var duplicates=err.writeErrors;
+            var duplicates=JSON.stringify(err.writeErrors,undefined,2);
             console.log(duplicates)
             var duplicates_ts=duplicates.map(function (el) { return el.collectionTime; });
             var all_ts=data.map(a => a.collectionTime)
             // console.log(all_ts)
             var clear = duplicates_ts.filter(function(obj) { return all_ts.indexOf(obj) < 0; });
-          
+
             console.log( duplicates_ts)
 
             console.log(duplicates_ts.length)
