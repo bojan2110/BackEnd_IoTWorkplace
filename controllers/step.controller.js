@@ -44,7 +44,9 @@ exports.new = function (req, res) {
             // console.log(all_ts)
             var clear = duplicates_ts.filter(function(obj) { return all_ts.indexOf(obj) < 0; });
             console.log(typeof duplicates_ts)
+            console.log( duplicates_ts)
             console.log(typeof all_ts)
+            console.log( all_ts)
             console.log(duplicates_ts.length)
             console.log(all_ts.length)
             console.log(clear.length)
