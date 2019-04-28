@@ -38,6 +38,8 @@ exports.new = function (req, res) {
           {
 
             console.log(JSON.stringify(err.writeErrors,undefined,2));
+            console.log(JSON.stringify(err.result,undefined,2));
+            console.log(JSON.stringify(err.result.insertedIds));
             res.json(err);
           }
           else{
