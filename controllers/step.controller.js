@@ -36,22 +36,23 @@ exports.new = function (req, res) {
     Step.insertMany(data,{ ordered: false },function (err) {
         if (err)
           {
-            console.log(err)
-            var duplicates=JSON.parse(JSON.stringify(err.writeErrors,undefined,2));
-            var duplicates_ts=duplicates.map(function (el) { return el.op.collectionTime; });
-            var input_ts=data.map(a => a.collectionTime)
-            var new_ts = input_ts.filter(function(obj) { return duplicates_ts.indexOf(obj) == -1; });
+            if(err.name === 'BulkWriteError')
+            {
+              var duplicates=JSON.parse(JSON.stringify(err.writeErrors,undefined,2));
+              var duplicates_ts=duplicates.map(function (el) { return el.op.collectionTime; });
+              var input_ts=data.map(a => a.collectionTime)
+              var new_ts = input_ts.filter(function(obj) { return duplicates_ts.indexOf(obj) == -1; });
 
-            console.log(duplicates_ts.length)
-            console.log(input_ts.length)
-            console.log(new_ts.length)
+              console.log(duplicates_ts.length)
+              console.log(input_ts.length)
+              console.log(new_ts.length)
 
-            res.json({message : "Some Step Entries Inserted", status : 200,timestamps:ts});
-            // console.log(JSON.stringify(err.result,undefined,2));
-            // console.log(JSON.stringify(err.result.insertedIds));
-            //
-            // console.log(ts);
-            res.json(err);
+              res.json({message : "Some Step Entries Inserted", status : 200,timestamps:ts});
+            
+            }
+            else{
+              res.json(err);
+            }
           }
           else{
             console.log('step data inserted')
