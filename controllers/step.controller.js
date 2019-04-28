@@ -47,8 +47,8 @@ exports.new = function (req, res) {
               console.log(input_ts.length)
               console.log(new_ts.length)
 
-              res.json({message : "Some Step Entries Inserted", status : 200,timestamps:ts});
-            
+              res.json({message : "Some Step Entries Inserted", status : 200,timestamps:new_ts});
+
             }
             else{
               res.json(err);
