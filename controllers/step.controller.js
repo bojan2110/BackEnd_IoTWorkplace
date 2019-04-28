@@ -37,9 +37,17 @@ exports.new = function (req, res) {
         if (err)
           {
 
-            console.log(JSON.stringify(err.writeErrors,undefined,2));
-            console.log(JSON.stringify(err.result,undefined,2));
-            console.log(JSON.stringify(err.result.insertedIds));
+            var duplicates=JSON.stringify(err.writeErrors,undefined,2);
+            var duplicates_ts=duplicates.map(function (el) { return el.name; });
+            var all_ts=data.map(a => a.collectionTime)
+            var res = duplicates_ts.filter( function(n) { return !this.has(n) }, new Set(all_ts) );
+            console.log(duplicates_ts.length)
+            console.log(all_ts.length)
+            console.log(res.length)
+            // console.log(JSON.stringify(err.result,undefined,2));
+            // console.log(JSON.stringify(err.result.insertedIds));
+            //
+            // console.log(ts);
             res.json(err);
           }
           else{
