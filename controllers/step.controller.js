@@ -37,11 +37,12 @@ exports.new = function (req, res) {
         if (err)
           {
 
-            var duplicates=err.writeErrors;
+            var duplicates=JSON.stringify(err.writeErrors,undefined,2);
 
-            // console.log(typeof JSON.parse(err.writeErrors));
+
             // console.log(duplicates)
-            var duplicates_ts=duplicates.map(function (el) { return el.collectionTime; });
+            console.log(typeof data)
+            // var duplicates_ts=duplicates.map(function (el) { return el.collectionTime; });
             var all_ts=data.map(a => a.collectionTime)
             // console.log(all_ts)
             var res = duplicates_ts.filter( function(n) { return !this.has(n) }, new Set(all_ts) );
