@@ -38,17 +38,15 @@ exports.new = function (req, res) {
           {
 
             var duplicates=JSON.parse(JSON.stringify(err.writeErrors,undefined,2));
-
             var duplicates_ts=duplicates.map(function (el) { return el.op.collectionTime; });
-            var all_ts=data.map(a => a.collectionTime)
-            // console.log(all_ts)
-            var clear = duplicates_ts.filter(function(obj) { return all_ts.indexOf(obj) == -1; });
 
-            console.log( duplicates_ts)
+            var input_ts=data.map(a => a.collectionTime)
+
+            var new_ts = input_ts.filter(function(obj) { return duplicates_ts.indexOf(obj) == -1; });
 
             console.log(duplicates_ts.length)
-            console.log(all_ts.length)
-            console.log(clear.length)
+            console.log(input_ts.length)
+            console.log(new_ts.length)
             // console.log(JSON.stringify(err.result,undefined,2));
             // console.log(JSON.stringify(err.result.insertedIds));
             //
