@@ -43,6 +43,8 @@ exports.new = function (req, res) {
             var all_ts=data.map(a => a.collectionTime)
             // console.log(all_ts)
             var clear = duplicates_ts.filter(function(obj) { return all_ts.indexOf(obj) < 0; });
+            console(typeof duplicates_ts)
+            console(typeof all_ts)
             console.log(duplicates_ts.length)
             console.log(all_ts.length)
             console.log(clear.length)
