@@ -39,7 +39,7 @@ exports.new = function (req, res) {
 
             var duplicates=JSON.stringify(err.writeErrors,undefined,2);
 
-            console.log(typeof err.writeErrors);
+            console.log(typeof JSON.parse(err.writeErrors));
             // console.log(duplicates)
             // var duplicates_ts=duplicates.map(function (el) { return el.collectionTime; });
             var all_ts=data.map(a => a.collectionTime)
