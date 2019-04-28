@@ -37,7 +37,7 @@ exports.new = function (req, res) {
         if (err)
           {
 
-            console.log(JSON.stringify(err.getWriteErrors(),undefined,2));
+            console.log(JSON.stringify(err.writeErrors,undefined,2));
             res.json(err);
           }
           else{
