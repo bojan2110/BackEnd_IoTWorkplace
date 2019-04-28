@@ -38,11 +38,11 @@ exports.new = function (req, res) {
           {
 
             var duplicates=JSON.parse(JSON.stringify(err.writeErrors,undefined,2));
-            console.log(typeof duplicates)
+
             var duplicates_ts=duplicates.map(function (el) { return el.op.collectionTime; });
             var all_ts=data.map(a => a.collectionTime)
             // console.log(all_ts)
-            var clear = duplicates_ts.filter(function(obj) { return all_ts.indexOf(obj) < 0; });
+            var clear = duplicates_ts.filter(function(obj) { return all_ts.indexOf(obj) == -1; });
 
             console.log( duplicates_ts)
 
