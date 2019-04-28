@@ -42,7 +42,7 @@ exports.new = function (req, res) {
             var duplicates_ts=duplicates.map(function (el) { return el.collectionTime; });
             var all_ts=data.map(a => a.collectionTime)
             // console.log(all_ts)
-            var clear = all_ts.filter( function(n) { return !this.has(n) }, new Set(duplicates_ts) );
+            var clear = duplicates_ts.filter(function(obj) { return all_ts.indexOf(obj) == -1; });
             console.log(duplicates_ts.length)
             console.log(all_ts.length)
             console.log(clear.length)
