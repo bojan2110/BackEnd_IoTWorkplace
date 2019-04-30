@@ -46,7 +46,7 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
 
 // Connect to Mongoose and set connection variable
 // database name is resthub in this case
-  mongoose.connect('admin:bombona@mongodb://localhost:27017/resthub', { useNewUrlParser: true });
+  mongoose.connect('mongodb://localhost:27017/resthub', { useNewUrlParser: true });
 
 
   var db=mongoose.connection;
@@ -154,7 +154,9 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
   app.listen(port,address);
   console.log('Server running!!');
 
-});
+}); // db.open ends here
+
+
 // //creates an oAuth client
 function getOAuthClient () {
   console.log('getOAuthClient')
