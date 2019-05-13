@@ -46,18 +46,20 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
 
 // Connect to Mongoose and set connection variable
 // database name is resthub in this case
-  mongoose.connect('mongodb://localhost:27017/resthub', { useNewUrlParser: true });
+// we use authentication with user,pass. there are other options also available
+
+  //change to production to get production credentials
+  var env = 'production';
+  var config = require('./config')[env];
+
+  mongoose.connect('mongodb://'+config.database.user+':'+config.database.password+'@'+
+  config.database.host+':'+config.database.port+'/'+config.database.db, { useNewUrlParser: true });
 
 
   var db=mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function callback () {
   console.log("Start Server node js");
-//local: 3005	, remote : 80
-  var port = 80;
-  //local: 127.0.0.1, remote/VM: 130.37.53.25 or health-iot.labs.vu.nl
-  var address='health-iot.labs.vu.nl';
-
 
   // Load client secrets from a local file.
   // fs.readFile('credentials.json', (err, content) => {
@@ -151,7 +153,7 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
   app.use('/api', userRoutes)
   app.use('/api', stepRoutes)
   app.use('/api', activityRoutes)
-  app.listen(port,address);
+  app.listen(config.server.port,config.server.host);
   console.log('Server running!!');
 
 }); // db.open ends here
