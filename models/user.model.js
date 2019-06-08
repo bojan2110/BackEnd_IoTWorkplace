@@ -4,7 +4,7 @@ var userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    email: {
+    useremail: {
         type: String,
         required: true
     },
