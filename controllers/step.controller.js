@@ -23,6 +23,8 @@ exports.new = function (req, res) {
 
     for(const step of req.body){
       var stepentry = new Step();
+      console.log('userid')
+      console.log(step.userid)
       stepentry.userid = step.userid;
       stepentry.dataSource = step.dataSource;
       stepentry.collectionTime=step.collectionTime;
