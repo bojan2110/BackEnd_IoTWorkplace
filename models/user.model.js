@@ -1,10 +1,14 @@
 var mongoose = require('mongoose');
 var userSchema = mongoose.Schema({
-    userid: {
-        type: Number,
+    username: {
+        type: String,
         required: true
     },
-    username: {
+    email: {
+        type: String,
+        required: true
+    },
+    userid: {
         type: String,
         required: true
     },
@@ -12,15 +16,15 @@ var userSchema = mongoose.Schema({
     workdays: [{
                   day: {
                       type: String,
-                      required: true
+                      default: ''
                   },
                   starttime: {
                       type: String,
-                      required: true
+                      default: ''
                   },
                   endtime: {
                       type: String,
-                      required: true
+                      default: ''
                   }
               }]
 });
