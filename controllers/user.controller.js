@@ -29,14 +29,16 @@ exports.getUserInfo = function (req, res){
 
 //post(add) user method
 exports.addUserInfo = function (req, res){
+  console.log('adding new user')
+  console.log(req.body)
+
   var user = new User();
   user.userid = req.body.userid;
   user.username = req.body.username;
   user.email=req.body.email;
   user.location = req.body.location;
   user.workdays = req.body.workdays;
-  console.log('adding new user')
-  console.log(req.body)
+
 
 // save the contact and check for errors
   user.save(function (err) {
