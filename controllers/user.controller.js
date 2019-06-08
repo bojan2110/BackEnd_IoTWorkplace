@@ -32,6 +32,7 @@ exports.addUserInfo = function (req, res){
   var user = new User();
   user.userid = req.body.userid;
   user.username = req.body.username;
+  user.email=req.body.email;
   user.location = req.body.location;
   user.workdays = req.body.workdays;
   console.log('adding new user')
