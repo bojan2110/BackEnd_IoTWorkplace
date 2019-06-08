@@ -34,15 +34,25 @@ exports.addUserInfo = function (req, res){
   user.username = req.body.username;
   user.location = req.body.location;
   user.workdays = req.body.workdays;
+  console.log('adding new user')
+  console.log(req.body)
+
 // save the contact and check for errors
   user.save(function (err) {
       if (err)
-          res.json(err);
+          {
+            res.json(err);
+            console.log('error adding new user')
+            console.log(err)
+          }
       else
-      res.json({
-                message: 'New User Created!',
-                data: user
-            });
+      {
+        console.log('new user added')
+        res.json({
+                  message: 'New User Created!',
+                  data: user
+              });
+      }
   });
 };
 
