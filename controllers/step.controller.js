@@ -23,12 +23,14 @@ exports.new = function (req, res) {
 
     for(const step of req.body){
       var stepentry = new Step();
-      console.log('userid')
-      console.log(step.userid)
+
       stepentry.userid = step.userid;
       stepentry.dataSource = step.dataSource;
       stepentry.collectionTime=step.collectionTime;
       stepentry.numSteps=step.numSteps;
+      console.log('userid')
+      console.log(step.userid)
+      console.log(stepentry)
       data.push(stepentry)
     }
     console.log('step data sent')
