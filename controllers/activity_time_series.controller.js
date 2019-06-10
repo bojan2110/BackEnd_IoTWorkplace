@@ -1,11 +1,12 @@
 exports.testSteps=function (req, res) {
   Steps = require('../models/step.model');
   var userid=req.params.userid;
-  var timestamp=req.params.timestamp;
+  var startdate=req.params.startdate;
+  var enddate=req.params.enddate;
 
   var findquery={
     "userid":userid ,
-    "collectionTime": {"$lte":timestamp}
+    "collectionTime": {"$lte":enddate,"gte":startdate}
   }
 
   Steps.find(findquery,
