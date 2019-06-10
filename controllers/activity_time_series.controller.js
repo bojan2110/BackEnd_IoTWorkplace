@@ -1,3 +1,33 @@
+exports.testSteps=function (req, res) {
+  Steps = require('../models/steps.model');
+  var userid=req.params.userid;
+  var timestamp=req.params.timestamp;
+
+  var findquery={
+    "userid":userid ,
+    "date": {"$lte":timestamp}
+  }
+
+  Steps.find(findquery,
+  function (err, stepsdata) {
+      if (err) {
+          res.json({
+              status: "error",
+              message: err,
+          });
+      }
+      else{
+          console.log(stepsdata)
+          res.json({
+              status: "success",
+              steps: stepsdata
+          });
+      }
+  });
+};
+
+
+
 
 exports.getActivityTimeSeries = function (req, res) {
 
