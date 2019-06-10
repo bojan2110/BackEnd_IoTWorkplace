@@ -3,7 +3,8 @@ exports.testSteps=function (req, res) {
   var userid=req.params.userid;
   var startdate=req.params.startdate;
   var enddate=req.params.enddate;
-
+  console.log(startdate)
+  console.log(enddate)
   var findquery={
     "userid":userid ,
     "collectionTime": {"$lte":enddate,"gte":startdate}
