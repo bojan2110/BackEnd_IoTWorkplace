@@ -22,6 +22,7 @@ exports.testSteps=function (req, res) {
           console.log(stepsdata)
           var totalsteps=0
           for (var stepentry in stepsdata){
+              console.log(stepentry.numSteps)
               totalsteps+=stepentry.numSteps
           }
           var lastUpdate=stepsdata.reduce((max, p) => p.collectionTime > max ? p.collectionTime : max, stepsdata[0].collectionTime);
