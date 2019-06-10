@@ -20,9 +20,17 @@ exports.testSteps=function (req, res) {
       }
       else{
           console.log(stepsdata)
+          var totalsteps=0
+          for (var stepentry in stepsdata){
+              totalsteps+=stepentry.numSteps
+          }
+          var lastUpdate=stepsdata.reduce((max, p) => p.collectionTime > max ? p.collectionTime : max, stepsdata[0].collectionTime);
+
           res.json({
               status: "success",
-              steps: stepsdata
+              steps: stepsdata,
+              totalsteps:totalsteps,
+              lastupdate:lastUpdate
           });
       }
   });
