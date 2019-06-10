@@ -7,7 +7,7 @@ exports.testSteps=function (req, res) {
   console.log(enddate)
   var findquery={
     "userid":userid ,
-    "collectionTime": {"$lte":enddate,"gte":startdate}
+    "collectionTime": {"$lte":enddate,"$gte":startdate}
   }
 
   Steps.find(findquery,
