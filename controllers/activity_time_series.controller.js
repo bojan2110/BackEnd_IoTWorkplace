@@ -11,7 +11,8 @@ exports.testSteps=function (req, res) {
     "collectionTime": {"$lte":enddate,"$gte":startdate}
   }
 
-  console.log(findquery)
+
+  console.log('Querying the MongoDB with ',findquery)
 
   Steps.find(findquery,
   function (err, stepsdata) {
@@ -24,7 +25,17 @@ exports.testSteps=function (req, res) {
       }
       else
       {
-        if (typeof stepsdata !== 'undefined')
+        if ( stepsdata === 'undefined' || stepsdata.length == 0)
+        {
+          console.log('Stepsdata undefined ')
+          res.json({
+              status: "success",
+              steps: stepsdata,
+              totalsteps:0,
+              lastupdate:0
+          });
+        }
+        else
         {
           console.log('Reading the steps data ',stepsdata)
           var totalsteps=0
@@ -41,9 +52,7 @@ exports.testSteps=function (req, res) {
               lastupdate:lastUpdate
           });
         }
-        else{
-          console.log('Stepsdata undefined ')
-        }
+
 
 
       }
