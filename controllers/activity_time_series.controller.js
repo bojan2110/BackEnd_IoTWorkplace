@@ -5,21 +5,28 @@ exports.testSteps=function (req, res) {
   var enddate=req.params.enddate;
   console.log(startdate)
   console.log(enddate)
+
   var findquery={
     "userid":userid ,
     "collectionTime": {"$lte":enddate,"$gte":startdate}
   }
 
+  console.log(findquery)
+
   Steps.find(findquery,
   function (err, stepsdata) {
       if (err) {
+        console.log('Error reading steps ',err)
           res.json({
               status: "error",
               message: err,
           });
       }
-      else{
-          console.log(stepsdata)
+      else
+      {
+        if (typeof stepsdata !== 'undefined')
+        {
+          console.log('Reading the steps data ',stepsdata)
           var totalsteps=0
           for (stepentry in stepsdata){
               console.log(stepentry)
@@ -33,6 +40,12 @@ exports.testSteps=function (req, res) {
               totalsteps:totalsteps,
               lastupdate:lastUpdate
           });
+        }
+        else{
+          console.log('Stepsdata undefined ')
+        }
+
+
       }
   });
 };
