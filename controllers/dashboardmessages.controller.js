@@ -2,7 +2,7 @@
 MessagesEntry = require('../models/dashboardmessages.model.js');
 var mongoose = require('mongoose');
 
-exports.getmessages = function (req, res) {
+exports.test = function (req, res) {
   res.json({
       status: "success",
       message: "test success"
