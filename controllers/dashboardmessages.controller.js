@@ -1,6 +1,14 @@
 
 MessagesEntry = require('../models/dashboardmessages.model.js');
 var mongoose = require('mongoose');
+
+exports.getmessages = function (req, res) {
+  res.json({
+      status: "success",
+      message: "test success"
+  });
+
+}
 // Handle index actions
 exports.getmessages = function (req, res) {
     //type of messages to be obtained
