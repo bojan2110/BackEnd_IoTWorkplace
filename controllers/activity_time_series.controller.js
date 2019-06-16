@@ -46,12 +46,7 @@ exports.testSteps=function (req, res) {
 
           console.log('Reading the steps data ',stepsdata)
           var totalsteps=0
-          // var newArray = homes.filter(function (el) {
-          //   return el.price <= 1000 &&
-          //          el.sqft >= 500 &&
-          //          el.num_of_beds >=2 &&
-          //          el.num_of_baths >= 2.5;
-          // });
+
 
 
           for (stepentry in stepsdata){
@@ -78,6 +73,25 @@ exports.testSteps=function (req, res) {
 
 function calculateIntervals(start,end,stepsdata) {
   console.log('calculating intervals');
+  //create the intervals for this day, first restart the day
+  var day=moment.unix(start).startOf('day');
+  console.log('start of day',day);
+  var count=0;
+  from=day.unix();
+  //make it a timestamp again, and create the ranges
+  while(count<23)
+  {
+    to=from+3600;
+    console.log('from ',from)
+    console.log('to ',to)
+    var intervalData = stepsdata.filter(function (el) {
+      return el.collectionTime <= to &&
+             el.collectionTime >= from;
+    });
+    from=to;
+    count++;
+}
+  console.log('intervalData ',intervalData)
   return [];
 }
 
