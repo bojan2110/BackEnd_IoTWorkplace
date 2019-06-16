@@ -31,15 +31,21 @@ exports.testSteps=function (req, res) {
           res.json({
               status: "success",
               steps: stepsdata,
+              intervals:[],
               totalsteps:0,
               lastupdate:0
           });
         }
+        //there is steps to show for the selected interval
         else
         {
+          //intervals are calculated only if the requested interval is daily data!
+          var intervals=[]
+
           console.log('Reading the steps data ',stepsdata)
           var totalsteps=0
           for (stepentry in stepsdata){
+              //getInterval(stepsdata[stepentry].collectionTime);
               console.log(stepentry)
               totalsteps+=stepsdata[stepentry].numSteps
           }
@@ -48,6 +54,7 @@ exports.testSteps=function (req, res) {
           res.json({
               status: "success",
               steps: stepsdata,
+              intervals: intervals,
               totalsteps:totalsteps,
               lastupdate:lastUpdate
           });
@@ -59,7 +66,9 @@ exports.testSteps=function (req, res) {
   });
 };
 
+function getInterval(timestamp) {
 
+}
 
 
 exports.getActivityTimeSeries = function (req, res) {

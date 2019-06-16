@@ -8,7 +8,7 @@ exports.test = function (req, res) {
       message: "test success"
   });
 
-}
+};
 // Handle index actions
 exports.getmessages = function (req, res) {
     //type of messages to be obtained

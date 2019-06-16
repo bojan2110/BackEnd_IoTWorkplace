@@ -40,6 +40,7 @@ exports.new = function (req, res) {
     Step.insertMany(data,{ ordered: false },function (err) {
         if (err)
           {
+
             if(err.name === 'BulkWriteError')
             {
               var duplicates=JSON.parse(JSON.stringify(err.writeErrors,undefined,2));
@@ -57,13 +58,27 @@ exports.new = function (req, res) {
             else{
               res.json(err);
             }
+
           }
           else{
-            console.log('step data inserted')
-            console.log(data)
+            let mqttBroker=require('./mqttBroker');
+
+            var packet = {
+                topic: 'steps',
+                payload: 20
+            }
+            mqttBroker.server.publish(packet, function() {
+                logger.log('Packet sent to','tete');
+            })
+
+            console.log('step data inserted for user')
+            if(data.length !=0)
+              console.log(data[0].userid)
+
             var ts=data.map(a => a.collectionTime)
             console.log('success : "Step Entries Inserted", status : 200')
             res.json({message : "All Step Entries Inserted", status : 200,timestamps:ts});
-        }
+
+          }
     });
 };
