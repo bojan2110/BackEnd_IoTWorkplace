@@ -39,13 +39,24 @@ exports.testSteps=function (req, res) {
         //there is steps to show for the selected interval
         else
         {
+          var intervals=[];
           //intervals are calculated only if the requested interval is daily data!
-          var intervals=[]
+            if(startdate.diff(enddate,'hours')<24)
+              intervals=calculateIntervals(startdate,enddate,stepsdata);
+
 
           console.log('Reading the steps data ',stepsdata)
           var totalsteps=0
+          var newArray = homes.filter(function (el) {
+            return el.price <= 1000 &&
+                   el.sqft >= 500 &&
+                   el.num_of_beds >=2 &&
+                   el.num_of_baths >= 2.5;
+          });
+
+
           for (stepentry in stepsdata){
-              //getInterval(stepsdata[stepentry].collectionTime);
+
               console.log(stepentry)
               totalsteps+=stepsdata[stepentry].numSteps
           }
@@ -66,8 +77,8 @@ exports.testSteps=function (req, res) {
   });
 };
 
-function getInterval(timestamp) {
-
+function calculateIntervals(start,end,stepsdata) {
+  return [];
 }
 
 
