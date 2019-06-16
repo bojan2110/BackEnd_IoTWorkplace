@@ -82,7 +82,7 @@ function calculateIntervals(start,end,stepsdata) {
   var count=0;
   from=day.unix();
   //make it a timestamp again, and create the ranges
-  while(count<23)
+  while(count<=23)
   {
     to=from+3600;
 
@@ -109,7 +109,7 @@ function calculateIntervals(start,end,stepsdata) {
 
 }
   console.log('intervalArray',intervalArray);
-  return [];
+  return intervalArray;
 }
 
 
