@@ -84,16 +84,29 @@ function calculateIntervals(start,end,stepsdata) {
   while(count<23)
   {
     to=from+3600;
-    console.log('from ',from)
-    console.log('to ',to)
+
     var intervalData = stepsdata.filter(function (el) {
-      return el.collectionTime <= to &&
+      return el.collectionTime < to &&
              el.collectionTime >= from;
     });
+    var interval_steps=0;
+    for (steps in intervalData){
+        interval_steps+=intervalData[steps].numSteps
+    }
+
+    console.log('interval ',count)
+    console.log('from ',from)
+    console.log('to ',to)
+    console.log('interval_steps ',interval_steps)
+
+
     from=to;
     count++;
+
+
+
 }
-  console.log('intervalData ',intervalData)
+
   return [];
 }
 
