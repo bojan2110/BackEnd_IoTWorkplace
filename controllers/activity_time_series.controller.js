@@ -11,9 +11,8 @@ exports.testSteps=function (req, res) {
     "collectionTime": {"$lte":enddate,"$gte":startdate}
   }
 
-
   console.log('Querying the MongoDB with ',findquery)
-
+  
   Steps.find(findquery,
   function (err, stepsdata) {
       if (err) {
@@ -41,7 +40,7 @@ exports.testSteps=function (req, res) {
         {
           var intervals=[];
           //intervals are calculated only if the requested interval is daily data!
-            if(startdate.diff(enddate,'hours')<24)
+            if(enddate-startdate<86400)
               intervals=calculateIntervals(startdate,enddate,stepsdata);
 
 
