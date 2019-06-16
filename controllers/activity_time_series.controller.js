@@ -12,7 +12,7 @@ exports.testSteps=function (req, res) {
   }
 
   console.log('Querying the MongoDB with ',findquery)
-  
+
   Steps.find(findquery,
   function (err, stepsdata) {
       if (err) {
@@ -46,12 +46,12 @@ exports.testSteps=function (req, res) {
 
           console.log('Reading the steps data ',stepsdata)
           var totalsteps=0
-          var newArray = homes.filter(function (el) {
-            return el.price <= 1000 &&
-                   el.sqft >= 500 &&
-                   el.num_of_beds >=2 &&
-                   el.num_of_baths >= 2.5;
-          });
+          // var newArray = homes.filter(function (el) {
+          //   return el.price <= 1000 &&
+          //          el.sqft >= 500 &&
+          //          el.num_of_beds >=2 &&
+          //          el.num_of_baths >= 2.5;
+          // });
 
 
           for (stepentry in stepsdata){
@@ -77,6 +77,7 @@ exports.testSteps=function (req, res) {
 };
 
 function calculateIntervals(start,end,stepsdata) {
+  console.log('calculating intervals');
   return [];
 }
 
