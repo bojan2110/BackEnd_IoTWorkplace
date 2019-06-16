@@ -40,8 +40,8 @@ exports.testSteps=function (req, res) {
         {
           var intervals=[];
           //intervals are calculated only if the requested interval is daily data!
-            if(enddate-startdate<86400)
-              intervals=calculateIntervals(startdate,enddate,stepsdata);
+          if(enddate-startdate<=86400)
+            intervals=calculateIntervals(startdate,enddate,stepsdata);
 
 
           console.log('Reading the steps data ',stepsdata)
