@@ -74,7 +74,7 @@ exports.testSteps=function (req, res) {
 function calculateIntervals(start,end,stepsdata) {
 
   var moment = require('moment');
-  var intervalArray={intervals:[]};
+  var intervalArray=[];
   console.log('calculating intervals');
   //create the intervals for this day, first restart the day
   var day=moment.unix(start).startOf('day');
@@ -99,7 +99,7 @@ function calculateIntervals(start,end,stepsdata) {
     console.log('from ',from)
     console.log('to ',to)
     console.log('interval_steps ',interval_steps)
-    intervalArray.intervals.push({
+    intervalArray.push({
             "interval" : count,
             "interval_steps"  : interval_steps
         });
