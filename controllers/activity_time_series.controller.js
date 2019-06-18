@@ -47,14 +47,14 @@ exports.testSteps=function (req, res) {
 
 
 
-          console.log('Reading the steps data ',stepsdata)
+          // console.log('Reading the steps data ',stepsdata)
           var totalsteps=0
 
 
 
           for (stepentry in stepsdata){
 
-              console.log(stepentry)
+              // console.log(stepentry)
               totalsteps+=stepsdata[stepentry].numSteps
           }
           var lastUpdate=stepsdata.reduce((max, p) => p.collectionTime > max ? p.collectionTime : max, stepsdata[0].collectionTime);
@@ -101,12 +101,12 @@ function calculateHistory(start,end,stepsdata) {
             "interval" : moment.unix(to-86400).format('YYYY-MM-DD'),
             "interval_steps"  : interval_steps
         });
-    console.log('intervalArray',intervalArray);
+
     //add another day
     from=from+86400;
     to=to+86400;
   }
-
+  console.log('intervalArray',intervalArray);
   // console.log('intervalArray',intervalArray);
   return [];
 
