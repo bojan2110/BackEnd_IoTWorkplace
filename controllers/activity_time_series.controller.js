@@ -80,12 +80,13 @@ function calculateHistory(start,end,stepsdata) {
   var to=from+86400;
 
   var intervalArray=[];
-  console.log('history from',from);
-  console.log('history to',to);
+  // console.log('history from',from);
+  // console.log('history to',to);
 
   while(from<until)
   {
 
+    console.log('history from',from);
     console.log('history to',to);
     var intervalData = stepsdata.filter(function (el) {
       return el.collectionTime < to &&
@@ -95,18 +96,18 @@ function calculateHistory(start,end,stepsdata) {
     for (steps in intervalData){
         interval_steps+=intervalData[steps].numSteps
     }
-    console.log('intervalArray',interval_steps);
+
     intervalArray.push({
-            "interval" : moment.unix(to-86400),
+            "interval" : moment.unix(to-86400).format('YYYY-MM-DD'),
             "interval_steps"  : interval_steps
         });
-
+    console.log('intervalArray',intervalArray);
     //add another day
     from=from+86400;
     to=to+86400;
   }
 
-  console.log('intervalArray',intervalArray);
+  // console.log('intervalArray',intervalArray);
   return [];
 
 
