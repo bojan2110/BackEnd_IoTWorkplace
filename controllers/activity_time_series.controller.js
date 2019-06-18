@@ -86,6 +86,7 @@ function calculateHistory(start,end,stepsdata) {
   while(to<end)
   {
     to=from+86400;
+    console.log('history to',to);
     var intervalData = stepsdata.filter(function (el) {
       return el.collectionTime < to &&
              el.collectionTime >= from;
@@ -94,7 +95,7 @@ function calculateHistory(start,end,stepsdata) {
     for (steps in intervalData){
         interval_steps+=intervalData[steps].numSteps
     }
-
+    console.log('intervalArray',interval_steps);
     intervalArray.push({
             "interval" : moment.unix(to-86400),
             "interval_steps"  : interval_steps
