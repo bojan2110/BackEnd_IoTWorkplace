@@ -76,16 +76,16 @@ exports.testSteps=function (req, res) {
 function calculateHistory(start,end,stepsdata) {
   var moment = require('moment');
   var from=moment.unix(start).startOf('day').unix();
-  var to=moment.unix(start).endOf('day').unix();
-  var daydiff=to-from/86400;
+  var until=moment.unix(end).endOf('day').unix();
+  var to=from+86400;
+
   var intervalArray=[];
   console.log('history from',from);
   console.log('history to',to);
-  console.log('day diff',daydiff);
 
-  while(to<end)
+  while(from<until)
   {
-    to=from+86400;
+
     console.log('history to',to);
     var intervalData = stepsdata.filter(function (el) {
       return el.collectionTime < to &&
@@ -101,8 +101,9 @@ function calculateHistory(start,end,stepsdata) {
             "interval_steps"  : interval_steps
         });
 
-
-    daydiff--;
+    //add another day
+    from=from+86400;
+    to=to+86400;
   }
 
   console.log('intervalArray',intervalArray);
