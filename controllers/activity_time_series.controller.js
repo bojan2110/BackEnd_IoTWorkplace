@@ -29,7 +29,6 @@ exports.testSteps=function (req, res) {
           console.log('Stepsdata undefined ')
           res.json({
               status: "success",
-              steps: stepsdata,
               intervals:[],
               totalsteps:0,
               lastupdate:0
@@ -42,6 +41,10 @@ exports.testSteps=function (req, res) {
           //intervals are calculated only if the requested interval is daily data!
           if(enddate-startdate<=86400)
             intervals=calculateIntervals(startdate,enddate,stepsdata);
+          else
+            intervals=calculateHistory(startdate,enddate,stepsdata);
+
+
 
 
           console.log('Reading the steps data ',stepsdata)
@@ -58,7 +61,6 @@ exports.testSteps=function (req, res) {
 
           res.json({
               status: "success",
-              steps: stepsdata,
               intervals: intervals,
               totalsteps:totalsteps,
               lastupdate:lastUpdate
@@ -70,6 +72,42 @@ exports.testSteps=function (req, res) {
       }
   });
 };
+
+function calculateHistory(start,end,stepsdata) {
+  var moment = require('moment');
+  var from=moment.unix(start).startOf('day').unix();
+  var to=moment.unix(start).endOf('day').unix();
+  var daydiff=to-from/86400;
+  var intervalArray=[];
+  console.log('history from',from);
+  console.log('history to',to);
+  console.log('day diff',daydiff);
+
+  while(to<end)
+  {
+    to=from+86400;
+    var intervalData = stepsdata.filter(function (el) {
+      return el.collectionTime < to &&
+             el.collectionTime >= from;
+    });
+    var interval_steps=0;
+    for (steps in intervalData){
+        interval_steps+=intervalData[steps].numSteps
+    }
+
+    intervalArray.push({
+            "interval" : moment.unix(to-86400),
+            "interval_steps"  : interval_steps
+        });
+
+
+    daydiff--;
+  }
+
+  return [];
+
+
+}
 
 function calculateIntervals(start,end,stepsdata) {
 
