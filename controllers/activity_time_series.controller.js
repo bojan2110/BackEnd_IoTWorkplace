@@ -83,7 +83,7 @@ function calculateHistory(start,end,stepsdata) {
   // console.log('history from',from);
   // console.log('history to',to);
 
-  while(from<until)
+  while(from<=until)
   {
 
     console.log('history from',from);
