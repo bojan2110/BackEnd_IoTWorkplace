@@ -104,6 +104,7 @@ function calculateHistory(start,end,stepsdata) {
     daydiff--;
   }
 
+  console.log('intervalArray',intervalArray);
   return [];
 
 
