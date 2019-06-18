@@ -108,7 +108,7 @@ function calculateHistory(start,end,stepsdata) {
   }
   console.log('intervalArray',intervalArray);
   // console.log('intervalArray',intervalArray);
-  return [];
+  return intervalArray;
 
 
 }
