@@ -141,7 +141,7 @@ const client = new FitbitApiClient({
   app.use('/api', activityRoutes)
 
   //app.listen(config.server.port,config.server.host);
-  // httpServer.listen(80);
+  httpServer.listen(80);
   httpsServer.listen(443);
   console.log('Server running!!');
 
