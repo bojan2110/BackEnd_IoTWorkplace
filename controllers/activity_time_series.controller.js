@@ -57,7 +57,8 @@ exports.testSteps=function (req, res) {
 
               // console.log(stepentry)
               totalsteps+=stepsdata[stepentry].numSteps
-              totalsits+=stepsdata[stepentry].sit
+              if(stepsdata[stepentry].sit!=-1)
+                totalsits+=stepsdata[stepentry].sit
           }
           var lastUpdate=stepsdata.reduce((max, p) => p.collectionTime > max ? p.collectionTime : max, stepsdata[0].collectionTime);
 
