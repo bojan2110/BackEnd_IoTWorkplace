@@ -46,7 +46,7 @@ cert: cert
 };
 
 var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
+var httpsServer = https.createServer(options, app);
 
 
 
@@ -142,7 +142,7 @@ const client = new FitbitApiClient({
   httpServer.listen(80);
   httpsServer.listen(443);
   console.log('Server running!!');
-  
+
   // CODE RELATED TO GOOGLE CALENDAR
   // // Load client secrets from a local file.
   // // fs.readFile('credentials.json', (err, content) => {
