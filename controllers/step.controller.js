@@ -75,7 +75,7 @@ exports.new = function (req, res) {
 
 
               console.log('userid')
-              console.log(step.userid)
+              console.log(sitentry.userid)
 
 
                 //user sits
