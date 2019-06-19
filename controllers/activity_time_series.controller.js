@@ -31,6 +31,7 @@ exports.testSteps=function (req, res) {
               status: "success",
               intervals:[],
               totalsteps:0,
+              totalsits:0,
               lastupdate:0
           });
         }
@@ -49,13 +50,14 @@ exports.testSteps=function (req, res) {
 
           // console.log('Reading the steps data ',stepsdata)
           var totalsteps=0
-
+          var totalsits=0;
 
 
           for (stepentry in stepsdata){
 
               // console.log(stepentry)
               totalsteps+=stepsdata[stepentry].numSteps
+              totalsits+=stepsdata[stepentry].sit
           }
           var lastUpdate=stepsdata.reduce((max, p) => p.collectionTime > max ? p.collectionTime : max, stepsdata[0].collectionTime);
 
@@ -63,6 +65,7 @@ exports.testSteps=function (req, res) {
               status: "success",
               intervals: intervals,
               totalsteps:totalsteps,
+              totalsits:totalsits,
               lastupdate:lastUpdate
           });
         }
@@ -93,13 +96,16 @@ function calculateHistory(start,end,stepsdata) {
              el.collectionTime >= from;
     });
     var interval_steps=0;
+    var interval_sits=0;
     for (steps in intervalData){
         interval_steps+=intervalData[steps].numSteps
+        interval_sits+=intervalData[steps].sit
     }
 
     intervalArray.push({
             "interval" : moment.unix(to-86400).format('YYYY-MM-DD'),
-            "interval_steps"  : interval_steps
+            "interval_steps"  : interval_steps,
+            "interval_sits"  : interval_sits
         });
 
     //add another day
@@ -109,8 +115,6 @@ function calculateHistory(start,end,stepsdata) {
   console.log('intervalArray',intervalArray);
   // console.log('intervalArray',intervalArray);
   return intervalArray;
-
-
 }
 
 function calculateIntervals(start,end,stepsdata) {
@@ -133,8 +137,10 @@ function calculateIntervals(start,end,stepsdata) {
              el.collectionTime >= from;
     });
     var interval_steps=0;
+    var interval_sits=0;
     for (steps in intervalData){
         interval_steps+=intervalData[steps].numSteps
+        interval_sits+=intervalData[steps].sit
     }
 
     console.log('interval ',count)
@@ -143,7 +149,8 @@ function calculateIntervals(start,end,stepsdata) {
     console.log('interval_steps ',interval_steps)
     intervalArray.push({
             "interval" : count,
-            "interval_steps"  : interval_steps
+            "interval_steps"  : interval_steps,
+            "interval_sits"  : interval_sits
         });
 
     from=to;
