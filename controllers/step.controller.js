@@ -66,6 +66,7 @@ exports.new = function (req, res) {
           else{
               //creating the sitdata
             var sitdata = []
+            console.log('creating sit data entries')
             for(const entry of stepdata){
               var sitentry = new Sit();
 
@@ -92,6 +93,7 @@ exports.new = function (req, res) {
             Sit.insertMany(sitdata,{ ordered: false },function (err) {
                 if (err)
                 {
+                    console.log('error sit data insert')
                     res.json(err);
                 }
                 else{
