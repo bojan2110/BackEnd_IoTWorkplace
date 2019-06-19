@@ -74,23 +74,29 @@ const client = new FitbitApiClient({
   console.log("Start Server node js");
   //fitbit get
   app.get("/authorize", (req, res) => {
+console.log('I am in authorize')
   // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
   res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition \
   profile settings sleep social weight', 'http://health-iot.labs.vu.nl/callback'));
   });
   //fitbit callback
   app.get("/callback", (req, res) => {
+    console.log('I am in callback')
     // exchange the authorization code we just received for an access token
-    client.getAccessToken(req.query.code, 'http://health-iot.labs.vu.nl/callbacks').then(result => {
+    client.getAccessToken(req.query.code, 'http://health-iot.labs.vu.nl/callback').then(result => {
       // use the access token to fetch the user's profile information
       token = result.access_token;
-      console.log(token);
+      console.log('Fitbit token', token)
+
       client.get("/profile.json", result.access_token).then(results => {
+        console.log('results')
         res.send(results[0]);
       }).catch(err => {
+          console.log('catch 1',err)
         res.status(err.status).send(err);
       });
     }).catch(err => {
+        console.log('catch 2',err)
       res.status(err.status).send(err);
     });
   });
