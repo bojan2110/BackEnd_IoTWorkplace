@@ -99,7 +99,8 @@ function calculateHistory(start,end,stepsdata) {
     var interval_sits=0;
     for (steps in intervalData){
         interval_steps+=intervalData[steps].numSteps
-        interval_sits+=intervalData[steps].sit
+        if(intervalData[steps].sit!=-1)
+          interval_sits+=intervalData[steps].sit
     }
 
     intervalArray.push({
