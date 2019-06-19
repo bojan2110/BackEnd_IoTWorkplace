@@ -142,7 +142,7 @@ const client = new FitbitApiClient({
 
   //app.listen(config.server.port,config.server.host);
   httpServer.listen(80);
-  httpsServer.listen(8443);
+  httpsServer.listen(8433);
   console.log('Server running!!');
 
   // CODE RELATED TO GOOGLE CALENDAR
