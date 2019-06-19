@@ -39,7 +39,9 @@ const TOKEN_PATH = 'token.json';
 
 //ENABLING HTTPS CONNECTIONS
 var key=fs.readFileSync('private.key');
+console.log('key',key);
 var cert=fs.readFileSync('mydomain.csr');
+console.log('cert',cert);
 var options = {
 key: key,
 cert: cert
