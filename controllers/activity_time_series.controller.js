@@ -140,7 +140,9 @@ function calculateIntervals(start,end,stepsdata) {
     var interval_sits=0;
     for (steps in intervalData){
         interval_steps+=intervalData[steps].numSteps
-        interval_sits+=intervalData[steps].sit
+        //it should never be -1 once we start calculating from start
+        if(intervalData[steps].sit!=-1)
+          interval_sits+=intervalData[steps].sit
     }
 
     console.log('interval ',count)
