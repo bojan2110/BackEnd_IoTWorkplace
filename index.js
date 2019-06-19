@@ -1,5 +1,7 @@
 // add timestamps in front of log messages
 require('console-stamp')(console, '[HH:MM:ss.l]');
+var https = require('https');
+var http = require('http');
 // Import express
 let express = require('express')
 // Initialize the app
@@ -35,6 +37,19 @@ var OAuth2 = google.auth.OAuth2;
 // time.
 const TOKEN_PATH = 'token.json';
 
+//ENABLING HTTPS CONNECTIONS
+var key=fs.readFileSync('private.key');
+var cert=fs.readFileSync('mydomain.csr');
+var options = {
+key: key,
+cert: cert
+};
+
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+
+
 mongoose.set('debug', true)
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
@@ -62,7 +77,6 @@ const client = new FitbitApiClient({
   //change to production to get production credentials
   var env = 'production';
   var config = require('./config')[env];
-
   mongoose.connect('mongodb://'+config.database.user+':'+config.database.password+'@'+
   config.database.host+':'+config.database.port+'/'+config.database.db, { useNewUrlParser: true });
 
@@ -101,6 +115,35 @@ const client = new FitbitApiClient({
     });
   });
 
+ // Send message for default URL
+  app.get('/',function(req,res){
+     res.sendFile(__dirname + '/landingpage/index.html');
+     // var url = getAuthUrl();
+     // console.log(url);
+
+  });
+  // Launch the website
+  app.use(express.static(__dirname + '/landingpage'));
+ // Use Api routes
+  app.use('/api', bluetoothRoutes)
+  app.use('/api', microphoneRoutes)
+  app.use('/api', messagesRoutes)
+  app.use('/api', stepsRoutes)
+  app.use('/api', sitEventRoutes)
+  app.use('/api', sitCycleRoutes)
+  app.use('/api', dashboardBackgroundRoutes)
+  app.use('/api', activityTimeSeriesRoutes)
+  app.use('/api', flashCardRoutes)
+  app.use('/api', userRoutes)
+  app.use('/api', stepRoutes)
+  app.use('/api', activityRoutes)
+
+  //app.listen(config.server.port,config.server.host);
+  httpServer.listen(80);
+  httpsServer.listen(443);
+  console.log('Server running!!');
+  
+  // CODE RELATED TO GOOGLE CALENDAR
   // // Load client secrets from a local file.
   // // fs.readFile('credentials.json', (err, content) => {
   // //   console.log('readFile')
@@ -170,32 +213,6 @@ const client = new FitbitApiClient({
   //     }
   //   });
   // }
-
- // Send message for default URL
-  app.get('/',function(req,res){
-     res.sendFile(__dirname + '/landingpage/index.html');
-     // var url = getAuthUrl();
-     // console.log(url);
-
-  });
-  // Launch the website
-  app.use(express.static(__dirname + '/landingpage'));
- // Use Api routes
-  app.use('/api', bluetoothRoutes)
-  app.use('/api', microphoneRoutes)
-  app.use('/api', messagesRoutes)
-  app.use('/api', stepsRoutes)
-  app.use('/api', sitEventRoutes)
-  app.use('/api', sitCycleRoutes)
-  app.use('/api', dashboardBackgroundRoutes)
-  app.use('/api', activityTimeSeriesRoutes)
-  app.use('/api', flashCardRoutes)
-  app.use('/api', userRoutes)
-  app.use('/api', stepRoutes)
-  app.use('/api', activityRoutes)
-  app.listen(config.server.port,config.server.host);
-  console.log('Server running!!');
-
 }); // db.open ends here
 
 
