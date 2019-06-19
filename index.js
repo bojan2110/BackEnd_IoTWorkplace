@@ -38,13 +38,13 @@ var OAuth2 = google.auth.OAuth2;
 const TOKEN_PATH = 'token.json';
 
 //ENABLING HTTPS CONNECTIONS
-var key=fs.readFileSync('csr.pem','utf8');
+var key=fs.readFileSync('csr.pem');
 console.log('key',key);
-var cert=fs.readFileSync('server.crt', 'utf8');
+var cert=fs.readFileSync('server.crt');
 console.log('cert',cert);
 var options = {
 key: key,
-cert: cert
+pfx: cert
 };
 
 var httpServer = http.createServer(app);
