@@ -29,10 +29,9 @@ exports.new = function (req, res) {
       stepentry.dataSource = step.dataSource;
       stepentry.collectionTime=step.collectionTime;
       stepentry.numSteps=step.numSteps;
-      //sitting
+      //sitting(0) or standing(1)
       if(step.numSteps<=2)
         stepentry.sit=1;
-      //not sitting
       else
         stepentry.sit=0;
 

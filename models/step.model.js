@@ -5,7 +5,7 @@ var stepSchema = mongoose.Schema({
     dataSource: {type: String,required: true},
     collectionTime: {type: Number, required: true, unique: true},
     numSteps: {type: Number,required: true},
-    sit: {type: Number,default: -1}
+    sit: {type: Number,default: 0}
 
 });
 
