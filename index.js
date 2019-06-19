@@ -44,6 +44,17 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
 
+//FITBIT credentials
+
+const FitbitApiClient = require("fitbit-node");
+const client = new FitbitApiClient({
+  clientId: "22DHW7",
+  clientSecret: "75130623b587b7a4ac64b7a11f719087",
+  apiVersion: '1.2'
+});
+
+
+
 // Connect to Mongoose and set connection variable
 // database name is resthub in this case
 // we use authentication with user,pass. there are other options also available
@@ -58,8 +69,31 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
 
   var db=mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
+  //connection is open
   db.once('open', function callback () {
   console.log("Start Server node js");
+  //fitbit get
+  app.get("/authorize", (req, res) => {
+  // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
+  res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition \
+  profile settings sleep social weight', 'http://health-iot.labs.vu.nl/callback'));
+  });
+  //fitbit callback
+  app.get("/callback", (req, res) => {
+    // exchange the authorization code we just received for an access token
+    client.getAccessToken(req.query.code, 'http://health-iot.labs.vu.nl/callbacks').then(result => {
+      // use the access token to fetch the user's profile information
+      token = result.access_token;
+      console.log(token);
+      client.get("/profile.json", result.access_token).then(results => {
+        res.send(results[0]);
+      }).catch(err => {
+        res.status(err.status).send(err);
+      });
+    }).catch(err => {
+      res.status(err.status).send(err);
+    });
+  });
 
   // Load client secrets from a local file.
   // fs.readFile('credentials.json', (err, content) => {
