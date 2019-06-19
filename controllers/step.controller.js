@@ -29,6 +29,11 @@ exports.new = function (req, res) {
       stepentry.dataSource = step.dataSource;
       stepentry.collectionTime=step.collectionTime;
       stepentry.numSteps=step.numSteps;
+      if(step.numSteps<=2)
+        stepentry.sit=0;
+      else
+        stepentry.sit=1;
+
 
       console.log('userid')
       console.log(step.userid)
