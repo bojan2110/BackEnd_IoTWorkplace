@@ -38,9 +38,9 @@ var OAuth2 = google.auth.OAuth2;
 const TOKEN_PATH = 'token.json';
 
 //ENABLING HTTPS CONNECTIONS
-var key=fs.readFileSync('private.key');
+var key=fs.readFileSync('csr.pem');
 console.log('key',key);
-var cert=fs.readFileSync('mydomain.csr');
+var cert=fs.readFileSync('server.crt');
 console.log('cert',cert);
 var options = {
 key: key,
