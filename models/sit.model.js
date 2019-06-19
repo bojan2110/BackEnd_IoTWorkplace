@@ -11,7 +11,7 @@ var sitSchema = mongoose.Schema({
 sitSchema.set('timestamps', true);
 sitSchema.index({ collectionTime: 1}, { unique: true})
 
-var Sit = module.exports = mongoose.model('db_sits', stepSchema);
+var Sit = module.exports = mongoose.model('db_sits', sitSchema);
 module.exports.get = function (callback, limit) {
     Sit.find(callback).limit(limit);
 }
