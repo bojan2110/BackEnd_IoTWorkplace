@@ -60,7 +60,7 @@ const client = new FitbitApiClient({
 // we use authentication with user,pass. there are other options also available
 
   //change to production to get production credentials
-  var env = 'development';
+  var env = 'production';
   var config = require('./config')[env];
 
   mongoose.connect('mongodb://'+config.database.user+':'+config.database.password+'@'+
