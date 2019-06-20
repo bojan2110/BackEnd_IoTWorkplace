@@ -24,7 +24,7 @@ exports.testSteps=function (req, res) {
       }
       else
       {
-        if ( stepsdata === 'undefined' || stepsdata.length == 0)
+        if(stepsdata === 'undefined' || stepsdata.length == 0)
         {
           console.log('Stepsdata undefined ')
           res.json({

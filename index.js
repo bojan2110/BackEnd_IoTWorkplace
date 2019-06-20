@@ -117,15 +117,15 @@ const client = new FitbitApiClient({
     });
   });
 
- // Send message for default URL
-  app.get('/',function(req,res){
-     res.sendFile(__dirname + '/landingpage/index.html');
-     // var url = getAuthUrl();
-     // console.log(url);
-
-  });
-  // Launch the website
-  app.use(express.static(__dirname + '/landingpage'));
+ // // Send message for default URL
+ //  app.get('/',function(req,res){
+ //     res.sendFile(__dirname + '/landingpage/index.html');
+ //     // var url = getAuthUrl();
+ //     // console.log(url);
+ //
+ //  });
+ //  // Launch the website
+ //  app.use(express.static(__dirname + '/landingpage'));
  // Use Api routes
   app.use('/api', bluetoothRoutes)
   app.use('/api', microphoneRoutes)
