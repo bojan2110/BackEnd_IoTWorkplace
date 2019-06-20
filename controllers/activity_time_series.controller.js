@@ -32,7 +32,8 @@ exports.testSteps=function (req, res) {
               intervals:[],
               totalsteps:0,
               totalsits:0,
-              lastupdate:0
+              lastupdate:0,
+              cyclesinfo:[]
           });
         }
         //there is steps to show for the selected interval
@@ -44,7 +45,7 @@ exports.testSteps=function (req, res) {
           if(enddate-startdate<=86400)
             {
               intervals=calculateIntervals(startdate,enddate,stepsdata);
-              currentProlonged=calculateCycles(startdate,enddate,stepsdata);
+              cyclesinfo=calculateCycles(startdate,enddate,stepsdata);
             }
           else
             intervals=calculateHistory(startdate,enddate,stepsdata);
@@ -70,7 +71,8 @@ exports.testSteps=function (req, res) {
               intervals: intervals,
               totalsteps:totalsteps,
               totalsits:totalsits,
-              lastupdate:lastUpdate
+              lastupdate:lastUpdate,
+              cyclesinfo:cyclesinfo
           });
         }
 
