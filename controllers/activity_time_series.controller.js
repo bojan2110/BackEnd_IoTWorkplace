@@ -189,7 +189,7 @@ function calculateCycles(start,end,data) {
 
   //get the length of the data
   var count = Object.keys(data).length;
-
+  console.log('count dataobjects',count)
   //no data is available
   if(count==0)
   {
@@ -253,8 +253,10 @@ function calculateCycles(start,end,data) {
     returnArray.push({"prolonged":prolonged,
     "cycles":cycles,
     "current":current})
-  }
 
+
+  }
+console.log('returnArray',returnArray)
 return returnArray;
 
 }
