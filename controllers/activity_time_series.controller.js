@@ -39,9 +39,13 @@ exports.testSteps=function (req, res) {
         else
         {
           var intervals=[];
+          var currentProlonged;
           //intervals are calculated only if the requested interval is daily data!
           if(enddate-startdate<=86400)
-            intervals=calculateIntervals(startdate,enddate,stepsdata);
+            {
+              intervals=calculateIntervals(startdate,enddate,stepsdata);
+              currentProlonged=calculateCycles(startdate,enddate,stepsdata);
+            }
           else
             intervals=calculateHistory(startdate,enddate,stepsdata);
 
@@ -54,7 +58,6 @@ exports.testSteps=function (req, res) {
 
 
           for (stepentry in stepsdata){
-
               // console.log(stepentry)
               totalsteps+=stepsdata[stepentry].numSteps
               if(stepsdata[stepentry].sit!=-1)
@@ -165,6 +168,96 @@ function calculateIntervals(start,end,stepsdata) {
   return intervalArray;
 }
 
+function calculateCycles(start,end,data) {
+  //the return returnArray
+  var returnArray=[];
+  //will store all the sitting cycles
+  var cycles=[];
+  //will store the current cycle
+  var current=[];
+
+  //start and end timestams of a cycle
+  var cycleStartTs=0;
+  var cycleEndTs=0;
+  //total num of prolonged cycles
+  var prolonged=0;
+  //the condition for a prolonged cycle
+  var prolongedMinutes=35;
+  //minutes of the cycle + the current cycle minutes
+  var minutesSitting=0
+  var minutesCurrent=0
+
+  //get the length of the data
+  var count = Object.keys(data).length;
+
+  //no data is available
+  if(count==0)
+  {
+    //will return empty arrays
+    returnArray.push({"prolonged":prolonged,
+    "cycles":cycles,
+    "current":current})
+  }
+  //single data point is available (this is posssible at the start of the day)
+  else if (count==1)
+  {
+    if(data[entry].sits==1)
+      current.push(
+      {"lenght":1,
+      "start":data[entry].collectionTime});
+
+    //no cycles are done available,so only current cycle with one minute should be returned
+    returnArray.push({"prolonged":prolonged,
+    "cycles":cycles,
+    "current":current})
+  }
+  //main calculation
+  else{
+    for (entry in data){
+        //user is sitting
+        if(data[entry].sits==1)
+        {
+          minutesSitting+=1;
+          minutesCurrent+=1;
+        }
+        //log the start of the cycle
+        if(minutesSitting==1)
+          cycleStartTs=data[entry].collectionTime
+
+        //user is standing == cycle break
+        if(data[entry].sits==0)
+        {
+          //check prologned
+          if(minutesSitting>=prolongedMinutes)
+            prolonged+=1;
+
+          cycleEndTs=data[entry].collectionTime;
+          cycles.push({
+          "startCycle":cycleStartTs,
+          "endCycle":cycleEndTs,
+          "totalTime":minutesSitting});
+
+          //resets
+          minutesCurrent=0;
+          minutesSitting=0;
+          cycleStartTs=0;
+
+        }//end cycle break
+
+    }
+    //after all data is looped, you will get a current cycle info here
+    current.push(
+    {"lenght":minutesCurrent,
+    "start":cycleStartTs})
+    //fill the return array
+    returnArray.push({"prolonged":prolonged,
+    "cycles":cycles,
+    "current":current})
+  }
+
+return returnArray;
+
+}
 
 exports.getActivityTimeSeries = function (req, res) {
 
