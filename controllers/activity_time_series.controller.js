@@ -217,6 +217,7 @@ function calculateCycles(start,end,data) {
   else{
     console.log('entering main calculation')
     for (entry in data){
+        console.log('minutesSitting',minutesSitting)
         //user is sitting
         if(data[entry].sit==1)
         {
@@ -237,13 +238,13 @@ function calculateCycles(start,end,data) {
             prolonged+=1;
 
           if(minutesSitting>0)
-            {
+          {
               cycleEndTs=data[entry].collectionTime;
               cycles.push({
               "startCycle":cycleStartTs,
               "endCycle":cycleEndTs,
               "totalTime":minutesSitting});
-            }
+          }
 
           //resets
           minutesCurrent=0;
