@@ -1,7 +1,7 @@
 // add timestamps in front of log messages
 require('console-stamp')(console, '[HH:MM:ss.l]');
-var https = require('https');
-// var http = require('http');
+// var https = require('https');
+// // var http = require('http');
 // Import express
 let express = require('express')
 // Initialize the app
@@ -38,17 +38,17 @@ var OAuth2 = google.auth.OAuth2;
 const TOKEN_PATH = 'token.json';
 
 //ENABLING HTTPS CONNECTIONS
-var key=fs.readFileSync('domain.key');
-console.log('key',key);
-var cert=fs.readFileSync('domain.crt');
-console.log('cert',cert);
-var options = {
-key: key,
-cert: cert
-};
-
-var httpServer = http.createServer(app);
-var httpsServer = https.createServer(options, app);
+// var key=fs.readFileSync('domain.key');
+// console.log('key',key);
+// var cert=fs.readFileSync('domain.crt');
+// console.log('cert',cert);
+// var options = {
+// key: key,
+// cert: cert
+// };
+//
+// var httpServer = http.createServer(app);
+// var httpsServer = https.createServer(options, app);
 
 
 
@@ -139,10 +139,10 @@ const client = new FitbitApiClient({
   app.use('/api', userRoutes)
   app.use('/api', stepRoutes)
   app.use('/api', activityRoutes)
-
-  //app.listen(config.server.port,config.server.host);
-  httpServer.listen(8433);
-  httpsServer.listen(433);
+  app.listen(8080,127.0.0.1);
+  // app.listen(config.server.port,config.server.host);
+  // httpServer.listen(80);
+  // httpsServer.listen(433);
   console.log('Server running!!');
 
   // CODE RELATED TO GOOGLE CALENDAR
