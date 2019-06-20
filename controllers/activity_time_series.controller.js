@@ -216,7 +216,7 @@ function calculateCycles(start,end,data) {
     console.log('entering main calculation')
     for (entry in data){
         //user is sitting
-        if(data[entry].sits==1)
+        if(data[entry].sit==1)
         {
           console.log('sitting minute')
           minutesSitting+=1;
@@ -227,7 +227,7 @@ function calculateCycles(start,end,data) {
           cycleStartTs=data[entry].collectionTime
 
         //user is standing == cycle break
-        if(data[entry].sits==0)
+        if(data[entry].sit==0)
         {
           console.log('standing minute')
           //check prologned
