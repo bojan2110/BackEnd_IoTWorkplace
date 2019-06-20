@@ -1,7 +1,7 @@
 // add timestamps in front of log messages
 require('console-stamp')(console, '[HH:MM:ss.l]');
 var https = require('https');
-var http = require('http');
+// var http = require('http');
 // Import express
 let express = require('express')
 // Initialize the app
@@ -117,15 +117,15 @@ const client = new FitbitApiClient({
     });
   });
 
- // // Send message for default URL
- //  app.get('/',function(req,res){
- //     res.sendFile(__dirname + '/landingpage/index.html');
- //     // var url = getAuthUrl();
- //     // console.log(url);
- //
- //  });
- //  // Launch the website
- //  app.use(express.static(__dirname + '/landingpage'));
+ // Send message for default URL
+  app.get('/',function(req,res){
+     res.sendFile(__dirname + '/landingpage/index.html');
+     // var url = getAuthUrl();
+     // console.log(url);
+
+  });
+  // Launch the website
+  app.use(express.static(__dirname + '/landingpage'));
  // Use Api routes
   app.use('/api', bluetoothRoutes)
   app.use('/api', microphoneRoutes)
