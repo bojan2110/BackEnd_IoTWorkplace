@@ -236,11 +236,14 @@ function calculateCycles(start,end,data) {
           if(minutesSitting>=prolongedMinutes)
             prolonged+=1;
 
-          cycleEndTs=data[entry].collectionTime;
-          cycles.push({
-          "startCycle":cycleStartTs,
-          "endCycle":cycleEndTs,
-          "totalTime":minutesSitting});
+          if(minutesSitting>0)
+            {
+              cycleEndTs=data[entry].collectionTime;
+              cycles.push({
+              "startCycle":cycleStartTs,
+              "endCycle":cycleEndTs,
+              "totalTime":minutesSitting});
+            }
 
           //resets
           minutesCurrent=0;
