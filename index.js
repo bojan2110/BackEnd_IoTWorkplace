@@ -215,6 +215,8 @@ const client = new FitbitApiClient({
   //     }
   //   });
   // }
+
+
 }); // db.open ends here
 
 

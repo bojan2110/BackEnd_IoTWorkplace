@@ -70,50 +70,7 @@ exports.new = function (req, res) {
 
           }
           else{
-            //   //creating the sitdata
-            // var sitdata = []
-            // console.log('creating sit data entries')
-            // for(const entry of stepdata){
-            //   var sitentry = new Sit();
-            //
-            //   sitentry.userid = entry.userid;
-            //   sitentry.dataSource = entry.dataSource;
-            //   sitentry.collectionTime=entry.collectionTime;
-            //
-            //
-            //   console.log('userid')
-            //   console.log(sitentry.userid)
-            //
-            //
-            //     //user sits
-            //     if(entry.numSteps<=2)
-            //       sitentry.status=0;
-            //     else
-            //       sitentry.status=1;
-            //
-            //   console.log('sitentry',sitentry)
-            //   sitdata.push(sitentry)
-            // }
-            //
-            // //inserting sit data in mongo
-            // Sit.insertMany(sitdata,{ ordered: false },function (err) {
-            //     if (err)
-            //     {
-            //         console.log('error sit data insert')
-            //         res.json(err);
-            //     }
-            //     else{
-            //       console.log('sit data inserted for user')
-            //       if(sitdata.length !=0)
-            //         console.log(sitdata[0].userid)
-            //
-            //       //var ts=stepdata.map(a => a.collectionTime)
-            //       console.log('success : "Sit Entries Inserted", status : 200')
-            //       //res.json({message : "All Sit Entries Inserted", status : 200,timestamps:ts});
-            //     }
-            //
-            //   });
-
+  
             console.log('step data inserted for user')
             if(stepdata.length !=0)
               console.log(stepdata[0].userid)

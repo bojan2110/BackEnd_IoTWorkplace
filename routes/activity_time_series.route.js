@@ -1,7 +1,6 @@
 let router =require('express').Router();
 var timeSeriesController = require('../controllers/activity_time_series.controller');
 
-router.route('/user/:userid/activity/:activity/date/:startdate/:enddate').get(timeSeriesController.getActivityTimeSeries);
-router.route('/user/:userid/startdate/:startdate/enddate/:enddate').get(timeSeriesController.testSteps);
+router.route('/user/:userid/startdate/:startdate/enddate/:enddate').get(timeSeriesController.getActivityData);
 
 module.exports = router;
