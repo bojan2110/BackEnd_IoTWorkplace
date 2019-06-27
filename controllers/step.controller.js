@@ -70,7 +70,7 @@ exports.new = function (req, res) {
 
           }
           else{
-  
+
             console.log('step data inserted for user')
             if(stepdata.length !=0)
               console.log(stepdata[0].userid)

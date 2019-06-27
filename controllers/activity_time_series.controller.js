@@ -126,10 +126,10 @@ function calculateIntervals(start,end,stepsdata) {
 
   var moment = require('moment');
   var intervalArray=[];
-  console.log('calculating intervals');
+  //console.log('calculating intervals');
   //create the intervals for this day, first restart the day
   var day=moment.unix(start).startOf('day');
-  console.log('start of day',day);
+  //console.log('start of day',day);
   var count=0;
   from=day.unix();
   //make it a timestamp again, and create the ranges
@@ -164,7 +164,7 @@ function calculateIntervals(start,end,stepsdata) {
     count++;
 
 }
-  console.log('intervalArray',intervalArray);
+  //console.log('intervalArray',intervalArray);
   return intervalArray;
 }
 
@@ -189,7 +189,7 @@ function calculateCycles(start,end,data) {
 
   //get the length of the data
   var count = Object.keys(data).length;
-  console.log('count dataobjects',count)
+  //console.log('count dataobjects',count)
   //no data is available
   if(count==0)
   {
@@ -213,13 +213,13 @@ function calculateCycles(start,end,data) {
   }
   //main calculation
   else{
-    console.log('entering main calculation')
+    //console.log('entering main calculation')
     for (entry in data){
         //console.log('minutesSitting',minutesSitting)
         //user is sitting
         if(data[entry].sit==1)
         {
-          console.log('sitting minute')
+          //console.log('sitting minute')
           minutesSitting+=1;
           minutesCurrent+=1;
         }
