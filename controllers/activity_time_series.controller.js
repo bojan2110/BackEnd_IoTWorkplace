@@ -93,8 +93,8 @@ function calculateHistory(start,end,stepsdata) {
   while(from<=until)
   {
 
-    console.log('history from',from);
-    console.log('history to',to);
+    // console.log('history from',from);
+    // console.log('history to',to);
     var intervalData = stepsdata.filter(function (el) {
       return el.collectionTime < to &&
              el.collectionTime >= from;
@@ -117,7 +117,7 @@ function calculateHistory(start,end,stepsdata) {
     from=from+86400;
     to=to+86400;
   }
-  console.log('intervalArray',intervalArray);
+
   // console.log('intervalArray',intervalArray);
   return intervalArray;
 }
@@ -150,10 +150,10 @@ function calculateIntervals(start,end,stepsdata) {
           interval_sits+=intervalData[steps].sit
     }
 
-    console.log('interval ',count)
-    console.log('from ',from)
-    console.log('to ',to)
-    console.log('interval_steps ',interval_steps)
+    // console.log('interval ',count)
+    // console.log('from ',from)
+    // console.log('to ',to)
+    // console.log('interval_steps ',interval_steps)
     intervalArray.push({
             "interval" : count,
             "interval_steps"  : interval_steps,
@@ -215,7 +215,7 @@ function calculateCycles(start,end,data) {
   else{
     console.log('entering main calculation')
     for (entry in data){
-        console.log('minutesSitting',minutesSitting)
+        //console.log('minutesSitting',minutesSitting)
         //user is sitting
         if(data[entry].sit==1)
         {
@@ -230,7 +230,7 @@ function calculateCycles(start,end,data) {
         //user is standing == cycle break
         if(data[entry].sit==0)
         {
-          console.log('standing minute')
+          //console.log('standing minute')
           //check prologned
           if(minutesSitting>=prolongedMinutes)
             prolonged+=1;
@@ -263,7 +263,7 @@ function calculateCycles(start,end,data) {
 
 
   }
-console.log('returnArray',returnArray)
+//console.log('returnArray',returnArray)
 return returnArray;
 
 }
