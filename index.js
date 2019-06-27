@@ -12,30 +12,30 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 
 //import routes
-let bluetoothRoutes = require("./routes/bluetooth.route");
-let microphoneRoutes = require("./routes/microphone.route");
+//commented out for the student project
+// let bluetoothRoutes = require("./routes/bluetooth.route");
+// let microphoneRoutes = require("./routes/microphone.route");
+// let activityRoutes=require("./routes/activity.route");
+
 let messagesRoutes = require("./routes/dashboardmessages.route");
-let stepsRoutes = require("./routes/steps.route");
-let sitEventRoutes = require("./routes/sittingevent.route");
-let sitCycleRoutes = require("./routes/sitcycle.route");
 let dashboardBackgroundRoutes = require("./routes/dashboardbackground.route");
 let flashCardRoutes = require("./routes/flashcard.route");
 let activityTimeSeriesRoutes=require("./routes/activity_time_series.route");
 let userRoutes=require("./routes/user.route");
 let stepRoutes=require("./routes/step.route");
-let activityRoutes=require("./routes/activity.route");
+
 
 //for google calendar calls
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
-const SCOPES = ['https://www.googleapis.com/auth/calendar'];
-var OAuth2 = google.auth.OAuth2;
+// const SCOPES = ['https://www.googleapis.com/auth/calendar'];
+// var OAuth2 = google.auth.OAuth2;
 // var Session = require('express-session');
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
-const TOKEN_PATH = 'token.json';
+// const TOKEN_PATH = 'token.json';
 
 //ENABLING HTTPS CONNECTIONS
 // var key=fs.readFileSync('domain.key');
@@ -127,18 +127,17 @@ const client = new FitbitApiClient({
   // Launch the website
   app.use(express.static(__dirname + '/landingpage'));
  // Use Api routes
-  app.use('/api', bluetoothRoutes)
-  app.use('/api', microphoneRoutes)
+  // app.use('/api', bluetoothRoutes)
+  // app.use('/api', microphoneRoutes)
+  // app.use('/api', activityRoutes)
+
   app.use('/api', messagesRoutes)
-  app.use('/api', stepsRoutes)
-  app.use('/api', sitEventRoutes)
-  app.use('/api', sitCycleRoutes)
   app.use('/api', dashboardBackgroundRoutes)
   app.use('/api', activityTimeSeriesRoutes)
   app.use('/api', flashCardRoutes)
   app.use('/api', userRoutes)
   app.use('/api', stepRoutes)
-  app.use('/api', activityRoutes)
+
   // app.listen('8080','127.0.0.1');
   app.listen(config.server.port,config.server.host);
   // httpServer.listen(80);
