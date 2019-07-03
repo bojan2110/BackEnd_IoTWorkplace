@@ -31,6 +31,7 @@ cron.schedule('* * * * *', () => {
   //  var starttime = JSON.stringify(results[0]['activities-steps'][0]['activities/minutesSedentary']);
 
     console.log('number of steps ',data)
+  }
 });
 
 //import routes
