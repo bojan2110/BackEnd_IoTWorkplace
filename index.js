@@ -100,6 +100,7 @@ const client = new FitbitApiClient({
     // exchange the authorization code we just received for an access token
     client.getAccessToken(req.query.code, 'https://health-iot.labs.vu.nl/callback').then(result => {
       // use the access token to fetch the user's profile information
+      console.log('callback result', result)
       token = result.access_token;
       console.log("i am token", token)
       client.get("/profile.json", result.access_token).then(results => {
