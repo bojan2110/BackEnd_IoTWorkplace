@@ -11,6 +11,12 @@ let bodyParser = require('body-parser');
 // Import Mongoose
 let mongoose = require('mongoose');
 
+var cron = require('node-cron');
+
+cron.schedule('* * * * *', () => {
+  console.log('running a task every minute');
+});
+
 //import routes
 //commented out for the student project
 // let bluetoothRoutes = require("./routes/bluetooth.route");
