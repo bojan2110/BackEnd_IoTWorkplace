@@ -15,6 +15,29 @@ var cron = require('node-cron');
 
 cron.schedule('* * * * *', () => {
   console.log('running a task every minute');
+  var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRIVzciLCJzdWIiOiI3R01SUjgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJociByc2V0IHJwcm8iLCJleHAiOjE1NjIxODMwMTEsImlhdCI6MTU2MjE1NDIxMX0.RPf-JNq8a8VAtyYmyU4wralTQ-1zHBAvsL7ZVmQzCPk";
+  var date='2019-06-13'
+  var apipath="/activities/steps/date/" + date + "/1d.json";
+  // console.log('api path',apipath);
+  client.get(apipath, token)
+    .then(async function(results) {
+    console.log('ím in async')
+    var date = results[0]['activities-steps'][0]['dateTime'];
+    console.log('date',date)
+    console.log('results',results[0])
+    var data = JSON.stringify(results[0]['activities-steps'][0]['value']);
+    //var data2 = JSON.stringify(results[0]['activities-steps-intraday']['dataset']);
+    var time_stamp = JSON.stringify(results[0]['activities-steps'][0]['dateTime'])
+  //  var starttime = JSON.stringify(results[0]['activities-steps'][0]['activities/minutesSedentary']);
+
+    console.log('number of steps ',data)
+    var arr = [data, time_stamp]
+    res.send(arr);
+    }).catch(err => {
+      res.status(err.status).send(err);
+    });
+
+
 });
 
 //import routes
@@ -128,17 +151,9 @@ const client = new FitbitApiClient({
   app.get("/activity/:activity/:date", (req, res) => {
   //app.get("/activity/:activity/:date/1d/1min/:time", (req,res) => {
       console.log("steps  token", token)
-      var today = new Date();
-      var currentminute = today.getHours() + ":" + today.getMinutes();
-      var aMinuteAgo = new Date( Date.now() - 1000 * 60 );
-      var previousminute = aMinuteAgo.getHours() + ":" + aMinuteAgo.getMinutes();
-      console.log("current time", currentminute, "minute ago", previousminute)
       var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRIVzciLCJzdWIiOiI3R01SUjgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJociByc2V0IHJwcm8iLCJleHAiOjE1NjIxODMwMTEsImlhdCI6MTU2MjE1NDIxMX0.RPf-JNq8a8VAtyYmyU4wralTQ-1zHBAvsL7ZVmQzCPk";
       console.log("steps token 2 ", token)
       var apipath="/activities/steps/date/" + req.params.date + "/1d.json";
-      //var apipath="/activities/steps/date/" + req.params.date + "/1d/1min/" + previousminute + currentminute +".json";
-      //var apipath="/activities/steps/date/" + req.params.date + "/1d/1min/15:05/15:10.json";
-    //  var apipath="/activities/steps/date/" + req.params.date + "/1d.json";
       console.log('api path',apipath);
       client.get(apipath, token)
         .then(async function(results) {
