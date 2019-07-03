@@ -89,33 +89,70 @@ const client = new FitbitApiClient({
   db.once('open', function callback () {
   console.log("Start Server node js");
   //fitbit get
-  app.get("/authorize", (req, res) => {
-    console.log('I am in authorize')
-  // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-    res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition \
-    profile settings sleep social weight', 'http://health-iot.labs.vu.nl/callback'));
-    });
+  app.get("/authorize",(req, res) => {
+    console.log('authorize')
+    //request access to the user's activity, loc, etc.
+    res.redirect(client.getAuthorizeUrl('heartrate activity profile settings', 'https://health-iot.labs.vu.nl/callback'));
+  });
   //fitbit callback
   app.get("/callback", (req, res) => {
-    console.log('I am in callback')
+    console.log('i am in callback')
     // exchange the authorization code we just received for an access token
-    client.getAccessToken(req.query.code, 'http://health-iot.labs.vu.nl/callback').then(result => {
+    client.getAccessToken(req.query.code, 'https://health-iot.labs.vu.nl/callback').then(result => {
       // use the access token to fetch the user's profile information
       token = result.access_token;
-      console.log('Fitbit token', token)
-
+      console.log("i am token", token)
       client.get("/profile.json", result.access_token).then(results => {
-        console.log('results')
-        res.send(results[0]);
+        var username = results[0]['user']['username'];
+      res.send(results[0]);
       }).catch(err => {
-          console.log('catch 1',err)
+        console.log('error ', err)
         res.status(err.status).send(err);
       });
     }).catch(err => {
-        console.log('catch 2',err)
+      console.log('error', err)
       res.status(err.status).send(err);
     });
   });
+
+
+
+  //get request for steps
+  app.get("/activity/:activity/:date", (req, res) => {
+  //app.get("/activity/:activity/:date/1d/1min/:time", (req,res) => {
+      console.log("steps  token", token)
+      var today = new Date();
+      var currentminute = today.getHours() + ":" + today.getMinutes();
+      var aMinuteAgo = new Date( Date.now() - 1000 * 60 );
+      var previousminute = aMinuteAgo.getHours() + ":" + aMinuteAgo.getMinutes();
+      console.log("current time", currentminute, "minute ago", previousminute)
+      var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRIVzciLCJzdWIiOiI3R01SUjgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJociByc2V0IHJwcm8iLCJleHAiOjE1NjIxODMwMTEsImlhdCI6MTU2MjE1NDIxMX0.RPf-JNq8a8VAtyYmyU4wralTQ-1zHBAvsL7ZVmQzCPk";
+      console.log("steps token 2 ", token)
+      var apipath="/activities/steps/date/" + req.params.date + "/1d.json";
+      //var apipath="/activities/steps/date/" + req.params.date + "/1d/1min/" + previousminute + currentminute +".json";
+      //var apipath="/activities/steps/date/" + req.params.date + "/1d/1min/15:05/15:10.json";
+    //  var apipath="/activities/steps/date/" + req.params.date + "/1d.json";
+      console.log('api path',apipath);
+      client.get(apipath, token)
+        .then(async function(results) {
+        console.log('ím in async')
+        var date = results[0]['activities-steps'][0]['dateTime'];
+        console.log('date',date)
+        console.log('results',results[0])
+        var data = JSON.stringify(results[0]['activities-steps'][0]['value']);
+        //var data2 = JSON.stringify(results[0]['activities-steps-intraday']['dataset']);
+        var time_stamp = JSON.stringify(results[0]['activities-steps'][0]['dateTime'])
+      //  var starttime = JSON.stringify(results[0]['activities-steps'][0]['activities/minutesSedentary']);
+
+        console.log('number of steps ',data)
+        var arr = [data, time_stamp]
+        res.send(arr);
+        }).catch(err => {
+          res.status(err.status).send(err);
+        });
+      });
+
+
 
  // Send message for default URL
   app.get('/',function(req,res){
