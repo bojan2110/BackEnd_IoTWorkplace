@@ -44,11 +44,15 @@ exports.getActivityData=function (req, res) {
           //intervals are calculated only if the requested interval is daily data!
           if(enddate-startdate<=86400)
             {
+              console.log('getting daily data')
               intervals=calculateIntervals(startdate,enddate,stepsdata);
               cyclesinfo=calculateCycles(startdate,enddate,stepsdata);
             }
           else
-            intervals=calculateHistory(startdate,enddate,stepsdata);
+            {
+              intervals=calculateHistory(startdate,enddate,stepsdata);
+              console.log('getting history data')
+            }
 
 
 
@@ -169,6 +173,7 @@ function calculateIntervals(start,end,stepsdata) {
 }
 
 function calculateCycles(start,end,data) {
+  console.log('Calculating cycles')
   //the return returnArray
   var returnArray=[];
   //will store all the sitting cycles
