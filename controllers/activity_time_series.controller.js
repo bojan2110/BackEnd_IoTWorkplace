@@ -263,7 +263,7 @@ function calculateCycles(start,end,data) {
 
 
   }
-//console.log('returnArray',returnArray)
+console.log('returnArray',returnArray)
 return returnArray;
 
 }
