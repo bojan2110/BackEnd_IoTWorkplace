@@ -33,10 +33,10 @@ exports.getActivityData=function (req, res) {
               totalsteps:0,
               totalsits:0,
               lastupdate:0,
-              cyclesinfo:{"prolonged":-1,
+              cyclesinfo:[{"prolonged":-1,
               "cycles":[],
               "current":[{"length":-1,
-              "start":-1}]}
+              "start":-1}]}]
           });
         }
         //there is steps to show for the selected interval
