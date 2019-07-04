@@ -35,8 +35,8 @@ exports.getActivityData=function (req, res) {
               lastupdate:0,
               cyclesinfo:{"prolonged":-1,
               "cycles":[],
-              "current":{"length":-1,
-              "start":-1}}
+              "current":[{"length":-1,
+              "start":-1}]}
           });
         }
         //there is steps to show for the selected interval
