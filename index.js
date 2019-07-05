@@ -52,7 +52,7 @@ cron.schedule('*/20 * * * * *', () => {
         console.log('number of steps ',data)
       }//access token is expired. refresh token and update the json object
       else{
-          refreshAccessToken(fitbituser.accesstoken, fitbituser.refreshtoken)
+          client.refreshAccessToken(fitbituser.accesstoken, fitbituser.refreshtoken)
           .then(result => {
 
             console.log('refreshAccessToken result', result)})
