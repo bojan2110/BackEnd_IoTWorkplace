@@ -134,7 +134,7 @@ const client = new FitbitApiClient({
       console.log('callback result', result)
 
       let jsonData = require('./fitbitusers.json');
-      jsonData=JSON.stringify(jsonData);
+      //jsonData=JSON.stringify(jsonData);
       console.log('jsonData before', jsonData)
       accesstoken = result.access_token;
       refreshtoken=result.refresh_token;
