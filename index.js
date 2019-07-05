@@ -54,8 +54,9 @@ cron.schedule('*/20 * * * * *', () => {
       else{
           client.refreshAccessToken(fitbituser.accesstoken, fitbituser.refreshtoken)
           .then(result => {
-            fitbitData[i].accesstoken=result.access_token;
-            fitbitData[i].refreshtoken=result.refresh_token;
+            console.log('fitbitData[i]',fitbitData[i])
+            // fitbitData[i].accesstoken=result.access_token;
+            // fitbitData[i].refreshtoken=result.refresh_token;
             console.log('refreshAccessToken result', result)})
           .catch(err => {
             console.log('Fitbit refresh token error', err)
