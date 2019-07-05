@@ -23,7 +23,7 @@ cron.schedule('*/20 * * * * *', () => {
     .then(async function(results) {
     console.log('ím in async')
 
-    console.log('results',results)
+    console.log('results',results[0].success)
     var date = results[0]['activities-steps'][0]['dateTime'];
     console.log('date',date)
     var data = JSON.stringify(results[0]['activities-steps'][0]['value']);
