@@ -13,30 +13,73 @@ let mongoose = require('mongoose');
 
 var cron = require('node-cron');
 //*/20 * * * * *
+//fitbit calls cron job
 cron.schedule('* * */2 * * *', () => {
-  console.log('running a task every minute');
-  var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRIVzciLCJzdWIiOiI3R01SUjgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJociByc2V0IHJwcm8iLCJleHAiOjE1NjIxODMwMTEsImlhdCI6MTU2MjE1NDIxMX0.RPf-JNq8a8VAtyYmyU4wralTQ-1zHBAvsL7ZVmQzCPk";
-  var datafor='2019-06-13'
-  var apipath="/activities/steps/date/" + datafor + "/1d.json";
-  // console.log('api path',apipath);
-  client.get(apipath, token)
-    .then(async function(results) {
-    console.log('ím in async')
+  //get the fitbit users> maybe this can be changed to be done in 6 hours,
+  // instead of every time and saved in a global variable?
+  console.log('cron job started')
+  let fitbitData = require('./fitbitusers.json');
+  for (var i = 0; i < fitbitData.length; i++) {
+    var fitbituser = fitbitData[i];
+    console.log('fitbituser.username',fitbituser.username);
+    console.log('fitbituser.accesstoken',fitbituser.accesstoken);
+    console.log('fitbituser.refreshtoken',fitbituser.refreshtoken);
+    var today=moment().format("YYYY-MM-DD");
+    var apipath="/activities/steps/date/" + today + "/1d.json";
+    //call the fitbit api
+    client.get(apipath, token)
+      .then(async function(results) {
+      console.log('ím in async')
+      console.log('results',results[0].success)
+      //successfully retreived data
+      if(results[0].success)
+      {
+        console.log('Fitbit data obtained')
+        var date = results[0]['activities-steps'][0]['dateTime'];
+        var data = JSON.stringify(results[0]['activities-steps'][0]['value']);
+        var time_stamp = JSON.stringify(results[0]['activities-steps'][0]['dateTime'])
+        console.log('number of steps ',data)
+      }//access token is expired. refresh token and update the json object
+      else{
+          refreshAccessToken(fitbituser.accesstoken, fitbituser.refreshtoken)
+          .then(result => {
 
-    console.log('results',results[0].success)
-    var date = results[0]['activities-steps'][0]['dateTime'];
-    console.log('date',date)
-    var data = JSON.stringify(results[0]['activities-steps'][0]['value']);
-    //var data2 = JSON.stringify(results[0]['activities-steps-intraday']['dataset']);
-    var time_stamp = JSON.stringify(results[0]['activities-steps'][0]['dateTime'])
-  //  var starttime = JSON.stringify(results[0]['activities-steps'][0]['activities/minutesSedentary']);
+            console.log('refreshAccessToken result', result)
 
-    console.log('number of steps ',data)
+          )
+          .catch(err => {
+            console.log('Fitbit refresh token error', err)
+            res.status(err.status).send(err);
+          });
+      }
+      }).catch(err => {
+      console.log('Fitbit API call error', err)
+      });
 
-
-    }).catch(err => {
-    console.log('Fitbit error', err)
-    });
+  }
+  // console.log('running a task every minute');
+  // var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRIVzciLCJzdWIiOiI3R01SUjgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJociByc2V0IHJwcm8iLCJleHAiOjE1NjIxODMwMTEsImlhdCI6MTU2MjE1NDIxMX0.RPf-JNq8a8VAtyYmyU4wralTQ-1zHBAvsL7ZVmQzCPk";
+  // var datafor='2019-06-13'
+  // var apipath="/activities/steps/date/" + datafor + "/1d.json";
+  // // console.log('api path',apipath);
+  // client.get(apipath, token)
+  //   .then(async function(results) {
+  //   console.log('ím in async')
+  //
+  //   console.log('results',results[0].success)
+  //   var date = results[0]['activities-steps'][0]['dateTime'];
+  //   console.log('date',date)
+  //   var data = JSON.stringify(results[0]['activities-steps'][0]['value']);
+  //   //var data2 = JSON.stringify(results[0]['activities-steps-intraday']['dataset']);
+  //   var time_stamp = JSON.stringify(results[0]['activities-steps'][0]['dateTime'])
+  // //  var starttime = JSON.stringify(results[0]['activities-steps'][0]['activities/minutesSedentary']);
+  //
+  //   console.log('number of steps ',data)
+  //
+  //
+  //   }).catch(err => {
+  //   console.log('Fitbit error', err)
+  //   });
 
 
 });
@@ -91,17 +134,6 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
 
-//FITBIT credentials
-
-const FitbitApiClient = require("fitbit-node");
-const client = new FitbitApiClient({
-  clientId: "22DHW7",
-  clientSecret: "75130623b587b7a4ac64b7a11f719087",
-  apiVersion: '1.2'
-});
-
-
-
 // Connect to Mongoose and set connection variable
 // database name is resthub in this case
 // we use authentication with user,pass. there are other options also available
@@ -118,7 +150,17 @@ const client = new FitbitApiClient({
   //connection is open
   db.once('open', function callback () {
   console.log("Start Server node js");
-  //fitbit get
+
+
+  //FITBIT credentials
+
+  const FitbitApiClient = require("fitbit-node");
+  const client = new FitbitApiClient({
+    clientId: "22DHW7",
+    clientSecret: "75130623b587b7a4ac64b7a11f719087",
+    apiVersion: '1.2'
+  });
+    //fitbit get
   app.get("/authorize",(req, res) => {
     console.log('authorize')
 
@@ -128,14 +170,16 @@ const client = new FitbitApiClient({
   //fitbit callback
   app.get("/callback", (req, res) => {
     console.log('i am in callback')
-    // exchange the authorization code we just received for an access token
-    client.getAccessToken(req.query.code, 'https://health-iot.labs.vu.nl/callback').then(result => {
+      // exchange the authorization code we just received for an access token
+      client.getAccessToken(req.query.code, 'https://health-iot.labs.vu.nl/callback').then(result => {
       // use the access token to fetch the user's profile information
       console.log('callback result', result)
 
       let jsonData = require('./fitbitusers.json');
       //jsonData=JSON.stringify(jsonData);
-      console.log('jsonData before', jsonData)
+      console.log('jsonData type', typeof jsonData)
+      console.log('jsonData length', jsonData.length)
+
       accesstoken = result.access_token;
       refreshtoken=result.refresh_token;
       var username='testuser'
@@ -162,37 +206,6 @@ const client = new FitbitApiClient({
       res.status(err.status).send(err);
     });
   });
-
-
-
-  //get request for steps
-  app.get("/activity/:activity/:date", (req, res) => {
-  //app.get("/activity/:activity/:date/1d/1min/:time", (req,res) => {
-      console.log("steps  token", token)
-      var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRIVzciLCJzdWIiOiI3R01SUjgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJociByc2V0IHJwcm8iLCJleHAiOjE1NjIxODMwMTEsImlhdCI6MTU2MjE1NDIxMX0.RPf-JNq8a8VAtyYmyU4wralTQ-1zHBAvsL7ZVmQzCPk";
-      console.log("steps token 2 ", token)
-      var apipath="/activities/steps/date/" + req.params.date + "/1d.json";
-      console.log('api path',apipath);
-      client.get(apipath, token)
-        .then(async function(results) {
-        console.log('ím in async')
-        var date = results[0]['activities-steps'][0]['dateTime'];
-        console.log('date',date)
-        console.log('results',results[0])
-        var data = JSON.stringify(results[0]['activities-steps'][0]['value']);
-        //var data2 = JSON.stringify(results[0]['activities-steps-intraday']['dataset']);
-        var time_stamp = JSON.stringify(results[0]['activities-steps'][0]['dateTime'])
-      //  var starttime = JSON.stringify(results[0]['activities-steps'][0]['activities/minutesSedentary']);
-
-        console.log('number of steps ',data)
-        var arr = [data, time_stamp]
-        res.send(arr);
-        }).catch(err => {
-          res.status(err.status).send(err);
-        });
-      });
-
-
 
  // Send message for default URL
   app.get('/',function(req,res){
