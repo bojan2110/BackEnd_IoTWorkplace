@@ -37,9 +37,11 @@ cron.schedule('*/20 * * * * *', () => {
     var today=moment().format("YYYY-MM-DD");
     console.log('today',today)
     var apipath="/activities/steps/date/" + today + "/1d.json";
+    var newaccesstoken=''
+    var newrefreshtoken=''
     //call the fitbit api
     client.get(apipath, fitbituser.accesstoken)
-      .then(function(results) {
+      .then(async function(results) {
       console.log('ím in async')
       // console.log('results',results)
       //successfully retreived data
@@ -54,6 +56,8 @@ cron.schedule('*/20 * * * * *', () => {
       else{
           client.refreshAccessToken(fitbituser.accesstoken, fitbituser.refreshtoken)
           .then(result => {
+           newaccesstoken=result.access_token
+           newrefreshtoken=result.refresh_token
             console.log('fitbitData[i]',fitbitData[i])
             // fitbitData[i].accesstoken=result.access_token;
             // fitbitData[i].refreshtoken=result.refresh_token;
@@ -66,6 +70,8 @@ cron.schedule('*/20 * * * * *', () => {
       console.log('Fitbit API call error', err)
       });
       console.log('New Fitbit Data ',fitbitData);
+      console.log('New AT ',newaccesstoken);
+      console.log('New RT ',newaccesstoken);
   }
   // console.log('running a task every minute');
   // var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRIVzciLCJzdWIiOiI3R01SUjgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJociByc2V0IHJwcm8iLCJleHAiOjE1NjIxODMwMTEsImlhdCI6MTU2MjE1NDIxMX0.RPf-JNq8a8VAtyYmyU4wralTQ-1zHBAvsL7ZVmQzCPk";
