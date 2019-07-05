@@ -13,6 +13,15 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 
 var cron = require('node-cron');
+
+//FITBIT credentials
+
+const FitbitApiClient = require("fitbit-node");
+const client = new FitbitApiClient({
+  clientId: "22DHW7",
+  clientSecret: "75130623b587b7a4ac64b7a11f719087",
+  apiVersion: '1.2'
+});
 //*/20 * * * * *
 //fitbit calls cron job
 cron.schedule('*/20 * * * * *', () => {
@@ -151,14 +160,6 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
   console.log("Start Server node js");
 
 
-  //FITBIT credentials
-
-  const FitbitApiClient = require("fitbit-node");
-  const client = new FitbitApiClient({
-    clientId: "22DHW7",
-    clientSecret: "75130623b587b7a4ac64b7a11f719087",
-    apiVersion: '1.2'
-  });
     //fitbit get
   app.get("/authorize",(req, res) => {
     console.log('authorize')
