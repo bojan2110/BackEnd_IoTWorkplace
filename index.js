@@ -58,7 +58,7 @@ cron.schedule('*/20 * * * * *', () => {
       }//access token is expired. refresh token and update the json object
       else{
           client.refreshAccessToken(fitbituser.accesstoken, fitbituser.refreshtoken)
-          .then(result => {
+          .then(async function(result) {
            newaccesstoken=await result.access_token
            newrefreshtoken=await result.refresh_token
            //find the user with that access token
