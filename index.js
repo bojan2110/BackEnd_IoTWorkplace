@@ -43,7 +43,7 @@ cron.schedule('*/20 * * * * *', () => {
       console.log('ím in async')
       console.log('results',results)
       //successfully retreived data
-      if(results[0].success)
+      if(!results[0].hasOwnProperty('success'))
       {
         console.log('Fitbit data obtained')
         var date = results[0]['activities-steps'][0]['dateTime'];
