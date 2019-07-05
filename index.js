@@ -37,7 +37,7 @@ cron.schedule('*/20 * * * * *', () => {
     var today=moment().format("YYYY-MM-DD");
     var apipath="/activities/steps/date/" + today + "/1d.json";
     //call the fitbit api
-    client.get(apipath, token)
+    client.get(apipath, fitbituser.accesstoken)
       .then(async function(results) {
       console.log('ím in async')
       console.log('results',results[0].success)
