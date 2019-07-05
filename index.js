@@ -1,5 +1,6 @@
 // add timestamps in front of log messages
 require('console-stamp')(console, '[HH:MM:ss.l]');
+var moment = require('moment');
 // var https = require('https');
 // // var http = require('http');
 // Import express
