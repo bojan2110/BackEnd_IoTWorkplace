@@ -12,8 +12,8 @@ let bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 
 var cron = require('node-cron');
-
-cron.schedule('*/20 * * * * *', () => {
+//*/20 * * * * *
+cron.schedule('* * */2 * * *', () => {
   console.log('running a task every minute');
   var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRIVzciLCJzdWIiOiI3R01SUjgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJociByc2V0IHJwcm8iLCJleHAiOjE1NjIxODMwMTEsImlhdCI6MTU2MjE1NDIxMX0.RPf-JNq8a8VAtyYmyU4wralTQ-1zHBAvsL7ZVmQzCPk";
   var datafor='2019-06-13'
@@ -121,8 +121,9 @@ const client = new FitbitApiClient({
   //fitbit get
   app.get("/authorize",(req, res) => {
     console.log('authorize')
+    var user=userid
     //request access to the user's activity, loc, etc.
-    res.redirect(client.getAuthorizeUrl('heartrate activity profile settings', 'https://health-iot.labs.vu.nl/callback'));
+    res.redirect(client.getAuthorizeUrl('heartrate activity profile settings', 'https://health-iot.labs.vu.nl/callback/'));
   });
   //fitbit callback
   app.get("/callback", (req, res) => {
@@ -131,8 +132,10 @@ const client = new FitbitApiClient({
     client.getAccessToken(req.query.code, 'https://health-iot.labs.vu.nl/callback').then(result => {
       // use the access token to fetch the user's profile information
       console.log('callback result', result)
-      token = result.access_token;
-      console.log("i am token", token)
+      accesstoken = result.access_token;
+      refreshtoken=result.refresh_token;
+
+      console.log("i am token", accesstoken)
       client.get("/profile.json", result.access_token).then(results => {
         var username = results[0]['user']['username'];
       res.send(results[0]);
