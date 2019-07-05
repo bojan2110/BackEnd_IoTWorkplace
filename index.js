@@ -27,8 +27,11 @@ const client = new FitbitApiClient({
 cron.schedule('*/20 * * * * *', () => {
   //get the fitbit users> maybe this can be changed to be done in 6 hours,
   // instead of every time and saved in a global variable?
+  var newaccesstoken=''
+  var newrefreshtoken=''
   console.log('cron job started')
   let fitbitData = require('./fitbitusers.json');
+  
   for (var i = 0; i < fitbitData.length; i++) {
     var fitbituser = fitbitData[i];
     console.log('fitbituser.username',fitbituser.username);
@@ -37,8 +40,7 @@ cron.schedule('*/20 * * * * *', () => {
     var today=moment().format("YYYY-MM-DD");
     console.log('today',today)
     var apipath="/activities/steps/date/" + today + "/1d.json";
-    var newaccesstoken=''
-    var newrefreshtoken=''
+
     //call the fitbit api
     client.get(apipath, fitbituser.accesstoken)
       .then(async function(results) {
