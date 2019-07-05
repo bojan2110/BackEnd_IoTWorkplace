@@ -59,7 +59,6 @@ cron.schedule('*/20 * * * * *', () => {
             console.log('refreshAccessToken result', result)})
           .catch(err => {
             console.log('Fitbit refresh token error', err)
-            res.status(err.status).send(err);
           });
       }
       }).catch(err => {
