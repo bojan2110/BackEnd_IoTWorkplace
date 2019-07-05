@@ -34,7 +34,7 @@ cron.schedule('* * * * *', () => {
 
 
     }).catch(err => {
-    
+    console.log('Fitbit error', err)
     });
 
 
