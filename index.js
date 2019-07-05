@@ -33,6 +33,7 @@ cron.schedule('*/20 * * * * *', () => {
   let fitbitData = require('./fitbitusers.json');
 
   for (var i = 0; i < fitbitData.length; i++) {
+    console.log('START PROCESS FOR USER ',i);
     var fitbituser = fitbitData[i];
     console.log('fitbituser.username',fitbituser.username);
     console.log('fitbituser.accesstoken',fitbituser.accesstoken);
