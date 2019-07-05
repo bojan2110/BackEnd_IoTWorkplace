@@ -51,23 +51,23 @@ cron.schedule('*/20 * * * * *', () => {
       if(results[0].hasOwnProperty('success'))
       {
         console.log('Fitbit data obtained')
-        var date = await results[0]['activities-steps'][0]['dateTime'];
-        var data = await JSON.stringify(results[0]['activities-steps'][0]['value']);
-        var time_stamp = await JSON.stringify(results[0]['activities-steps'][0]['dateTime'])
+        var date =  results[0]['activities-steps'][0]['dateTime'];
+        var data =  JSON.stringify(results[0]['activities-steps'][0]['value']);
+        var time_stamp =  JSON.stringify(results[0]['activities-steps'][0]['dateTime'])
         console.log('number of steps ',data)
       }//access token is expired. refresh token and update the json object
       else{
           client.refreshAccessToken(fitbituser.accesstoken, fitbituser.refreshtoken)
-          .then(async function(result) {
-           newaccesstoken=await result.access_token
-           newrefreshtoken=await result.refresh_token
+          .then(function(result) {
+           newaccesstoken= result.access_token
+           newrefreshtoken= result.refresh_token
            //find the user with that access token
-            console.log('fitbitData[i]',await fitbitData[i])
+            console.log('fitbitData[i]', fitbitData[i])
             console.log('[i]',i)
-            console.log('refreshAccessToken result',await  result)
-            fitbitData[i-1].accesstoken=await result.access_token;
-            fitbitData[i-1].refreshtoken=await result.refresh_token;
-            console.log('New Fitbit Data ',await fitbitData);
+            console.log('refreshAccessToken result',  result)
+            fitbitData[i-1].accesstoken= result.access_token;
+            fitbitData[i-1].refreshtoken= result.refresh_token;
+            console.log('New Fitbit Data ', fitbitData);
 
           })
           .catch(err => {
