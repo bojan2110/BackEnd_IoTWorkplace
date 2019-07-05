@@ -14,7 +14,7 @@ let mongoose = require('mongoose');
 var cron = require('node-cron');
 //*/20 * * * * *
 //fitbit calls cron job
-cron.schedule('* * */2 * * *', () => {
+cron.schedule('*/20 * * * * *', () => {
   //get the fitbit users> maybe this can be changed to be done in 6 hours,
   // instead of every time and saved in a global variable?
   console.log('cron job started')
