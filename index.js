@@ -31,7 +31,7 @@ cron.schedule('*/20 * * * * *', () => {
   var newrefreshtoken=''
   console.log('cron job started')
   let fitbitData = require('./fitbitusers.json');
-  
+
   for (var i = 0; i < fitbitData.length; i++) {
     var fitbituser = fitbitData[i];
     console.log('fitbituser.username',fitbituser.username);
@@ -61,6 +61,8 @@ cron.schedule('*/20 * * * * *', () => {
            newaccesstoken=result.access_token
            newrefreshtoken=result.refresh_token
             console.log('fitbitData[i]',fitbitData[i])
+            console.log('[i]',i)
+              console.log('[fitbitData',fitbitData)
             // fitbitData[i].accesstoken=result.access_token;
             // fitbitData[i].refreshtoken=result.refresh_token;
             console.log('refreshAccessToken result', result)})
