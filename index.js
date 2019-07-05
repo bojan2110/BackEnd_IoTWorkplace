@@ -30,11 +30,11 @@ cron.schedule('*/20 * * * * *', () => {
   var newaccesstoken=''
   var newrefreshtoken=''
   console.log('cron job started')
-  let fitbitData = require('./fitbitusers.json');
+  let fitbitData = await require('./fitbitusers.json');
 
   for (var i = 0; i < fitbitData.length; i++) {
     console.log('START PROCESS FOR USER ',i);
-    var fitbituser = fitbitData[i];
+    var fitbituser = await fitbitData[i];
     console.log('fitbituser.username',fitbituser.username);
     console.log('fitbituser.accesstoken',fitbituser.accesstoken);
     console.log('fitbituser.refreshtoken',fitbituser.refreshtoken);
@@ -59,14 +59,17 @@ cron.schedule('*/20 * * * * *', () => {
       else{
           client.refreshAccessToken(fitbituser.accesstoken, fitbituser.refreshtoken)
           .then(result => {
-           newaccesstoken=result.access_token
-           newrefreshtoken=result.refresh_token
-            console.log('fitbitData[i]',fitbitData[i-1])
+           newaccesstoken=await result.access_token
+           newrefreshtoken=await result.refresh_token
+           //find the user with that access token
+            console.log('fitbitData[i]',fitbitData[i])
             console.log('[i]',i)
-
+            console.log('refreshAccessToken result', result)
             fitbitData[i-1].accesstoken=result.access_token;
             fitbitData[i-1].refreshtoken=result.refresh_token;
-            console.log('refreshAccessToken result', result)})
+            console.log('New Fitbit Data ',fitbitData);
+
+          })
           .catch(err => {
             console.log('Fitbit refresh token error', err)
           });
@@ -74,7 +77,7 @@ cron.schedule('*/20 * * * * *', () => {
       }).catch(err => {
       console.log('Fitbit API call error', err)
       });
-      console.log('New Fitbit Data ',fitbitData);
+
 
   }
   // console.log('running a task every minute');
