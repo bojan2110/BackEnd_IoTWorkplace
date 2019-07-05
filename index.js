@@ -123,7 +123,7 @@ const client = new FitbitApiClient({
     console.log('authorize')
 
     //request access to the user's activity, loc, etc.
-    res.redirect(client.getAuthorizeUrl('heartrate activity profile settings', 'https://health-iot.labs.vu.nl/callback/'));
+    res.redirect(client.getAuthorizeUrl('heartrate activity profile settings', 'https://health-iot.labs.vu.nl/callback'));
   });
   //fitbit callback
   app.get("/callback", (req, res) => {
