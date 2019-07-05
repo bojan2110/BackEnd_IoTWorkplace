@@ -41,7 +41,7 @@ cron.schedule('*/20 * * * * *', () => {
     client.get(apipath, fitbituser.accesstoken)
       .then(async function(results) {
       console.log('ím in async')
-      console.log('results',results)
+      // console.log('results',results)
       //successfully retreived data
       if(!results[0].hasOwnProperty('success'))
       {
