@@ -132,8 +132,22 @@ const client = new FitbitApiClient({
     client.getAccessToken(req.query.code, 'https://health-iot.labs.vu.nl/callback').then(result => {
       // use the access token to fetch the user's profile information
       console.log('callback result', result)
+
+      let jsonData = require('./fitbitusers.json');
+      jsonData=JSON.stringify(jsonData);
+      console.log('jsonData before', jsonData)
       accesstoken = result.access_token;
       refreshtoken=result.refresh_token;
+      var username='testuser'
+      let credentials = {
+          username: username,
+          accesstoken: accesstoken,
+          refreshtoken: refreshtoken
+      };
+      jsonData.push(JSON.stringify(credentials))
+      console.log('jsonData after', jsonData)
+      fs.writeFileSync('fitbitusers.json', jsonData);
+
 
       console.log("i am token", accesstoken)
       client.get("/profile.json", result.access_token).then(results => {
