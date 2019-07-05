@@ -13,18 +13,19 @@ let mongoose = require('mongoose');
 
 var cron = require('node-cron');
 
-cron.schedule('* * * * *', () => {
+cron.schedule('*/20 * * * * *', () => {
   console.log('running a task every minute');
   var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRIVzciLCJzdWIiOiI3R01SUjgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJociByc2V0IHJwcm8iLCJleHAiOjE1NjIxODMwMTEsImlhdCI6MTU2MjE1NDIxMX0.RPf-JNq8a8VAtyYmyU4wralTQ-1zHBAvsL7ZVmQzCPk";
-  var date='2019-06-13'
-  var apipath="/activities/steps/date/" + date + "/1d.json";
+  var datafor='2019-06-13'
+  var apipath="/activities/steps/date/" + datafor + "/1d.json";
   // console.log('api path',apipath);
   client.get(apipath, token)
     .then(async function(results) {
     console.log('ím in async')
+
+    console.log('results',results)
     var date = results[0]['activities-steps'][0]['dateTime'];
     console.log('date',date)
-    console.log('results',results[0])
     var data = JSON.stringify(results[0]['activities-steps'][0]['value']);
     //var data2 = JSON.stringify(results[0]['activities-steps-intraday']['dataset']);
     var time_stamp = JSON.stringify(results[0]['activities-steps'][0]['dateTime'])
