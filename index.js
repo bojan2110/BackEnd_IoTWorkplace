@@ -15,71 +15,70 @@ let mongoose = require('mongoose');
 var cron = require('node-cron');
 
 //FITBIT credentials
-
-const FitbitApiClient = require("fitbit-node");
-const client = new FitbitApiClient({
-  clientId: "22DHW7",
-  clientSecret: "75130623b587b7a4ac64b7a11f719087",
-  apiVersion: '1.2'
-});
+// const FitbitApiClient = require("fitbit-node");
+// const client = new FitbitApiClient({
+//   clientId: "22DHW7",
+//   clientSecret: "75130623b587b7a4ac64b7a11f719087",
+//   apiVersion: '1.2'
+// });
 //*/20 * * * * *
 //fitbit calls cron job
-cron.schedule('*/20 * * * * *', () => {
-  //get the fitbit users> maybe this can be changed to be done in 6 hours,
-  // instead of every time and saved in a global variable?
-  var newaccesstoken=''
-  var newrefreshtoken=''
-  console.log('cron job started')
-  let fitbitData = require('./fitbitusers.json');
+// cron.schedule('*/20 * * * * *', () => {
+//   //get the fitbit users> maybe this can be changed to be done in 6 hours,
+//   // instead of every time and saved in a global variable?
+//   var newaccesstoken=''
+//   var newrefreshtoken=''
+//   console.log('cron job started')
+//   let fitbitData = require('./fitbitusers.json');
+//
+//   for (var i = 0; i < fitbitData.length; i++) {
+//     console.log('START PROCESS FOR USER ',i);
+//     var fitbituser = fitbitData[i];
+//     console.log('fitbituser.username',fitbituser.username);
+//     console.log('fitbituser.accesstoken',fitbituser.accesstoken);
+//     console.log('fitbituser.refreshtoken',fitbituser.refreshtoken);
+//     var today=moment().format("YYYY-MM-DD");
+//     console.log('today',today)
+//     var apipath="/activities/steps/date/" + today + "/1d.json";
+//
+//     //call the fitbit api
+//     client.get(apipath, fitbituser.accesstoken)
+//       .then(async function(results) {
+//       console.log('ím in async')
+//       // console.log('results',results)
+//       //successfully retreived data
+//       if(results[0].hasOwnProperty('success'))
+//       {
+//         console.log('Fitbit data obtained')
+//         var date = results[0§activities-steps'][0]['dateTime'];
+//         var data = JSON.stringify(results[0]['activities-steps'][0]['value']);
+//         var time_stamp = JSON.stringify(results[0]['activities-steps'][0]['dateTime'])
+//         console.log('number of steps ',data)
+//       }//access token is expired. refresh token and update the json object
+//       else{
+//           client.refreshAccessToken(fitbituser.accesstoken, fitbituser.refreshtoken)
+//           .then(result => {
+//            newaccesstoken=result.access_token
+//            newrefreshtoken=result.refresh_token
+//            //find the user with that
+//             console.log('fitbitData[i]',fitbitData[i-1])
+//             console.log('[i]',i)
+//             console.log('refreshAccessToken result', result)
+//             fitbitData[i-1].accesstoken=result.access_token;
+//             fitbitData[i-1].refreshtoken=result.refresh_token;
+//             console.log('New Fitbit Data ',fitbitData);
+//
+//           })
+//           .catch(err => {
+//             console.log('Fitbit refresh token error', err)
+//           });
+//       }
+//       }).catch(err => {
+//       console.log('Fitbit API call error', err)
+//       });
+//   }
 
-  for (var i = 0; i < fitbitData.length; i++) {
-    console.log('START PROCESS FOR USER ',i);
-    var fitbituser = fitbitData[i];
-    console.log('fitbituser.username',fitbituser.username);
-    console.log('fitbituser.accesstoken',fitbituser.accesstoken);
-    console.log('fitbituser.refreshtoken',fitbituser.refreshtoken);
-    var today=moment().format("YYYY-MM-DD");
-    console.log('today',today)
-    var apipath="/activities/steps/date/" + today + "/1d.json";
 
-    //call the fitbit api
-    client.get(apipath, fitbituser.accesstoken)
-      .then(async function(results) {
-      console.log('ím in async')
-      // console.log('results',results)
-      //successfully retreived data
-      if(results[0].hasOwnProperty('success'))
-      {
-        console.log('Fitbit data obtained')
-        var date =  results[0]['activities-steps'][0]['dateTime'];
-        var data =  JSON.stringify(results[0]['activities-steps'][0]['value']);
-        var time_stamp =  JSON.stringify(results[0]['activities-steps'][0]['dateTime'])
-        console.log('number of steps ',data)
-      }//access token is expired. refresh token and update the json object
-      else{
-          client.refreshAccessToken(fitbituser.accesstoken, fitbituser.refreshtoken)
-          .then(function(result) {
-           newaccesstoken= result.access_token
-           newrefreshtoken= result.refresh_token
-           //find the user with that access token
-            console.log('fitbitData[i]', fitbitData[i])
-            console.log('[i]',i)
-            console.log('refreshAccessToken result',  result)
-            fitbitData[i-1].accesstoken= result.access_token;
-            fitbitData[i-1].refreshtoken= result.refresh_token;
-            console.log('New Fitbit Data ', fitbitData);
-
-          })
-          .catch(err => {
-            console.log('Fitbit refresh token error', err)
-          });
-      }
-      }).catch(err => {
-      console.log('Fitbit API call error', err)
-      });
-
-
-  }
   // console.log('running a task every minute');
   // var token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyMkRIVzciLCJzdWIiOiI3R01SUjgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IHJociByc2V0IHJwcm8iLCJleHAiOjE1NjIxODMwMTEsImlhdCI6MTU2MjE1NDIxMX0.RPf-JNq8a8VAtyYmyU4wralTQ-1zHBAvsL7ZVmQzCPk";
   // var datafor='2019-06-13'
@@ -174,53 +173,53 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
   db.once('open', function callback () {
   console.log("Start Server node js");
 
-
-    //fitbit get
-  app.get("/authorize",(req, res) => {
-    console.log('authorize')
-
-    //request access to the user's activity, loc, etc.
-    res.redirect(client.getAuthorizeUrl('heartrate activity profile settings', 'https://health-iot.labs.vu.nl/callback'));
-  });
-  //fitbit callback
-  app.get("/callback", (req, res) => {
-    console.log('i am in callback')
-      // exchange the authorization code we just received for an access token
-      client.getAccessToken(req.query.code, 'https://health-iot.labs.vu.nl/callback').then(result => {
-      // use the access token to fetch the user's profile information
-      console.log('callback result', result)
-
-      let jsonData = require('./fitbitusers.json');
-      //jsonData=JSON.stringify(jsonData);
-      console.log('jsonData type', typeof jsonData)
-      console.log('jsonData length', jsonData.length)
-
-      accesstoken = result.access_token;
-      refreshtoken=result.refresh_token;
-      var username='testuser'
-      let credentials = {
-          username: username,
-          accesstoken: accesstoken,
-          refreshtoken: refreshtoken
-      };
-      jsonData.push(JSON.stringify(credentials))
-      console.log('jsonData after', jsonData)
-      fs.writeFileSync('fitbitusers.json', jsonData);
-
-
-      console.log("i am token", accesstoken)
-      client.get("/profile.json", result.access_token).then(results => {
-        var username = results[0]['user']['username'];
-      res.send(results[0]);
-      }).catch(err => {
-        console.log('error ', err)
-        res.status(err.status).send(err);
-      });
-    }).catch(err => {
-      console.log('error', err)
-      res.status(err.status).send(err);
-    });
-  });
+  //FITBIT CALLS
+  //   //fitbit get
+  // app.get("/authorize",(req, res) => {
+  //   console.log('authorize')
+  // 
+  //   //request access to the user's activity, loc, etc.
+  //   res.redirect(client.getAuthorizeUrl('heartrate activity profile settings', 'https://health-iot.labs.vu.nl/callback'));
+  // });
+  // //fitbit callback
+  // app.get("/callback", (req, res) => {
+  //   console.log('i am in callback')
+  //     // exchange the authorization code we just received for an access token
+  //     client.getAccessToken(req.query.code, 'https://health-iot.labs.vu.nl/callback').then(result => {
+  //     // use the access token to fetch the user's profile information
+  //     console.log('callback result', result)
+  //
+  //     let jsonData = require('./fitbitusers.json');
+  //     //jsonData=JSON.stringify(jsonData);
+  //     console.log('jsonData type', typeof jsonData)
+  //     console.log('jsonData length', jsonData.length)
+  //
+  //     accesstoken = result.access_token;
+  //     refreshtoken=result.refresh_token;
+  //     var username='testuser'
+  //     let credentials = {
+  //         username: username,
+  //         accesstoken: accesstoken,
+  //         refreshtoken: refreshtoken
+  //     };
+  //     jsonData.push(JSON.stringify(credentials))
+  //     console.log('jsonData after', jsonData)
+  //     fs.writeFileSync('fitbitusers.json', jsonData);
+  //
+  //
+  //     console.log("i am token", accesstoken)
+  //     client.get("/profile.json", result.access_token).then(results => {
+  //       var username = results[0]['user']['username'];
+  //     res.send(results[0]);
+  //     }).catch(err => {
+  //       console.log('error ', err)
+  //       res.status(err.status).send(err);
+  //     });
+  //   }).catch(err => {
+  //     console.log('error', err)
+  //     res.status(err.status).send(err);
+  //   });
+  // });
 
  // Send message for default URL
   app.get('/',function(req,res){
