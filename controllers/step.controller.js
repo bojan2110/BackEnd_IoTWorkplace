@@ -52,10 +52,24 @@ exports.new = function (req, res) {
 
             if(err.name === 'BulkWriteError')
             {
-              var duplicates=JSON.parse(JSON.stringify(err.writeErrors,undefined,2));
-              var duplicates_ts=duplicates.map(function (el) { return el.op.collectionTime; });
-              var input_ts=stepdata.map(a => a.collectionTime)
-              var new_ts = input_ts.filter(function(obj) { return duplicates_ts.indexOf(obj) == -1; });
+              var duplicates=[];
+              var duplicates_ts=[];
+              var input_ts=[];
+              var new_ts=[];
+
+                 try {
+                   duplicates=JSON.parse(JSON.stringify(err.writeErrors,undefined,2));
+                   duplicates_ts=duplicates.map(function (el) { return el.op.collectionTime; });
+                   input_ts=stepdata.map(a => a.collectionTime)
+                   new_ts = input_ts.filter(function(obj) { return duplicates_ts.indexOf(obj) == -1; });
+                 } catch (e) {
+                   console.log('BulkWriteError try catch',e)
+                 }
+
+              // var duplicates=JSON.parse(JSON.stringify(err.writeErrors,undefined,2));
+              // var duplicates_ts=duplicates.map(function (el) { return el.op.collectionTime; });
+              // var input_ts=stepdata.map(a => a.collectionTime)
+              // var new_ts = input_ts.filter(function(obj) { return duplicates_ts.indexOf(obj) == -1; });
 
 
               console.log('DEALING WITH DUPLICATES')
@@ -68,6 +82,7 @@ exports.new = function (req, res) {
 
             }
             else{
+              console.log('BulkWriteError',err)
               res.json(err);
             }
 
