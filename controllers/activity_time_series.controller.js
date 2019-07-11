@@ -39,6 +39,20 @@ exports.getActivityData=function (req, res) {
               "start":-1}]}]
           });
         }
+        else if (stepsdata.length == 0){
+          console.log('Stepsdata 0 ')
+          res.json({
+              status: "success",
+              intervals:[],
+              totalsteps:-1,
+              totalsits:-1,
+              lastupdate:0,
+              cyclesinfo:[{"prolonged":-1,
+              "cycles":[],
+              "current":[{"length":-1,
+              "start":-1}]}]
+          });
+        }
         //there is steps to show for the selected interval
         else
         {
