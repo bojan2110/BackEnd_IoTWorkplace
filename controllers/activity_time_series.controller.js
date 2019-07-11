@@ -30,8 +30,8 @@ exports.getActivityData=function (req, res) {
           res.json({
               status: "success",
               intervals:[],
-              totalsteps:0,
-              totalsits:0,
+              totalsteps:-1,
+              totalsits:-1,
               lastupdate:0,
               cyclesinfo:[{"prolonged":-1,
               "cycles":[],
