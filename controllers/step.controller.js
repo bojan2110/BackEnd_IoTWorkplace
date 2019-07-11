@@ -59,9 +59,9 @@ exports.new = function (req, res) {
 
 
               console.log('DEALING WITH DUPLICATES')
-              console.log(duplicates)
-              console.log(duplicates_ts.length)
-              console.log(input_ts.length)
+              // console.log(duplicates)
+              console.log('duplicates length',duplicates_ts.length)
+              console.log('new stepsdata length',input_ts.length)
               console.log(new_ts.length)
 
               res.json({message : "Some Step Entries Inserted", status : 200,timestamps:new_ts});
