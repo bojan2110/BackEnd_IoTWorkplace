@@ -24,7 +24,7 @@ exports.getActivityData=function (req, res) {
       }
       else
       {
-        if(stepsdata === 'undefined' || stepsdata.length == 0)
+        if(stepsdata === 'undefined')
         {
           console.log('Stepsdata undefined ')
           res.json({
