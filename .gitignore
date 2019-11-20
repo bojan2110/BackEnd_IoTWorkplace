@@ -1,0 +1,5 @@
+/node_modules
+backgroundpictures/
+package-lock.json
+package.json
+config.js
