@@ -134,7 +134,7 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
 // database name is resthub in this case
 // we use authentication with user,pass. there are other options also available
 
-  //change to production to get production credentials
+  //env is set to development OR production | depending of local vs remote server
   var env = 'production';
   var config = require('./config')[env];
   mongoose.connect('mongodb://'+config.database.user+':'+config.database.password+'@'+
@@ -146,54 +146,6 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
   //connection is open
   db.once('open', function callback () {
   console.log("Start Server node js");
-
-
-    //fitbit get
-  // app.get("/authorize",(req, res) => {
-  //   console.log('authorize')
-  //
-  //   //request access to the user's activity, loc, etc.
-  //   res.redirect(client.getAuthorizeUrl('heartrate activity profile settings', 'https://health-iot.labs.vu.nl/callback'));
-  // });
-  // //fitbit callback
-  // app.get("/callback", (req, res) => {
-  //   console.log('i am in callback')
-  //     // exchange the authorization code we just received for an access token
-  //     client.getAccessToken(req.query.code, 'https://health-iot.labs.vu.nl/callback').then(result => {
-  //     // use the access token to fetch the user's profile information
-  //     console.log('callback result', result)
-  //
-  //     let jsonData = require('./fitbitusers.json');
-  //     //jsonData=JSON.stringify(jsonData);
-  //     console.log('jsonData type', typeof jsonData)
-  //     console.log('jsonData length', jsonData.length)
-  //
-  //     accesstoken = result.access_token;
-  //     refreshtoken=result.refresh_token;
-  //     var username='testuser'
-  //     let credentials = {
-  //         username: username,
-  //         accesstoken: accesstoken,
-  //         refreshtoken: refreshtoken
-  //     };
-  //     jsonData.push(JSON.stringify(credentials))
-  //     console.log('jsonData after', jsonData)
-  //     fs.writeFileSync('fitbitusers.json', jsonData);
-  //
-  //
-  //     console.log("i am token", accesstoken)
-  //     client.get("/profile.json", result.access_token).then(results => {
-  //       var username = results[0]['user']['username'];
-  //     res.send(results[0]);
-  //     }).catch(err => {
-  //       console.log('error ', err)
-  //       res.status(err.status).send(err);
-  //     });
-  //   }).catch(err => {
-  //     console.log('error', err)
-  //     res.status(err.status).send(err);
-  //   });
-  // });
 
  // Send message for default URL
   app.get('/',function(req,res){
