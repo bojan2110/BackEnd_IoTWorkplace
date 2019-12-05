@@ -1,5 +1,6 @@
 exports.getActivityData=function (req, res) {
   Steps = require('../models/step.model');
+  // get the input parameters
   var userid=req.params.userid;
   var startdate=req.params.startdate;
   var enddate=req.params.enddate;
@@ -223,10 +224,10 @@ function calculateCycles(start,end,data) {
   //single data point is available (this is posssible at the start of the day)
   else if (count==1)
   {
+    for (entry in data){
     if(data[entry].sits==1)
-      current.push(
-      {"lenght":1,
-      "start":data[entry].collectionTime});
+      current.push({"lenght":1,"start":data[entry].collectionTime});
+    }
 
     //no cycles are done available,so only current cycle with one minute should be returned
     returnArray.push({"prolonged":prolonged,
