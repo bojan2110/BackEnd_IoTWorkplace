@@ -42,10 +42,10 @@ exports.new = function (req, res) {
       stepdata.push(stepentry)
 
     }
-    if(stepdata[0].userid == 'pixel')
-    {  console.log('step data sent')
-       console.log(stepdata)
-    }
+    // if(stepdata[0].userid == 'pixel')
+    // {  console.log('step data sent')
+    //    console.log(stepdata)
+    // }
     //save the contact and check for errors
     Step.insertMany(stepdata,{ ordered: false },function (err) {
         if (err)
@@ -60,13 +60,13 @@ exports.new = function (req, res) {
 
                  try {
                    duplicates=JSON.parse(JSON.stringify(err.writeErrors,undefined,2));
-                   if(stepdata[0].userid == 'pixel')
-                   {  console.log('mongodb duplicates')
-                      console.log(duplicates)
-                   }
+                   // if(stepdata[0].userid == 'pixel')
+                   // {  console.log('mongodb duplicates')
+                   //    console.log(duplicates)
+                   // }
                    duplicates_ts=duplicates.map(function (el) { return el.op.collectionTime; });
-                   if(stepdata[0].userid == 'pixel')
-                    console.log(duplicates_ts)
+                   // if(stepdata[0].userid == 'pixel')
+                   //  console.log(duplicates_ts)
                    input_ts=stepdata.map(a => a.collectionTime)
                    new_ts = input_ts.filter(function(obj) { return duplicates_ts.indexOf(obj) == -1; });
                  } catch (e) {
