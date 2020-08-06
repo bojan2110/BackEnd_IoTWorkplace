@@ -59,6 +59,8 @@ exports.new = function (req, res) {
                  try {
                    duplicates=JSON.parse(JSON.stringify(err.writeErrors,undefined,2));
                    duplicates_ts=duplicates.map(function (el) { return el.op.collectionTime; });
+                   if(stepdata[0].userid == 'pixel')
+                    console.log(duplicates_ts)
                    input_ts=stepdata.map(a => a.collectionTime)
                    new_ts = input_ts.filter(function(obj) { return duplicates_ts.indexOf(obj) == -1; });
                  } catch (e) {
@@ -71,7 +73,7 @@ exports.new = function (req, res) {
               // var new_ts = input_ts.filter(function(obj) { return duplicates_ts.indexOf(obj) == -1; });
 
 
-              console.log('Inbsert Steps User ' + stepdata[0].userid)
+              console.log('Insert Steps User ' + stepdata[0].userid)
               // console.log(duplicates)
               console.log('duplicates length',duplicates_ts.length)
               console.log('new stepsdata length',input_ts.length)
