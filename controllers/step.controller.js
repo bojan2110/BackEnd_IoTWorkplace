@@ -72,7 +72,7 @@ exports.new = function (req, res) {
               // var new_ts = input_ts.filter(function(obj) { return duplicates_ts.indexOf(obj) == -1; });
 
 
-              console.log('DEALING WITH DUPLICATES')
+              console.log('Steps Duplicates')
               // console.log(duplicates)
               console.log('duplicates length',duplicates_ts.length)
               console.log('new stepsdata length',input_ts.length)
