@@ -44,7 +44,6 @@ exports.new = function (req, res) {
     }
     // console.log('step data sent')
     // console.log(stepdata)
-    console.log('INSERT STEP DATA')
     //save the contact and check for errors
     Step.insertMany(stepdata,{ ordered: false },function (err) {
         if (err)
@@ -72,7 +71,7 @@ exports.new = function (req, res) {
               // var new_ts = input_ts.filter(function(obj) { return duplicates_ts.indexOf(obj) == -1; });
 
 
-              console.log('Steps Duplicates')
+              console.log('Inbsert Steps User ' + stepdata[0].userid)
               // console.log(duplicates)
               console.log('duplicates length',duplicates_ts.length)
               console.log('new stepsdata length',input_ts.length)
