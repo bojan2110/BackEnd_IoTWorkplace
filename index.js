@@ -26,6 +26,7 @@ let flashCardRoutes = require("./routes/flashcard.route");
 let activityTimeSeriesRoutes=require("./routes/activity_time_series.route");
 let userRoutes=require("./routes/user.route");
 let stepRoutes=require("./routes/step.route");
+let activityGoogleRoutes=require("./routes/activity.route");
 
 
 //for google calendar calls
@@ -103,6 +104,7 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
   app.use('/api', flashCardRoutes)
   app.use('/api', userRoutes)
   app.use('/api', stepRoutes)
+  app.use('/api', activityGoogleRoutes)
 
   app.listen('8080','127.0.0.1');
   // app.listen(config.server.port,config.server.host);
