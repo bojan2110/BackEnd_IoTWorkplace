@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 // Setup schema
 var activitySchema = mongoose.Schema({
-    userid: {  type: Number,required: true},
+    userid: {  type: String,required: true},
     dataSource: {type: String,required: true},
     activityType: {  type: String,required: true},
     confidence: {  type: Number,required: true},

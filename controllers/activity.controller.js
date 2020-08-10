@@ -18,7 +18,7 @@ exports.index = function (req, res) {
 };
 
 exports.new = function (req, res) {
-
+      console.log('activity', req.body)
       var activity = new Activity();
       activity.userid = req.body.userid;
       activity.dataSource = req.body.dataSource;
