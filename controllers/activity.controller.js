@@ -20,11 +20,11 @@ exports.index = function (req, res) {
 exports.new = function (req, res) {
 
       var activity = new Activity();
-      actentry.userid = act.userid;
-      actentry.dataSource = act.dataSource;
-      actentry.activityType = act.activityType;
-      actentry.confidence = act.confidence;
-      actentry.collectionTime=act.collectionTime;
+      activity.userid = act.userid;
+      activity.dataSource = act.dataSource;
+      activity.activityType = act.activityType;
+      activity.confidence = act.confidence;
+      activity.collectionTime=act.collectionTime;
 
     // save the contact and check for errors
       activity.save(function (err) {
