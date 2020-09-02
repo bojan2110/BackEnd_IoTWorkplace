@@ -13,7 +13,7 @@
     "console-stamp": "^0.2.7",
     "express": "^4.16.4",
     "fitbit-node": "^2.2.0",
-    "googleapis": "^27.0.0",
+    "googleapis": "^39.1.0",
     "http": "0.0.0",
     "https": "^1.0.0",
     "moment": "^2.24.0",
