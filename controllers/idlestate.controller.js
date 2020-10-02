@@ -20,7 +20,7 @@ exports.new = function (req, res) {
 
   var idlestate = new IdleState();
   idlestate.userid = req.body.userid;
-  idlestate.deviceid = req.body.userid;
+  idlestate.deviceid = req.body.deviceid;
   idlestate.collectionTime = req.body.collectionTime;
   idlestate.idleTime=req.body.idleTime;
 
