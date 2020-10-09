@@ -1,19 +1,77 @@
 IdleState = require('../models/idlestate.model');
 // Handle index actions
-exports.index = function (req, res) {
-    IdleState.get(function (err, idlestatedata) {
+exports.getIdleStateData = function (req, res) {
+
+    var userid=req.params.userid;
+    var deviceid=req.params.deviceid;
+    var startdate=req.params.startdate;
+    var enddate=req.params.enddate;
+
+    var findquery={
+      "userid":userid,
+      "deviceid": deviceid,
+      "collectionTime": {"$lte":enddate,"$gte":startdate}
+    }
+
+    Steps.find(findquery,
+    function (err, idlestatedata) {
         if (err) {
+          console.log('Error reading idle state data ',err)
             res.json({
                 status: "error",
                 message: err,
             });
         }
-        res.json({
-            status: "success",
-            message: "IdleState Data retrieved successfully!",
-            data: idlestatedata
-        });
-    });
+        else
+        {
+          if(idlestatedata === 'undefined')
+          {
+            console.log('idlestatedata undefined')
+            res.json({
+                status: "idlestatedata undefined",
+                intervals:[]
+            });
+          }
+          else if (idlestatedata.length == 0){
+            console.log('Stepsdata 0 ')
+            res.json({
+                status: "stepsdata 0",
+                intervals:[]
+            });
+          }
+          else{
+
+            res.json({
+                status: "success",
+                intervals:idlestatedata
+            });
+            // var intervals=[];
+            // var currentProlonged;
+            // //intervals are calculated only if the requested interval is daily data!
+            // if(enddate-startdate<=86400)
+            // {
+            //     console.log('getting daily data')
+            //     intervals=calculateIntervals(startdate,enddate,stepsdata);
+            // }
+
+          }
+        }
+      }
+    );
+
+    // IdleState.get(function (err, idlestatedata) {
+    //     if (err) {
+    //         res.json({
+    //             status: "error",
+    //             message: err,
+    //         });
+    //     }
+    //     res.json({
+    //         status: "success",
+    //         message: "IdleState Data retrieved successfully!",
+    //         data: idlestatedata
+    //     });
+    // });
 };
 
 exports.new = function (req, res) {
