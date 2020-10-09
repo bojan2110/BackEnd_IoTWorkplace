@@ -13,7 +13,7 @@ exports.getIdleStateData = function (req, res) {
       "collectionTime": {"$lte":enddate,"$gte":startdate}
     }
 
-    Steps.find(findquery,
+    IdleState.find(findquery,
     function (err, idlestatedata) {
         if (err) {
           console.log('Error reading idle state data ',err)
@@ -33,9 +33,9 @@ exports.getIdleStateData = function (req, res) {
             });
           }
           else if (idlestatedata.length == 0){
-            console.log('Stepsdata 0 ')
+            console.log('idlestatedata 0 ')
             res.json({
-                status: "stepsdata 0",
+                status: "idlestatedata 0",
                 intervals:[]
             });
           }
