@@ -113,3 +113,55 @@ exports.newEvent = function (req, res) {
   });
 
 };
+
+
+exports.getIdleStateAppEvents = function (req, res) {
+
+    var userid=req.params.userid;
+    var deviceid=req.params.deviceid;
+    var startdate=req.params.startdate;
+    var enddate=req.params.enddate;
+
+    var findquery={
+      "userid":userid,
+      "deviceid": deviceid,
+      "collectionTime": {"$lte":enddate,"$gte":startdate}
+    }
+
+    IdleStateAppEvents.find(findquery,
+    function (err, idlestateAppEvents) {
+        if (err) {
+          console.log('Error reading idlestateAppEvents data ',err)
+            res.json({
+                status: "error",
+                message: err,
+            });
+        }
+        else
+        {
+          if(idlestateAppEvents === 'undefined')
+          {
+            console.log('idlestateAppEvents undefined')
+            res.json({
+                status: "idlestateAppEvents undefined",
+                intervals: []
+            });
+          }
+          else if (idlestateAppEvents.length == 0){
+            console.log('idlestateAppEvents 0 ')
+            res.json({
+                status: "idlestateAppEvents 0",
+                intervals: []
+            });
+          }
+          else{
+            res.json({
+                status: "success",
+                intervals:idlestateAppEvents
+            });
+
+          }
+        }
+      }
+    );
+};
