@@ -1,4 +1,6 @@
 IdleState = require('../models/idlestate.model');
+IdleStateAppEvents = require('../models/idleStateAppEvents.model');
+
 // Handle index actions
 exports.getIdleStateData = function (req, res) {
 
@@ -45,36 +47,16 @@ exports.getIdleStateData = function (req, res) {
                 status: "success",
                 intervals:idlestatedata
             });
-            // var intervals=[];
-            // var currentProlonged;
-            // //intervals are calculated only if the requested interval is daily data!
-            // if(enddate-startdate<=86400)
-            // {
-            //     console.log('getting daily data')
-            //     intervals=calculateIntervals(startdate,enddate,stepsdata);
-            // }
+
 
           }
         }
       }
     );
 
-    // IdleState.get(function (err, idlestatedata) {
-    //     if (err) {
-    //         res.json({
-    //             status: "error",
-    //             message: err,
-    //         });
-    //     }
-    //     res.json({
-    //         status: "success",
-    //         message: "IdleState Data retrieved successfully!",
-    //         data: idlestatedata
-    //     });
-    // });
 };
 
-exports.new = function (req, res) {
+exports.newState = function (req, res) {
 
   var idlestate = new IdleState();
   idlestate.userid = req.body.userid;
@@ -97,6 +79,35 @@ exports.new = function (req, res) {
         res.json({
                   message: 'New idlestate Created!',
                   data: idlestate
+              });
+      }
+  });
+
+};
+
+exports.newEvent = function (req, res) {
+
+  var idlestateapp = new IdleStateAppEvents();
+  idlestateapp.userid = req.body.userid;
+  idlestateapp.deviceid = req.body.deviceid;
+  idlestateapp.collectionTime = req.body.collectionTime;
+  idlestateapp.eventid=req.body.eventid;
+
+
+  // save the contact and check for errors
+  idlestateapp.save(function (err) {
+      if (err)
+          {
+            res.json(err);
+            console.log('error adding new idlestate app event')
+            console.log(err)
+          }
+      else
+      {
+        console.log('new idlestate app event added')
+        res.json({
+                  message: 'New idlestate app event created!',
+                  data: idlestateapp
               });
       }
   });

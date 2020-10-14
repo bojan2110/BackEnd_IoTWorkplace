@@ -3,6 +3,7 @@ let router=require('express').Router();
 var idleStateController = require('../controllers/idlestate.controller');
 // Contact routes
 router.route('/idlestate/user/:userid/device/:deviceid/startdate/:startdate/enddate/:enddate').get(idleStateController.getIdleStateData);
-router.route('/idlestate/post').post(idleStateController.new);
+router.route('/idlestate/post').post(idleStateController.newState);
+router.route('/idlestate/event').post(idleStateController.newEvent);
 // Export API routes
 module.exports = router;
