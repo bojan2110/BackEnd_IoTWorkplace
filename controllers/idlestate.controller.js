@@ -86,7 +86,8 @@ exports.newState = function (req, res) {
 };
 
 exports.newEvent = function (req, res) {
-
+  console.log('Adding new event')
+  console.log('Request ', req)
   var idlestateapp = new IdleStateAppEvents();
   idlestateapp.userid = req.body.userid;
   idlestateapp.deviceid = req.body.deviceid;
