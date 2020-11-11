@@ -1,6 +1,18 @@
 IdleState = require('../models/idlestate.model');
-IdleStateAppEvents = require('../models/idleStateAppEvents.model');
 
+/* State events
+    0 - user not active
+    1 - user  active
+    2 - device suspend
+    3 - device resume
+    4 - device on-ac
+    5 - device on-battery
+    6 - device shutdown
+    7 - device lockscreen
+    8 - device unlockscreen
+    9 - application ON
+    10 - application OFF
+    */
 // Handle index actions
 exports.getIdleStateData = function (req, res) {
 
@@ -83,86 +95,4 @@ exports.newState = function (req, res) {
       }
   });
 
-};
-
-exports.newEvent = function (req, res) {
-  console.log('Adding new event')
-  console.log('Request ', req)
-  var idlestateapp = new IdleStateAppEvents();
-  idlestateapp.userid = req.body.userid;
-  idlestateapp.deviceid = req.body.deviceid;
-  idlestateapp.collectionTime = req.body.collectionTime;
-  idlestateapp.eventid=req.body.eventid;
-
-
-  // save the contact and check for errors
-  idlestateapp.save(function (err) {
-      if (err)
-          {
-            res.json(err);
-            console.log('error adding new idlestate app event')
-            console.log(err)
-          }
-      else
-      {
-        console.log('new idlestate app event added')
-        res.json({
-                  message: 'New idlestate app event created!',
-                  data: idlestateapp
-              });
-      }
-  });
-
-};
-
-
-exports.getIdleStateAppEvents = function (req, res) {
-
-    var userid=req.params.userid;
-    var deviceid=req.params.deviceid;
-    var startdate=req.params.startdate;
-    var enddate=req.params.enddate;
-
-    var findquery={
-      "userid":userid,
-      "deviceid": deviceid,
-      "collectionTime": {"$lte":enddate,"$gte":startdate}
-    }
-
-    IdleStateAppEvents.find(findquery,
-    function (err, idlestateAppEvents) {
-        if (err) {
-          console.log('Error reading idlestateAppEvents data ',err)
-            res.json({
-                status: "error",
-                message: err,
-            });
-        }
-        else
-        {
-          if(idlestateAppEvents === 'undefined')
-          {
-            console.log('idlestateAppEvents undefined')
-            res.json({
-                status: "idlestateAppEvents undefined",
-                intervals: []
-            });
-          }
-          else if (idlestateAppEvents.length == 0){
-            console.log('idlestateAppEvents 0 ')
-            res.json({
-                status: "idlestateAppEvents 0",
-                intervals: []
-            });
-          }
-          else{
-            res.json({
-                status: "success",
-                intervals:idlestateAppEvents
-            });
-
-          }
-        }
-      }
-    );
 };
