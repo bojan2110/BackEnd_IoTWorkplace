@@ -13,7 +13,7 @@ IdleState = require('../models/idlestate.model');
     9 - application ON
     10 - application OFF
     */
-// Handle index actions
+
 exports.getIdleStateData = function (req, res) {
 
     var userid=req.params.userid;
