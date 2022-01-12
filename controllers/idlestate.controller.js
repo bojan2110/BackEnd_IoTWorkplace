@@ -17,15 +17,19 @@ IdleState = require('../models/idlestate.model');
 exports.getIdleStateData = function (req, res) {
 
     var userid=req.params.userid;
-    var deviceid=req.params.deviceid;
+    // var deviceid=req.params.deviceid;
     var startdate=req.params.startdate;
     var enddate=req.params.enddate;
 
     var findquery={
       "userid":userid,
-      "deviceid": deviceid,
       "collectionTime": {"$lte":enddate,"$gte":startdate}
     }
+    if(req.params.deviceid)
+    {
+      findquery.deviceid  = req.params.deviceid
+    }
+
 
     IdleState.find(findquery,
     function (err, idlestatedata) {

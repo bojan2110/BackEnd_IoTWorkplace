@@ -3,3 +3,4 @@ backgroundpictures/
 package-lock.json
 package.json
 config.js
+.DS_Store
