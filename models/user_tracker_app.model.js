@@ -1,7 +1,7 @@
 
 var mongoose = require('mongoose');
 var userTrackerAppSchema = mongoose.Schema({
-    userid: {type: Number,required: true},
+    userid: {type: String,required: true},
     collectionTime: {type: Number, required: true, unique: true}
 });
 // Export Contact model
