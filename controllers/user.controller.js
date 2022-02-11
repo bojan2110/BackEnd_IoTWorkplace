@@ -92,15 +92,15 @@ exports.postDashboardInfo = function (req, res){
 exports.postUserTracker = function (req, res){
   var uta = new UserTrackerApp();
   uta.userid = req.body.userid;
-  udi.collectionTime = req.body.collectionTime;
+  uta.collectionTime = req.body.collectionTime;
 // save the contact and check for errors
-  udi.save(function (err) {
+  uta.save(function (err) {
       if (err)
           res.json(err);
       else
       res.json({
                 message: 'New UserTrackerApp entry created!',
-                data: udi
+                data: uta
             });
   });
 };
