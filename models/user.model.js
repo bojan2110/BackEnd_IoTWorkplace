@@ -1,9 +1,5 @@
 var mongoose = require('mongoose');
 var userSchema = mongoose.Schema({
-    username: {
-        type: String,
-        required: true
-    },
     useremail: {
         type: String,
         required: true
@@ -11,22 +7,7 @@ var userSchema = mongoose.Schema({
     userid: {
         type: String,
         required: true
-    },
-    location: String,
-    workdays: [{
-                  day: {
-                      type: String,
-                      default: ''
-                  },
-                  starttime: {
-                      type: String,
-                      default: ''
-                  },
-                  endtime: {
-                      type: String,
-                      default: ''
-                  }
-              }]
+    }
 });
 // Export Contact model
 var User = module.exports = mongoose.model('users', userSchema);

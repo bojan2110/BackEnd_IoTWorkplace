@@ -34,10 +34,7 @@ exports.addUserInfo = function (req, res){
 
   var user = new User();
   user.userid = req.body.userid;
-  user.username = req.body.username;
   user.useremail=req.body.useremail;
-  user.location = req.body.location;
-  user.workdays = req.body.workdays;
 
 
 // save the contact and check for errors
