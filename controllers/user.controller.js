@@ -1,7 +1,7 @@
 // handles the requests for both user and user dashboard interaction functions
 User = require('../models/user.model');
 UserDashboardInteraction = require('../models/user_dashboard_interaction.model');
-
+UserTrackerApp = require('../models/user_tracker_app.model');
 //get user method
 exports.getUserInfo = function (req, res){
 
@@ -35,8 +35,6 @@ exports.addUserInfo = function (req, res){
   var user = new User();
   user.userid = req.body.userid;
   user.useremail=req.body.useremail;
-
-
 // save the contact and check for errors
   user.save(function (err) {
       if (err)
@@ -86,6 +84,22 @@ exports.postDashboardInfo = function (req, res){
       else
       res.json({
                 message: 'New User Dashboard Interaction Created!',
+                data: udi
+            });
+  });
+};
+
+exports.postUserTracker = function (req, res){
+  var uta = new UserTrackerApp();
+  uta.userid = req.body.userid;
+  udi.collectionTime = req.body.collectionTime;
+// save the contact and check for errors
+  udi.save(function (err) {
+      if (err)
+          res.json(err);
+      else
+      res.json({
+                message: 'New UserTrackerApp entry created!',
                 data: udi
             });
   });
