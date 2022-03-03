@@ -11,54 +11,17 @@ let app = express();
 let bodyParser = require('body-parser');
 // Import Mongoose
 let mongoose = require('mongoose');
-
 var cron = require('node-cron');
 
 //import routes
-//commented out for the student project
-// let bluetoothRoutes = require("./routes/bluetooth.route");
-// let microphoneRoutes = require("./routes/microphone.route");
-// let activityRoutes=require("./routes/activity.route");
-
 let messagesRoutes = require("./routes/dashboardmessages.route");
 let dashboardBackgroundRoutes = require("./routes/dashboardbackground.route");
-let flashCardRoutes = require("./routes/flashcard.route");
-let activityTimeSeriesRoutes=require("./routes/activity_time_series.route");
 let userRoutes=require("./routes/user.route");
+let goalRoutes=require("./routes/goal.route");
 let idleStateRoutes=require("./routes/idlestate.route");
-let stepRoutes=require("./routes/step.route");
-let activityGoogleRoutes=require("./routes/activity.route");
-
-
-//for google calendar calls
-const fs = require('fs');
-const readline = require('readline');
-const {google} = require('googleapis');
-// const SCOPES = ['https://www.googleapis.com/auth/calendar'];
-// var OAuth2 = google.auth.OAuth2;
-// var Session = require('express-session');
-// The file token.json stores the user's access and refresh tokens, and is
-// created automatically when the authorization flow completes for the first
-// time.
-// const TOKEN_PATH = 'token.json';
-
-//ENABLING HTTPS CONNECTIONS
-// var key=fs.readFileSync('domain.key');
-// console.log('key',key);
-// var cert=fs.readFileSync('domain.crt');
-// console.log('cert',cert);
-// var options = {
-// key: key,
-// cert: cert
-// };
-//
-// var httpServer = http.createServer(app);
-// var httpsServer = https.createServer(options, app);
-
-
+let workdaysRoutes=require("./routes/workdays.route");
 
 // mongoose.set('debug', true)
-
 
 // Configure bodyparser to handle post requests
 app.use(bodyParser.urlencoded({
@@ -95,18 +58,12 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
   // Launch the website
   app.use(express.static(__dirname + '/landingpage'));
  // Use Api routes
-  // app.use('/api', bluetoothRoutes)
-  // app.use('/api', microphoneRoutes)
-  // app.use('/api', activityRoutes)
-
   app.use('/api', messagesRoutes)
   app.use('/api', dashboardBackgroundRoutes)
-  app.use('/api', activityTimeSeriesRoutes)
-  app.use('/api', flashCardRoutes)
   app.use('/api', userRoutes)
-  app.use('/api', stepRoutes)
   app.use('/api', idleStateRoutes)
-  app.use('/api', activityGoogleRoutes)
+  app.use('/api', goalRoutes)
+  app.use('/api', workdaysRoutes)
 
   app.listen('8080','127.0.0.1');
   // app.listen(config.server.port,config.server.host);
@@ -114,105 +71,4 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
   // httpsServer.listen(433);
   console.log('Server running!!');
 
-  // CODE RELATED TO GOOGLE CALENDAR
-  // // Load client secrets from a local file.
-  // // fs.readFile('credentials.json', (err, content) => {
-  // //   console.log('readFile')
-  // //   if (err) return console.log('Error loading client secret file:', err);
-  // //   // Authorize a client with credentials, then call the Google Calendar API.
-  // //   authorize(JSON.parse(content), listEvents);
-  // // });
-  //
-  // /**
-  //  * Create an OAuth2 client with the given credentials, and then execute the
-  //  * given callback function.
-  //  * @param {Object} credentials The authorization client credentials.
-  //  * @param {function} callback The callback to call with the authorized client.
-  //  */
-  // function authorize(credentials, callback) {
-  //   console.log('authorize')
-  //   // const {client_secret, client_id, redirect_uris} = credentials.installed;
-  //   const oAuth2Client = getOAuthClient();
-  //   // Check if we have previously stored a token.
-  //   fs.readFile(TOKEN_PATH, (err, token) => {
-  //     if (err) return getAccessToken(oAuth2Client, callback);
-  //     console.log(token)
-  //     oAuth2Client.setCredentials(JSON.parse(token));
-  //     callback(oAuth2Client);
-  //   });
-  // }
-  //
-  // /**
-  //  * Get and store new token after prompting for user authorization, and then
-  //  * execute the given callback with the authorized OAuth2 client.
-  //  * @param {google.auth.OAuth2} oAuth2Client The OAuth2 client to get token for.
-  //  * @param {getEventsCallback} callback The callback for the authorized client.
-  //  */
-  // function getAccessToken(oAuth2Client, callback) {
-  //   console.log('getAccessToken')
-  //   const authUrl = oAuth2Client.generateAuthUrl({
-  //     access_type: 'offline',
-  //     scope: SCOPES,
-  //   });
-  //   console.log('Authorize this app by visiting this url:', authUrl);
-  // }
-  //
-  // /**
-  //  * Lists the next 10 events on the user's primary calendar.
-  //  * @param {google.auth.OAuth2} auth An authorized OAuth2 client.
-  //  */
-  // function listEvents(auth) {
-  //   console.log('listEvents')
-  //   const calendar = google.calendar({version: 'v3', auth});
-  //   calendar.events.list({
-  //     calendarId: 'primary',
-  //     timeMin: (new Date()).toISOString(),
-  //     maxResults: 10,
-  //     singleEvents: true,
-  //     orderBy: 'startTime',
-  //   }, (err, res) => {
-  //     if (err) return console.log('The API returned an error: ' + err);
-  //     const events = res.data.items;
-  //     if (events.length) {
-  //       console.log('Upcoming 10 events:');
-  //       events.map((event, i) => {
-  //         const start = event.start.dateTime || event.start.date;
-  //         console.log(`${start} - ${event.summary}`);
-  //       });
-  //     } else {
-  //       console.log('No upcoming events found.');
-  //     }
-  //   });
-  // }
-
-
 }); // db.open ends here
-
-
-// // //creates an oAuth client
-// function getOAuthClient () {
-//   console.log('getOAuthClient')
-//     //clientid,client secret,redirect uri
-//     return new OAuth2("394896214180-1lc9sc7uje9tnd3vf2ueos4fqh263mu5.apps.googleusercontent.com" ,  "5NmGemSAjbNRfhgpmybQR8vH", "http://localhost:3005/redirect");
-// }
-//
-// app.use("/redirect", function (req, res) {
-//   console.log('redirect')
-//     var session = req.session;
-//     var code = req.query.code; // the query param code
-//     console.log('session ' + session)
-//     console.log('code ' + code)
-//     var oAuth2Client = getOAuthClient();
-//     // console.log(oAuth2Client)
-//     oAuth2Client.getToken(code, (err, token) => {
-//       if (err) return console.error('Error retrieving access token', err);
-//       oAuth2Client.setCredentials(token);
-//       // Store the token to disk for later program executions
-//       fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-//         if (err) return console.error(err);
-//         console.log('Token stored to', TOKEN_PATH);
-//       });
-//       callback(oAuth2Client);
-//     });
-//
-// });

@@ -1,11 +1,10 @@
 var mongoose = require('mongoose');
 // Setup schema
 var goalSchema = mongoose.Schema({
-    userid: {  type: Number,required: true},
-    goalid : { type: Number, required: true },
-    acceptedgoal : { type: Number, required: true },
-    recommendedgoal : { type: Number, required: true },
-    date: { type: Date , default:Date.now ,required: true}
+    userid: {  type: String,required: true},
+    prolongedgoal : { type: Number, required: true },
+    sittinggoal : { type: Number, required: true },
+    collectionTime: { type: Number, required: true, unique: true}
 });
 // Export Challenge model
 var Goal = module.exports = mongoose.model('goals', goalSchema);
