@@ -45,9 +45,32 @@ exports.allrandom = function (req, res) {
       });
 };
 
+exports.getbackground = function (req, res) {
+
+  var findquery={
+    "name":req.params.name
+  }
+
+  DashboardBackground.find(findquery,  function (err, backgrounddata) {
+
+        if (err) {
+            res.json({
+                status: "error",
+                message: err,
+            });
+        }
+        else{
+          res.json({
+            name: backgrounddata.name,
+            filePath: backgrounddata.backgroundImage,
+            _id: backgrounddata._id
+          });
+        }
+    });
+};
 
 
-exports.uploadpic=function (req, res) {
+exports.uploadpic = function (req, res) {
     upload(req,res,function(err){
         if(err)
         {
