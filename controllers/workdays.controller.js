@@ -72,7 +72,7 @@ exports.postWorkDays = function (req, res) {
         console.log('new Workdays added')
         res.json({
                   message: 'New Workdays Created!',
-                  data: goal
+                  data: workdays
               });
       }
   });
