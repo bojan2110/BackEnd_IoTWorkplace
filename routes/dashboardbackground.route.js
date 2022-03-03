@@ -8,7 +8,7 @@ const DashboardBackground = require('../models/dashboardbackground.model');
 
 // BackgroundImages routes
 router.route('/backgroundpictures/allrandom').get(dashboardBackgroundController.allrandom);
-router.route('/backgroundpictures/getbackground/:name').get(dashboardBackgroundController.getbackground);
+router.route('/backgroundpictures/:name').get(dashboardBackgroundController.getbackground);
 router.route('/backgroundpictures/uploadpic').post(dashboardBackgroundController.uploadpic);
 // router.route('/backgroundpictures/categoryrandom/:category').get(dashboardBackgroundController.categoryrandom);
 // router.route('/background/post').post([dashboardBackgroundController.uploadimage,dashboardBackgroundController.newdashboardbackground]);
