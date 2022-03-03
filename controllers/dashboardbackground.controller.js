@@ -56,7 +56,7 @@ exports.getbackground = function (req, res) {
         function (docs) {
           // use doc
           console.log('DashboardBackground',docs,req.params.name)
-          var doc = docs.filter(function(item) { return item.name === req.params.name });
+          var doc = docs.filter(function(item) { return item.name === req.params.name })[0];
           console.log('DashboardBackground doc',doc)
 
           res.json({
