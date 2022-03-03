@@ -3,7 +3,7 @@ Workdays = require('../models/workdays.model');
 exports.getWorkDays = function (req, res) {
 
     var findquery={
-      "userid":req.params.userid;
+      "userid":req.params.userid
     }
 
     Workdays.find(findquery,

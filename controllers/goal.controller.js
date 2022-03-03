@@ -3,7 +3,7 @@ Goal = require('../models/goal.model');
 exports.getGoals = function (req, res) {
 
     var findquery={
-      "userid":req.params.userid;
+      "userid":req.params.userid
     }
 
     Goal.find(findquery,
