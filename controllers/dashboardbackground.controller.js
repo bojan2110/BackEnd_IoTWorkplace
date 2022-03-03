@@ -56,6 +56,8 @@ exports.getbackground = function (req, res) {
           // use doc
           console.log('DashboardBackground',docs,req.params.name)
           var doc = docs.filter(function(item) { return item.name === req.params.name });
+          console.log('DashboardBackground doc',doc)
+
           res.json({
                         name: doc.name,
                         filePath: doc.backgroundImage,
