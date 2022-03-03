@@ -29,8 +29,9 @@ exports.allrandom = function (req, res) {
       .then(
         function (docs) {
           // use doc
-          console.log('DashboardBackground',docs)
+          console.log('DashboardBackground allrandom',docs)
           var doc = docs[Math.floor(Math.random() * docs.length)];
+          console.log('DashboardBackground doc allrandom',doc)
           res.json({
                         name: doc.name,
                         filePath: doc.backgroundImage,
