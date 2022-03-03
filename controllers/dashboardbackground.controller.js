@@ -29,6 +29,7 @@ exports.allrandom = function (req, res) {
       .then(
         function (docs) {
           // use doc
+          console.log('DashboardBackground',docs)
           var doc = docs[Math.floor(Math.random() * docs.length)];
           res.json({
                         name: doc.name,
@@ -47,26 +48,26 @@ exports.allrandom = function (req, res) {
 
 exports.getbackground = function (req, res) {
 
-  var findquery={
-    "name":req.params.name
-  }
-
-  DashboardBackground.find(findquery,  function (err, backgrounddata) {
-
-        if (err) {
-            res.json({
-                status: "error",
-                message: err,
-            });
-        }
-        else{
+  DashboardBackground.find()
+      .select("name _id backgroundImage")
+      .exec()
+      .then(
+        function (docs) {
+          // use doc
+          var doc = docs.filter(function(item) { return item.name === req.params.name });
           res.json({
-            name: backgrounddata.name,
-            filePath: backgrounddata.backgroundImage,
-            _id: backgrounddata._id
+                        name: doc.name,
+                        filePath: doc.backgroundImage,
+                        _id: doc._id
           });
         }
-    });
+      )
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({
+          error: err
+        });
+      });
 };
 
 
