@@ -20,9 +20,9 @@
 					<nav>
 						<ul>
 							<li><a href="#intro">Welcome</a></li>
-							<li><a href="#one">Facts</a></li>
-							<!-- <li><a href="#two">About</a></li> -->
-							<li><a href="#three">Participants Instructions</a></li>
+							<li><a href="#one">Software</a></li>
+							<li><a href="#two">Participants Instructions</a></li>
+							<li><a href="#three">Facts</a></li>
 							<li><a href="#four">Get in touch</a></li>
 						</ul>
 					</nav>
@@ -35,158 +35,152 @@
 				<!-- Intro -->
 					<section id="intro" class="wrapper style4 fullscreen fade-up">
 						<div class="inner">
-							<h2>StandUp! Research Project for Sedentary Behavior at Work.</h2>
-							<h5> The human body is designed to move. For thousands of years, that’s exactly what humans did.
-								 In the mid-20th century, however, rapid technological advances (think: cars, TVs, computers, etc.)
+							<h2>StandUp! For healthier lifestyle.</h2>
+							<h5> The human body is designed to move. For thousands of years, that’s exactly what we did.
+								 In the mid-20th century rapid technological advances (think: cars, TVs, computers, etc.)
 								  began chipping away at physical activity and people became increasingly sedentary. Technology has also
-								  influenced the way we work,  most of us being tied to the chairs during our working days. </h5>
-									<h5> We believe that technology can be used to fight work-related sedentary behavior.
-										Therefore we will develop an IoT-based behavior tracking system supported by a user dashboard for displaying
-										sedentary behaviour data.
-								 </h5>
-								 <!-- <h5> The research is conducted at the Computer Science department of Vrije Universiteit Amsterdam,
-									 combining the expertise of <a href="http://bi.cs.vu.nl"  target="_blank">Behavioural Informatics</a> and <a href="https://www.cs.vu.nl/SWAN/index.html" target="_blank">High Performance Distributed Computing</a> research groups.
-								</h5> -->
-								<h5> Check out our Health Dashboard in the video below:
-							 </h5>
-						 </br>
-								<h5>
-									<iframe width="760" height="515" src="https://www.youtube.com/embed/4BPORzonUpk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+								  influenced the way we work,  most of us being tied to the chairs for long times throughout the day.
+								In the same time, we believe that technology can be used to fight (work-related) sedentary behavior. </h5>
+									<h5>
+									 This project proposes a software-based health intervention for reducing sedentary time by looking into your daily active screen time.
+									 Active screen time is the time we spent in front of our computer. Reducing the daily screen time is the first focus of this software.
+									 We understand that lowering the screen time can be challenging: for example a lot of you are bound to the screen for work.
+									 That is  why our second focus point is changing the way you <span class="bolded">manage</span>  your active screen time.
+									 This involves dedicating more moments for short breaks, that help avoiding prolonged screen time cycles.
+									 Understaning the concept of prolonged screen time cycles is very important.
+									 Prolonged screen cycles are any active screen cycle longer than 45 minutes, that are especially harmful for your health.
+									 Our software will help you reducing the number of prolonged screen cycles, through observation and intervention.
 
-								</h5>
-								<!-- <h5>  <a id="urlauthenticate" href=""  target="_blank">Google Calendar Access</a>.
-							 </h5> -->
-							<!-- <ul class="actions">
-								<li><a href="#one" class="button scrolly">Learn more</a></li>
-							</ul> -->
+								 </h5>
+							 </br>
+								 <h4>
+									 Curious how it works? Keep scrolling for the software details...
+								 </h4>
+
 						</div>
 					</section>
 
-				<!-- One -->
-					<section id="one" class="wrapper style1 spotlights">
+
+
+					<section id="one" class="wrapper style1 fade-up">
+						<div class="inner">
+								<h2>The Software</h2>
+
+								<h5> The StandUp! software is a Chrome browser extension that replaces your regular new-tab screen (left picture) with a dashboard-like screen (right picture) where you can observe and get informed about your screen (sedentary) time behaviour. </h5>
+								<div class="row">
+									<img src="images/normal-new-tab.png" alt="dash" width="580" height="400" >
+									<img src="images/dashboard.png" alt="dash" width="580" height="400" style="display:inline">
+								</div>
+							</br>
+								<h5> The software is composed of three modules (screens): the home screen, quotes and history screens.
+									The home screen displays your daily data. The quotes screen displays inspirational quotes regarding sedentary behaviour. The history screen is where you can reflect on your sedentary behaviour and check how you are doing throughout the days/weeks..
+									There is much more to it, but let's not ruin all the fun. You will discover all the details by using the software!
+								</h5>
+							</br>
+								<h5> Besides the Chrome extension above, you will need to install another minimal software that we developed especially for data collection called the Screen Observer.
+									This desktop software collects data about the states of the computer where it is installed.
+									 We collect the following  computer usage  data (states) throughout the day: system idle status changes, lock/unlock screen, resume/suspend computer, and computer shutdown times.
+									 The system idle status change state, records the time when the computer moves from active usage (keyboard/mouse use) state to inactive usage state, and vice versa.
+								Our algorithms combine these state data to model your screen cycles and breaks. The StandUp! dashboard uses this data to show useful information and plots to you!
+								Having both software products installed is essential for a good user experience.
+							  </h5>
+								<div class="row">
+									<img src="images/screen-observer.png" alt="dash" width="580" height="400" >
+								</div>
+									</br>
+								<h5> Our priority is to offer ultimate data privacy and transparency to our participants.
+									 We collect minimal amount of data, and only related to computer states. No personal data is being collected.
+									 All the participants are anonymised, with a given 16-digit registration ID. All the data is stored on our private and secure VU Amsterdam servers.
+									 Each participant can request their data at any time, and withdraw from the experiment.
+									 The code related to this project is available on Github.
+								</h5>
+							</br>
+								<h4>
+					 			 Excited to participate? Scroll down to see what you need to do.
+					 		 </h4>
+						</div>
+					</section>
+
+					<section id="two" class="wrapper style4 fade-up">
+
+						<div class="inner">
+							<p style="font-size:18px">The experiment is organized in five weeks. We require your participation during this period of time.
+								In reality, there is not much you need to do besides  installing the two software products.
+  						We have developed a low-intrusive software that won't distract you from your regular work-life. You will see the StandUp! dashboard only on opening
+								new tab when using your Chrome browser. No smartphones, no wearables. Minimal number of notifications that you can always turn off.
+								We are aware that you have a busy work week, but we truly hope that this low intrusive tool will be helpful to at least observe and think more
+								about your sedentary 	behaviour patterns. Below find the timeline of your participation.
+							</p>
+							<h3 style="font-size:22px;color:rgba(255, 255, 255, 0.35);margin-bottom:0px;">Week 1: Introduction Period</h3>
+							<h5 style="margin-bottom:15px;">Install the Screen Observer software. Fill-in a five minute intake questionnaire.</h5>
+							<h3 style="font-size:22px;color:rgba(255, 255, 255, 0.35);margin-bottom:0px;" >Week 2 - 5: Intervention Period</h3>
+							<h5 style="margin-bottom:15px;"> Install the StandUp! extension software. Anytime you use your Chrome browser, you will see your screen time data details. Keep the Screen Observer software running!
+							</h5>
+							<h3 style="font-size:22px;color:rgba(255, 255, 255, 0.35);margin-bottom:0px;">Post-experiment</h3>
+								<h5 style="margin-bottom:15px;"> Fill the exit questionnaire (max 10 minutes).  Your feedback is much appreciated.
+								 We will also ask for data donation of your activity tracker (google fit, wearables..).
+								 We would like to use this data to validate our algorithms accuracy. This is purely optional!
+							</h5>
+						</div>
+					</section>
+
+					<section id="three" class="wrapper style1 spotlights">
 						<div class="inner">
 							<h2>Sedentary Behaviour Facts</h2>
 							<div class="features">
 								<section>
-									<span class="icon major fa-code"></span>
-									<h3>12 Hours</h3>
-									<p>the amount of time the average person is sitting (aka sedentary) a day. </p>
+									<span class="icon major fa-hourglass"></span>
+									<h3>How much we sit?</h3>
+									<p>The average person is sitting (aka sedentary) 12 hours a day. </p>
 								</section>
 								<section>
-									<span class="icon major fa-lock"></span>
-									<h3>4th LEADING</h3>
-									<p>Risk factor for global mortality is physical inactivity. 3.2 million
+									<span class="icon major fa-globe"></span>
+									<h3>Why is it important?</h3>
+									<p>Physical inactivity is the 4th risk factor for global mortality. 3.2 million
                   deaths a year are related to physical inactivity</p>
 								</section>
 								<section>
-									<span class="icon major fa-cog"></span>
-									<h3>71%</h3>
+									<span class="icon major fa-diamond"></span>
+									<h3>Less sit = more focus</h3>
 									<p>71% of employees reported feeling more focused after reducing sitting time by 1 hour. </p>
 								</section>
 								<section>
-									<span class="icon major fa-desktop"></span>
-									<h3>10 minutes</h3>
+									<span class="icon major fa-heart"></span>
+									<h3>Short breaks rock!</h3>
 									<p>10 minutes of movement is all it takes to increase mental focus. </p>
 								</section>
 								<section>
 									<span class="icon major fa-chain"></span>
-									<h3>6+ hours</h3>
+									<h3>Long sitting risks</h3>
 									<p>Sitting for 6+ hours during the workday puts you at a higher risk for anxiety and depression. </p>
 								</section>
 								<section>
-									<span class="icon major fa-diamond"></span>
-									<h3>15%</h3>
-									<p>Only 15% of people are aware of sitting disease.</p>
+									<span class="icon major fa-user"></span>
+									<h3>Raising awareness</h3>
+									<p>Only 15% of people are aware of the worldwide sitting disease.</p>
 								</section>
 							</div>
-							<ul class="actions">
+							<!-- <ul class="actions">
 								<li><a href="generic.html" class="button">Learn more</a></li>
-							</ul>
+							</ul> -->
 						</div>
 					</section>
 
-
-					<!-- <section id="two" class="wrapper style4 fade-up">
-						<div class="inner">
-							<h4>The project is imagined in two phases</h4>
-							<h5> Initially, we want to evaluate the benefits of collecting and evaluating behavioural data via the developed IoT system.
-								The goal of collecting the behavioural data is to be able to quantify the COM-B model’ parameters.  </h5>
-									<h5> Eventually we want to evaluate the effect of delivering personalized goals based the COM-B model based on the user dashboard.
-										The targeted health intervention is reducing the occupational sedentary behaviour.
-								 </h5>
-							</br>
-							<h4>COM-B Model</h4>
-							<h5> Initially, we want to evaluate the benefits of collecting and evaluating behavioural data via the developed IoT system.
-								The goal of collecting the behavioural data is to be able to quantify the COM-B model’ parameters.  </h5>
-									<h5> Eventually we want to evaluate the effect of delivering personalized goals based the COM-B model based on the user dashboard.
-										The targeted health intervention is reducing the occupational sedentary behaviour.
-								 </h5>
-						</div>
-					</section> -->
-
-
-
-					<section id="three" class="wrapper style4 fade-up">
-
-						<div class="inner">
-							<p>Our first experiment is a feasibility study. Therefore you are participating in a short experiment.
-								We require your participation in 10 working days, i.e. two weeks. You are more than welcomed to keep using the
-								dashboard in case you like what is doing for you.
-							</p>
-							<h3>Step1: Get your Xiaomi MiBand3 activity tracker</h3>
-							<h5>We will provide you with the MiBand3 tracker for counting your steps.
-								You will get a chance to play with this gadget during the experiment.</h5>
-							<h3>Step2: Install the browser-based extension on Google Chrome.</h3>
-							<h5> This extension will replace your default “new tab” screen for the duration of the experiment. Have a look at the video above
-								to have an idea what the dashboard will do.
-							</h5>
-							<h3>Step3: Install the Android App.</h3>
-							<h5> The Android App is simply storing your MiBand3 activity data to our secure cloud. Not much else happens there.
-							</h5>
-							<h3>Step4: Fill the exit questionnaire.</h3>
-							<h5> You are done in only 10 working days. Now your feedback is much appreciated! Please help us to improve the dashboard design and the UX.
-								We promise it won't take more than 15 minutes.</h5>
-						</div>
-					</section>
-
-
-					<section id="four" class="wrapper style1 fade-up">
+					<section id="four" class="wrapper style4 fade-up">
 						<div class="inner">
 							<h2>Get in touch</h2>
-							<p>We are happy to help you whenever you have any questions or suggestions!</p>
-							<div class="split style1">
-								<section>
-									<form method="post" action="#">
-										<div class="fields">
-											<div class="field half">
-												<label for="name">Name</label>
-												<input type="text" name="name" id="name" />
-											</div>
-											<div class="field half">
-												<label for="email">Email</label>
-												<input type="text" name="email" id="email" />
-											</div>
-											<div class="field">
-												<label for="message">Message</label>
-												<textarea name="message" id="message" rows="5"></textarea>
-											</div>
-										</div>
-										<ul class="actions">
-											<li><p class="button submit">Send Message</p></li>
-										</ul>
-									</form>
-								</section>
+							<h5> This research is conducted at the Computer Science department of Vrije Universiteit Amsterdam.
+								We are happy to help you whenever you have any questions or suggestions!
+						 </h5>
+
+							<div class=" style1">
+
 								<section>
 									<ul class="contact">
+
 										<li>
-											<h3>Address</h3>
-											<span>De Boelelaan 1105<br />
-											1081 HV Amsterdam<br />
-											the Netherlands</span>
-										</li>
-										<li>
-											<h3>Email</h3>
-											<a href="#">projectstandupvu@gmail.com</a>
+								
+											<a href="mailto:projectstandupvu@gmail.com">projectstandupvu@gmail.com</a>
 										</li>
 
 									</ul>
@@ -201,7 +195,7 @@
 			<footer id="footer" class="wrapper style1-alt">
 				<div class="inner">
 					<ul class="menu">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>&copy; StandUp! For healthier lifestyle. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 					</ul>
 				</div>
 			</footer>
