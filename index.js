@@ -65,7 +65,8 @@ app.use('/backgroundpictures', express.static(__dirname+'/backgroundpictures'));
   app.use('/api', idleStateRoutes)
   app.use('/api', goalRoutes)
   app.use('/api', workdaysRoutes)
-
+  app.use('/api', cycleRoutes)
+  
   app.listen('8080','127.0.0.1');
   // app.listen(config.server.port,config.server.host);
   // httpServer.listen(80);
