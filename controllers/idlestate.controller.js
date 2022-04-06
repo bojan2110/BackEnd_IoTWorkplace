@@ -6,8 +6,8 @@ exports.getIdleStateDataPerLimit = function (req, res) {
 
     var userid = req.params.userid;
     // var deviceid=req.params.deviceid;
-    var limit = req.params.limit;
-    var sort = req.params.sort;
+    var limit = parseInt(req.params.limit);
+    var sort = parseInt(req.params.sort);
 
     var findquery={"userid":userid}
     if(req.params.deviceid)
