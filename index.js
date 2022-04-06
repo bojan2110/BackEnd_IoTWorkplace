@@ -18,6 +18,7 @@ let messagesRoutes = require("./routes/dashboardmessages.route");
 let dashboardBackgroundRoutes = require("./routes/dashboardbackground.route");
 let userRoutes=require("./routes/user.route");
 let goalRoutes=require("./routes/goal.route");
+let cycleRoutes=require("./routes/cycle.route");
 let idleStateRoutes=require("./routes/idlestate.route");
 let workdaysRoutes=require("./routes/workdays.route");
 

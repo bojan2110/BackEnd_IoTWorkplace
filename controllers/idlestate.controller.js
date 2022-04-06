@@ -1,7 +1,5 @@
 IdleState = require('../models/idlestate.model');
 
-
-
 exports.getIdleStateDataPerLimit = function (req, res) {
 
     var userid = req.params.userid;
@@ -58,7 +56,6 @@ exports.getIdleStateDataPerLimit = function (req, res) {
     );
 
 };
-
 
 exports.getIdleStateDataPerPeriod = function (req, res) {
 
