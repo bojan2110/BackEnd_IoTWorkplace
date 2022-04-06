@@ -1,20 +1,66 @@
 IdleState = require('../models/idlestate.model');
 
-/* State events
-    0 - user not active
-    1 - user  active
-    2 - device suspend
-    3 - device resume
-    4 - device on-ac
-    5 - device on-battery
-    6 - device shutdown
-    7 - device lockscreen
-    8 - device unlockscreen
-    9 - application ON
-    10 - application OFF
-    */
 
-exports.getIdleStateData = function (req, res) {
+
+exports.getIdleStateDataPerLimit = function (req, res) {
+
+    var userid = req.params.userid;
+    // var deviceid=req.params.deviceid;
+    var limit = req.params.limit;
+    var sort = req.params.sort;
+
+    var findquery={"userid":userid}
+    if(req.params.deviceid)
+    {
+      findquery.deviceid  = req.params.deviceid
+    }
+
+
+    IdleState.find(findquery)
+    .sort({_id:sort})
+    .limit(limit)
+    .exec(function (err, idlestatedata) {
+        if (err) {
+          console.log('Error reading idle state data ',err)
+            res.json({
+                status: "error",
+                message: err,
+            });
+        }
+        else
+        {
+          if(idlestatedata === 'undefined')
+          {
+            console.log('idlestatedata undefined')
+            res.json({
+                status: "idlestatedata undefined",
+                intervals:[]
+            });
+          }
+          else if (idlestatedata.length == 0){
+            console.log('idlestatedata 0 ')
+            res.json({
+                status: "idlestatedata 0",
+                intervals:[]
+            });
+          }
+          else{
+
+            res.json({
+                status: "success",
+                intervals:idlestatedata
+            });
+
+
+          }
+        }
+      }
+    );
+
+};
+
+
+exports.getIdleStateDataPerPeriod = function (req, res) {
 
     var userid=req.params.userid;
     // var deviceid=req.params.deviceid;
