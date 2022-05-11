@@ -1,4 +1,4 @@
-function getInferredCycles(intervalArray){
+ function getInferredCycles(intervalArray){
   var cycleArray = {
       cycles: []
   };
@@ -128,7 +128,7 @@ function getInferredCycles(intervalArray){
   return cycleArray
 }
 // help method for getInferredCycles
-function glueCycles(cycleArray){
+ function glueCycles(cycleArray){
     var returnArray = cycleArray
 
     var cycleType = returnArray[0]['cycleType']
@@ -266,7 +266,7 @@ function glueCycles(cycleArray){
     return newArray3
 }
 //help method for createIntervals
-function getIntervalSummary(states,start_interval,end_interval,lastState,slidingWindowMinutes){
+ function getIntervalSummary(states,start_interval,end_interval,lastState,slidingWindowMinutes){
     var idleIntervalThreshold = 0.3
   // console.log('getIntervalSummary function')
     var currentState = lastState
@@ -410,7 +410,7 @@ function getIntervalSummary(states,start_interval,end_interval,lastState,sliding
 
 }
 //summary of states per period - used in the plots
-function statesSummaryPerPeriod(intervals,intervalLength){  // output data
+ function statesSummaryPerPeriod(intervals,intervalLength){  // output data
   var computerOff = []
   var screenTimeOn =[]
   var screenTimeOff = []
@@ -517,7 +517,7 @@ function statesSummaryPerPeriod(intervals,intervalLength){  // output data
 }
 
 //takes the DB-saved states and returns inferred intervals (with size depending on the sliding window)
-function createIntervals(states,slidingWindowMinutes,sTime,eTime){
+ function createIntervals(states,slidingWindowMinutes,sTime,eTime){
 
     // array that will contain the calculated intervals
       var intervalArray = {
@@ -615,7 +615,7 @@ function createIntervals(states,slidingWindowMinutes,sTime,eTime){
   }
 
 
-function createMinuteArray(cycleArray){
+ function createMinuteArray(cycleArray){
   var minuteArray = []
   var cycleBegin
   var cycleType
@@ -660,7 +660,7 @@ function createMinuteArray(cycleArray){
 }
 
 
-function hourTimeline(cycleArray){
+ function hourTimeline(cycleArray){
   var hourlyArray = []
   var intervalLength = 3600
   var hour = 0
@@ -693,7 +693,7 @@ function hourTimeline(cycleArray){
   return hourlyArray
 }
 
-async function cyclesStatsWeekComparison(){
+ async function cyclesStatsWeekComparison(){
   //this vs last week
   //This week
   var startDate1  = moment(moment().startOf('isoWeek').format('YYYY-MM-DD')).unix();
@@ -778,7 +778,7 @@ async function cyclesStatsWeekComparison(){
   return [stats1,stats2]
 }
 // internal (system) methods or we also allow user interaction?
-async function cyclesDayVsDay(){
+ async function cyclesDayVsDay(){
   //make two API calls to get the neccessary data
   //DAY 1 - today
   var startDate1 = moment().startOf('day').unix()
@@ -919,3 +919,17 @@ function cyclesStatsDaily(cycleArray,unique_days){
 
   return statsArray
 }
+
+
+module.exports = {
+  getInferredCycles: getInferredCycles,
+  glueCycles: glueCycles,
+  getIntervalSummary: getIntervalSummary,
+  statesSummaryPerPeriod: statesSummaryPerPeriod,
+  createIntervals: createIntervals,
+  createMinuteArray: createMinuteArray,
+  hourTimeline: hourTimeline,
+  cyclesStatsWeekComparison: cyclesStatsWeekComparison,
+  cyclesDayVsDay: cyclesDayVsDay,
+  cyclesStatsDaily: cyclesStatsDaily
+};

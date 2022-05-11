@@ -1,4 +1,5 @@
 IdleState = require('../models/idlestate.model');
+import * as CyclesAlg from './cycle-calculations.js'
 
 exports.getIdleStateDataPerLimit = function (req, res) {
 
@@ -101,9 +102,9 @@ exports.getGluedCycle = function (req, res) {
           }
           else{
 
-           var intervalArray = createIntervals(idlestatedata,1,parseInt(startdate),parseInt(enddate))
-           var cyclesArray = getInferredCycles(intervalArray.intervals).cycles
-           var gluedCycles = glueCycles(cyclesArray)
+           var intervalArray = CyclesAlg.createIntervals(idlestatedata,1,parseInt(startdate),parseInt(enddate))
+           var cyclesArray = CyclesAlg.getInferredCycles(intervalArray.intervals).cycles
+           var gluedCycles = CyclesAlg.glueCycles(cyclesArray)
             res.json({
                 status: "success",
                 intervals:gluedCycles
