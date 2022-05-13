@@ -920,6 +920,7 @@ function cyclesStatsDaily(cycleArray,unique_days){
 
   return statsArray
 }
+
 exports.getIdleStateDataPerLimit = function (req, res) {
 
     var userid = req.params.userid;
@@ -1024,9 +1025,12 @@ exports.getGluedCycle = function (req, res) {
            var intervalArray = createIntervals(idlestatedata,1,parseInt(startdate),parseInt(enddate))
            var cyclesArray = getInferredCycles(intervalArray.intervals).cycles
            var gluedCycles = glueCycles(cyclesArray)
+           var minuteArray = createMinuteArray(gluedCycles)
+           var summaryData = statesSummaryPerPeriod(minuteArray,60*60*24)
             res.json({
                 status: "success",
-                intervals:gluedCycles
+                intervals:gluedCycles,
+                summary:summaryData1
             });
 
 
@@ -1036,6 +1040,7 @@ exports.getGluedCycle = function (req, res) {
     );
 
 };
+
 
 exports.getIdleStateDataPerPeriod = function (req, res) {
 
@@ -1094,7 +1099,6 @@ exports.getIdleStateDataPerPeriod = function (req, res) {
     );
 
 };
-
 exports.newState = function (req, res) {
 
   var idlestate = new IdleState();
