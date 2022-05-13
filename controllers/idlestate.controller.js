@@ -1030,7 +1030,7 @@ exports.getGluedCycle = function (req, res) {
             res.json({
                 status: "success",
                 intervals:gluedCycles,
-                summary:summaryData1
+                summary:summaryData
             });
 
 
