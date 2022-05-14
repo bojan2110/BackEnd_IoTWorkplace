@@ -1026,7 +1026,7 @@ exports.getGluedCycle = function (req, res) {
            var cyclesArray = getInferredCycles(intervalArray.intervals).cycles
            var gluedCycles = glueCycles(cyclesArray)
            var minuteArray = createMinuteArray(gluedCycles)
-           var summaryData = statesSummaryPerPeriod(minuteArray,60*60)
+           var summaryData = statesSummaryPerPeriod(minuteArray,60*60*24)
             res.json({
                 status: "success",
                 intervals:gluedCycles,
